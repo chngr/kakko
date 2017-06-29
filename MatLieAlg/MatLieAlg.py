@@ -177,69 +177,6 @@ def matrix_to_liealg(mat):
     M = matrix_to_list(mat)
     return MatLieAlgElem(size,M)
 
-def make_sl(n,base=QQ):
-    # Make sl(n)
-    if n < 2:
-        raise ValueError("Let's only make special linear groups for n at least 2...")
-    generators = []
-    for i in range(1,n):
-        generators.append(basis_matrix(n,0,0) - basis_matrix(n,i,i))
-    for i in range(n):
-        for j in range(i+1,n):
-            generators.append(basis_matrix(n,i,j))
-            generators.append(basis_matrix(n,j,i))
-    generators = map(matrix_to_liealg,generators)
-    return MatLieAlg(n,generators)
-
-def make_so(n,base=QQ):
-    generators = []
-    for i in range(n):
-        for j in range(i + 1,n):
-            generators.append(basis_matrix(n,i,j) - basis_matrix(n,j,i))
-    generators = map(matrix_to_liealg,generators)
-    return MatLieAlg(n,generators)
-
-def make_sp(n,base=QQ):
-    if n % 2 != 0:
-        raise ValueError("Symplectic matrices only exist for even-dimensional space")
-    generators = []
-    m = n/2
-    # Off-diagonal blocks
-    for i in range(m):
-        for j in range(m):
-            if i == j:
-                generators.append(basis_matrix(n,i,m+j))
-                generators.append(basis_matrix(n,i+m,j))
-            else:
-                generators.append(basis_matrix(n,i,m+j) + basis_matrix(n,j,m+i))
-                generators.append(basis_matrix(n,i+m,j) + basis_matrix(n,j+m,i))
-    # Diagonal blocks
-    for i in range(m):
-        for j in range(m):
-            generators.append(basis_matrix(n,i,j) - basis_matrix(n,m+j,m+i))
-    generators = map(matrix_to_liealg,generators)
-    return MatLieAlg(n,generators)
-
-def dim_a(n):
-    if n < 1:
-        raise ValueError("Dimensions of A_n start from n = 1.")
-    return n * n + 2*n
-
-def dim_b(n):
-    if n < 2:
-        raise ValueError("Dimensions of B_n start from n = 2.")
-    return 2 * n * n + n
-
-def dim_c(n):
-    if n < 3:
-        raise ValueError("Dimensions of C_n start from n = 3.")
-    return 2 * n * n + n
-
-def dim_d(n):
-    if n < 4:
-        raise ValueError("Dimensons of D_n start from n = 4.")
-    return 2 * n * n - n
-
 def make_matrix(nrows,ncols,entries):
     # USAGE:
     #   ncols = int
