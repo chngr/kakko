@@ -25,24 +25,14 @@ end
 % Set of tuples are represented once and do not need more processing.
 function result = valid_tuples(p)
 valid_tuples = {};
-% for x = 1
-for a = p:-1:0
-    for b = (p-a-2):-1:0
-        for c = min(p-a-b,b):-1:0
-            for y = 0:1
-                d = p-a-b-c;
-                valid_tuples{end+1} = [1,a,b,c,d,y];
-            end
-        end
-    end
-end
-% for x = 0
-for a = p:-1:0
-    for b = (p-a-2):-1:0
-        for c = min(p-a-b,b):-1:0
-            for y = 0:1
-                d = p-a-b-c;
-                valid_tuples{end+1} = [0,a,b,c,d,y];
+for x = 0:1
+    for a = p:-1:0
+        for b = (p-a-2):-1:0
+            for c = min(p-a-b,b):-1:0
+                for y = 0:1
+                    d = p-a-b-c;
+                    valid_tuples{end+1} = [x,a,b,c,d,y];
+                end
             end
         end
     end
@@ -58,28 +48,18 @@ end
 % duplicates.
 function result = mixed_tuples(p)
 mixed_tuples = {};
-% for x = 1
-for a = p:-1:0
-    for b = (p-a):-1:(p-a-1)
-        for c = min(p-a-b,b):-1:0
-            for y = 0:1
-                d = p-a-b-c;
-                mixed_tuples{end+1} = [1,a,b,c,d,y];
-            end
-        end
-    end
-end
-% for x = 0
-for a = p:-1:0
-    for b = (p-a):-1:(p-a-1)
-        for c = min(p-a-b,b):-1:0
-            for y = 0:1
-                d = p-a-b-c;
-                mixed_tuples{end+1} = [0,a,b,c,d,y];
-            end
-        end
-    end
-end
 
+if x == 1
+    for a = p:-1:0
+        for b = (p-a):-1:(p-a-1)
+            for c = min(p-a-b,b):-1:0
+                for y = 0:1
+                    d = p-a-b-c;
+                    mixed_tuples{end+1} = [x,a,b,c,d,y];
+                end
+            end
+        end
+    end
+end
 result = mixed_tuples;
 end

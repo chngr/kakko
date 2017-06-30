@@ -1,6 +1,6 @@
-% normalize_matrix(): transforms matrix into normalized basis form
+% normalize_matrix(): transforms init_matrix into normalized basis form
 % (representative of isomorphism class)
-% Input: initial matrix
+% Input: initial init_matrix
 % Output: normalized matrix
 function result = normalize_matrix(init_mat)
 % find the K_p
@@ -25,25 +25,19 @@ for i = 1:length(tuple_list)
         break;
     end
 end
-% bring the K_p to the upper left
-for i = 1:length(k_p_indices)
-    % swap column i and column k_p_indices(i)
-    init_mat(:,[i, k_p_indices(i)]) = init_mat(:,[k_p_indices(i), i]);
-    % swap row i and row k_p_indices(i)
-    init_mat([i, k_p_indices(i)],:) = init_mat([k_p_indices(i), i],:);
-end
-% determine values of a, b, c, and d
+% determine the values of a, b, c, d
 a = 0; b = 0; c = 0; d = 0;
-for i = 1:p
-    if init_mat(i,p+1) == 1 && init_mat(i,p+2) == 1
+tuple_diff = setdiff([1:p+2],k_p_indices);
+for i = 1:length(k_p_indices)
+    if init_mat(k_p_indices(i),tuple_diff(1)) == 1 && init_mat(k_p_indices(i),tuple_diff(2)) == 1
         a = a + 1;
-    elseif init_mat(i,p+1) == 1 && init_mat(i,p+2) == 0
+    elseif init_mat(k_p_indices(i),tuple_diff(1)) == 1 && init_mat(k_p_indices(i),tuple_diff(2)) == 0
         b = b + 1;
-    elseif init_mat(i,p+1) == 0 && init_mat(i,p+2) == 1
+    elseif init_mat(k_p_indices(i),tuple_diff(1)) == 0 && init_mat(k_p_indices(i),tuple_diff(2)) == 1
         c = c + 1;
-    else
+    else 
         d = d + 1;
-    end
+    end 
 end
 % if there are more (0,1) than (1,0), flip b and c
 if c > b
@@ -53,24 +47,24 @@ end
 bound_1 = a + b; bound_2 = a + b + c;
 % set a coordinates: (1,1)
 for i = 1:a
-    matrix(i,p+1) = 1;
-    matrix(i,p+2) = 1;
+    init_mat(i,p+1) = 1;
+    init_mat(i,p+2) = 1;
 end
 % set b coordinates: (1,0)
 for i = (a+1):bound_1
-    matrix(i,p+1) = 1;
-    matrix(i,p+2) = 0;
+    init_mat(i,p+1) = 1;
+    init_mat(i,p+2) = 0;
 end
 % set c coordinates: (0,1)
 for i = (bound_1+1):bound_2
-    matrix(i,p+1) = 0;
-    matrix(i,p+2) = 1;
+    init_mat(i,p+1) = 0;
+    init_mat(i,p+2) = 1;
 end
 % set d coordinates: (0,0)
 for i = (bound_2+1):p
-    matrix(i,p+1) = 0;
-    matrix(i,p+2) = 0;
+    init_mat(i,p+1) = 0;
+    init_mat(i,p+2) = 0;
 end
-% leave y value alone and make matrix symmetric
+% leave y value alone and make init_matrix symmetric
 result = triu(init_mat) + triu(init_mat)';
 end

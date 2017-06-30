@@ -1,0 +1,17 @@
+% basis_size(): computes the expected size of the basis
+% Input: dimension of space p
+% Output: expected size of basis:
+% 70 + 1/2 * |(a,b,d)| that solve a + 2b + d = p
+function result = basis_size(p)
+solutions = {};
+for a = p:-1:0
+    for d = d:-1:0
+        for b = (p-a-d):-1:0
+            if mod(k,2) == 0
+                solutions{end+1} = [i,k,j];
+            end
+        end
+    end
+end
+result = 70 + (1/2) * length(solutions);
+end
