@@ -1,5 +1,5 @@
-% generate_basis(): basis for all unlabelled graphs with at least one K_p
-% (for action of a_p on W_{p+2})
+% gen_basis(): basis for all unlabelled graphs on (p+2) vertices with 
+% at least one K_p
 % Input: dimension of space p
 % Output: basis
 function result = gen_basis(p)
@@ -63,6 +63,10 @@ end
 result = mixed_tuples;
 end
 
+% ind_mixed_tuples(): construct a list of independent tuples in the
+% mixed_tuples list
+% Input: mixed tuples cell array
+% Output: independent matrix cell array
 function result = ind_mixed_tuples(mixed_tuples)
 mat_list = {};
 for i = 1:length(mixed_tuples)
@@ -78,6 +82,9 @@ mat_list = cellfun(@eval,str_list,'UniformOutput',false);
 result = mat_list;
 end
 
+% find_permutations(): find permutations of given matrix
+% Input: initial matrix to find permutations of
+% Output: permutations of initial matrix
 function result = find_permutations(init_mat)
 p = length(init_mat) - 2;
 permutations = {};

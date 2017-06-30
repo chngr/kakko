@@ -1,9 +1,9 @@
 % tuple_to_matrix(): generates normalized adjacency matrix from given 6-tuple
 % Input: tuple [x = 0/1, a, b, c, d, y = 0/1] where
 %   x = 0/1 (blue or red K_p in upper left corner)
-%   (a,b,c,d) generated in valid_tuples() and mixed_tuples()
+%   (a,b,c,d) generated in valid_tuples() or mixed_tuples()
 %   y = 0/1 is (p+1,p+2)-th entry (red or blue edge between two separate
-%       vertices
+%       vertices)
 % Output: matrix
 function result = tuple_to_matrix(tuple)
 x = tuple(1); y = tuple(6);
