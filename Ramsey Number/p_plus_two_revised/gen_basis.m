@@ -5,10 +5,18 @@
 function [map, basis] = gen_basis(p)
 valid_tuples = valid_tuples(p);
 mixed_tuples = mixed_tuples(p);
+
+disp('Intersections between valid and mixed:')
+valid_str = cellfun(@mat2str,valid_tuples,'UniformOutput',false);
+mixed_str = cellfun(@mat2str,mixed_tuples,'UniformOutput',false);
+celldisp(intersect(valid_str,mixed_str));
+
 [map, unique_values] = create_map(mixed_tuples,p);
+disp('Intersections between valid and processed_mixed:')
 valid_str = cellfun(@mat2str,valid_tuples,'UniformOutput',false);
 unique_str = cellfun(@mat2str,unique_values,'UniformOutput',false);
 celldisp(intersect(valid_str,unique_str));
+
 for i = 1:length(valid_tuples)
    map(mat2str(valid_tuples{i})) = valid_tuples{i};
    unique_values{end+1} = valid_tuples{i}; 
@@ -19,7 +27,8 @@ end
 % If R has one K_p^{red} (in general) -- generate tuples (x,a,b,c,d,y) with:
 %   a + b + c + d = p
 %   b >= c
-%   a + b <= p - 2
+%   a + b <= p - 2 (x = 1)
+%   b + d <= p - 2 (x = 0)
 % NOTE: Includes single edge case where a + b = p - 2, which has two
 % K_p^{red}, but no duplicate tuples.
 % Set of tuples are represented once and do not need more processing.
@@ -37,11 +46,11 @@ for a = p:-1:0
     end
 end
 % for x = 0
-for a = p:-1:0
-    for b = (p-a-2):-1:0
-        for c = min(p-a-b,b):-1:0
+for d = p:-1:0
+    for b = (p-d-2):-1:0
+        for c = min(p-d-b,b):-1:0
             for y = 0:1
-                d = p-a-b-c;
+                a = p-d-b-c;
                 valid_tuples{end+1} = [0,a,b,c,d,y];
             end
         end
@@ -53,7 +62,8 @@ end
 % If R has more than one K_p^{red} -- generate tuples (x,a,b,c,d,y) with:
 %   a + b + c + d = p
 %   b >= c
-%   a + b >= p - 1
+%   a + b >= p - 1 (x = 1)
+%   b + d >= p - 1 (x = 0)
 % NOTE: Set of tuples generated need to be processed further to eliminate 
 % duplicates.
 function result = mixed_tuples(p)
@@ -70,16 +80,15 @@ for a = p:-1:0
     end
 end
 % for x = 0
-for a = p:-1:0
-    for b = (p-a):-1:(p-a-1)
-        for c = min(p-a-b,b):-1:0
+for d = p:-1:0
+    for b = (p-d):-1:(p-d-1)
+        for c = min(p-d-b,b):-1:0
             for y = 0:1
-                d = p-a-b-c;
+                a = p-d-b-c;
                 mixed_tuples{end+1} = [0,a,b,c,d,y];
             end
         end
     end
 end
-
 result = mixed_tuples;
 end
