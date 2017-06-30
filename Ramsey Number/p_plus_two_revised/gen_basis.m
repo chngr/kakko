@@ -101,3 +101,4 @@ for i = (p+2):-1:1
 end
 result = permutations;
 end
+% try
