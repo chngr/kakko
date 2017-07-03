@@ -1,0 +1,77 @@
+% grouping_2_mat(grouping)
+% input: grouping: cell array of groups of basis 
+% output: E/F -- matrices representing E and F on the bases 
+
+
+
+    % basis: whole basis
+%{
+basis = new_basis_plus_two(p);
+index_array = [];
+partitions = {};
+for i = 1:length(basis)
+   [~, index] = mat_2_tuple(basis{i});
+   index_array = [index_array, index];
+end
+while ~isempty(index_array)
+    new_group = mult_E_F(index_array(1),p,basis);
+    partitions{end+1} = new_group;
+    index_array = setdiff(index_array, new_group);
+end
+disjoint_parts = make_disjoint(partitions,length(basis));
+E_col = {};
+F_col = {};
+for i = 1:length(disjoint_parts)
+    E_col{end+1} = opr_on_index_array(disjoint_parts{i},'E',p,basis);
+    F_col{end+1} = opr_on_index_array(disjoint_parts{i},'F',p,basis);
+end
+E = E_col{1};
+F = F_col{1};
+for i = 2:length(E_col)
+    E = blkdiag(E,E_col{i});
+    F = blkdiag(F,F_col{i});
+end
+%}
+
+function [E,F] = grouping_2_mat(grouping)
+for i = 1:length(grouping)
+    
+end
+end
+
+% function: get index of a tuple within a subgroup
+% input: tuple 
+%        group: cell array of tuple (subgroup)
+% output: index of tuple within subgroup
+function index = get_index_in_group(tuple, group)
+count = 1;
+    for i = 1 : length (group)
+        if isequal(tuple, group{i})
+            index = count;
+            break;
+        end
+        count = count + 1;
+    end    
+end
+
+% function: matrix of E and F in each subgroup
+% input: cell array of subgroup
+% output: matrix E_sub and F_sub
+function [E_sub,F_sub] = opr_in_sub(group)
+E_sub = zeros(length(group));
+F_sub = zeros(length(group));
+    for i = 1:length(group)
+        % ith element in group
+        cur_tuple = group{i};
+        E_result_arr = gen_opr_on_tuple(tuple,'E',p,r,map);
+        F_result_arr = gen_opr_on_tuple(tuple,'F',p,r,map);
+        for j = 1:length(E_result_arr)
+            result_index = get_index_in_group(cur_tuple,group);
+            E_sub(result_index,i) = 1;
+        end
+        for j = 1:length(F_result_arr)
+            result_index = get_index_in_group(cur_tuple,group);
+            F_sub(result_index,i) = 1;
+        end
+    end
+end
