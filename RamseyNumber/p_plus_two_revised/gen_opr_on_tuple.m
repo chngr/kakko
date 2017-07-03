@@ -6,9 +6,6 @@
 % result_mat -- set of transformed matrices
 
 function result_tuple_set = gen_opr_on_tuple(tuple,opr,p,r,map)
-% !!!!! W = mapping (tuple)
-% W = zeros(r);
-% TO BE CHANGED !!!!
 W = tuple_to_matrix(tuple);
 k_tuples = gen_k_tuples(r,p); % set of all possible tuples
 result_tuple_set = cell(0);
