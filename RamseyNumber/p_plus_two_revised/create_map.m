@@ -64,8 +64,10 @@ for i = 1:length(mixed_tuples)
 end
 map = tuple_map;
 map_values = values(map);
+fprintf('Number of values in map: %d\n', length(map_values));
 str_values = unique(cellfun(@mat2str,map_values,'UniformOutput',false));
 unique_values = cellfun(@eval,str_values,'UniformOutput',false);
+fprintf('Number of unique values in map: %d\n', length(unique_values));
 end
 
 % compare_tuples: finds the largest tuple in set lexicographically:
