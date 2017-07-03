@@ -5,35 +5,12 @@
 function [map, basis] = gen_basis(p)
 valid_tuples = valid_tuples(p);
 mixed_tuples = mixed_tuples(p);
-
 [map, unique_values] = create_map(mixed_tuples,p);
-disp('Intersections between valid and processed_mixed:')
-valid_str = cellfun(@mat2str,valid_tuples,'UniformOutput',false);
-unique_str = cellfun(@mat2str,unique_values,'UniformOutput',false);
-intersection = intersect(valid_str,unique_str);
-intersection = cellfun(@eval,intersection,'UniformOutput',false);
-celldisp(intersection);
-fprintf('Number of intersections: %d\n', length(intersection));
-
 for i = 1:length(valid_tuples)
    map(mat2str(valid_tuples{i})) = valid_tuples{i};
    unique_values{end+1} = valid_tuples{i}; 
 end
-
-key_set = keys(map);
-for i = 1:length(key_set)
-    for j = 1:length(intersection)
-        if isequal(map(key_set{i}),intersection{j})
-            disp(key_set{i})
-            disp('maps to')
-            disp(intersection{j})
-            disp('\n')
-        end
-    end
-end
-
 basis = unique_values;
-
 end
 
 % If R has one K_p^{red} (in general) -- generate tuples (x,a,b,c,d,y) with:
