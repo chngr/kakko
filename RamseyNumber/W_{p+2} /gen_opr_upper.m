@@ -55,7 +55,6 @@ for j = 1:length(k_tuples)
         result{end+1} = new_mat;
     end
     
-    
     % --------------- F ----------------
     % operation F: if find K_p_2
     if opr == 'F' && sum == 0

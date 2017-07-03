@@ -5,10 +5,11 @@
 % binary -- set of binary strings denoting 2 vertices
 % result_mat -- set of transformed matrices
 
-function [result_tuple_set] = gen_opr_on_tuple(W,tuple,opr,p,r)
-%!!!!! W = mapping (tuple)
-%W = zeros(r);
-
+function result_tuple_set = gen_opr_on_tuple(tuple,opr,p,r)
+% !!!!! W = mapping (tuple)
+% W = zeros(r);
+% TO BE CHANGED !!!!
+W = tuple_to_matrix(tuple);
 k_tuples = gen_k_tuples(r,p); % set of all possible tuples
 result_tuple_set = cell(0);
 set_all = 1:r;
@@ -78,11 +79,11 @@ for j = 1:length(k_tuples)
         
         if opr == 'E'
             temp_tuple = [0,a,b,c,d,e];
-            result_tuple_set{end+1} = mapping(temp_tuple);
         else
             temp_tuple = [1,a,b,c,d,e];
-            result_tuple_set{end+1} = mapping(temp_tuple);
         end
+        result_tuple_set{end+1} = temp_tuple;
+        % TODO: result_tuple_set{end+1} = mapping(temp_tuple);
         
         % Eleminate duplicates in result_tuple_set (matrices with same result)
         str = cellfun(@mat2str, result_tuple_set, 'UniformOutput', false);
