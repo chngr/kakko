@@ -31,10 +31,10 @@ for i = 1:length(mixed_tuples)
             tuple_image{end+1} = cur_tuple;
         end
     end
+    alphabet_values = {};
     for j = 1:length(tuple_image)
         k_p_indices = tuple_image{j};
         tuple_diff = setdiff([1:p+2],k_p_indices);
-        alphabet_values = {};
         % determine the values of x, a, b, c, d, y
         x = init_mat(k_p_indices(1), k_p_indices(2));
         y = init_mat(tuple_diff(1), tuple_diff(2));
