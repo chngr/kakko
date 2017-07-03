@@ -5,10 +5,11 @@
 function result = grouping_basis(p)
 % basis: whole basis
 tuple_basis = gen_basis(p); % generate basis of tuples
+tuple_basis = {[1,3,0,0,0,1],[0,0,0,0,3,0]};
 partitions = {};
 
 while ~isempty(tuple_basis)
-    new_group = multi_opr_on_tuple(tuple_basis(1),p+2);
+    new_group = multi_opr_on_tuple(tuple_basis{1},p+2);
     partitions{end+1} = new_group;
     
     % set diff for basis and new_group generated
@@ -18,7 +19,6 @@ while ~isempty(tuple_basis)
     tuple_basis = cellfun(@eval, basis_str, 'UniformOutput',false);
 
 end
-disjoint_parts = make_disjoint(partitions,length(basis));
-result = disjoint_parts;
+result = partitions;
 celldisp(result);
 end
