@@ -1,15 +1,12 @@
-% mat_2_tuple: transform normalized matrices to 6-tuple representation
-% Input: matrix with upper triangular form
-% Output:
-% result(upper(1/0),a,b,c,d,e)
-
-function tuple = mat_2_tuple (mat)
-r = size(mat,1); % size of mat
+% matrix_to_tuple(): transform normalized matrix to 6-tuple representation
+% Input: matrix in normalized form
+% Output: tuple (array) with [x,a,b,c,d,y]
+function tuple = matrix_to_tuple(mat)
+% size of mat
+r = length(matrix);
 p = r - 2;
-total_num = 4 * nchoosek(p+3,3);
-opr = 0; a=0; b=0;c=0 ;d=0; e=0;
-opr = mat(1,2);
-
+% compute a, b, c, d
+a = 0; b = 0; c = 0; d = 0;
 for i = 1:p
     first_digit = mat(i,p+1);
     second_digit = mat(i,p+2);
@@ -23,9 +20,12 @@ for i = 1:p
         d = d + 1;
     end
 end
+% switch b and c, if c > b
 if c > b
     [b,c] = deal(c,b);
 end
-e = mat(p+1,p+2);
-tuple = [opr,a,b,c,d,e];
+% extract x and y
+x = mat(1,2);
+y = mat(p+1,p+2);
+tuple = [x,a,b,c,d,y];
 end

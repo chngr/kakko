@@ -4,7 +4,7 @@
 %   (a,b,c,d) generated in valid_tuples() or mixed_tuples()
 %   y = 0/1 is (p+1,p+2)-th entry (red or blue edge between two separate
 %       vertices)
-% Output: matrix
+% Output: matrix of tuple
 function result = tuple_to_matrix(tuple)
 x = tuple(1); y = tuple(6);
 a = tuple(2); b = tuple(3); c = tuple(4); d = tuple(5);

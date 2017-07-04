@@ -1,11 +1,13 @@
 % gen_basis(): basis for all unlabelled graphs on (p+2) vertices with 
 % at least one K_p
-% Input: dimension p
-% Output: map with basis -- see create_map() function for details
+% Input: dimension p of K_p
+% Output: map with basis, set of unique basis tuples
+%         -- see create_map() for details
 function [map, basis] = gen_basis(p)
 valid_tuples = valid_tuples(p);
 mixed_tuples = mixed_tuples(p);
 [map, unique_values] = create_map(mixed_tuples,p);
+% fill map with valid_tuples
 for i = 1:length(valid_tuples)
    map(mat2str(valid_tuples{i})) = valid_tuples{i};
    unique_values{end+1} = valid_tuples{i}; 
@@ -68,7 +70,6 @@ for a = p:-1:0
         end
     end
 end
-
 % for x = 0
 for d = p:-1:0
     for b = (p-d):-1:(p-d-1)

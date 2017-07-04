@@ -1,7 +1,7 @@
 % gen_k_tuples(): generates list of unordered k-tuples using 
 % elements from {1,2,...,n}
 % Input: upper bound for list n, number of elements selected k
-% Output: cell object with k-tuples
+% Output: cell array with k-tuples
 function k_tuples = gen_k_tuples(n,k)
 test_cell = {};
 % perform recursion
@@ -21,9 +21,11 @@ end
 % Output: list of x-tuples going up to the max item
 function cell_new = cell_helper(cell_old, max)
 cell_new = {};
+% for every element in cell_old
 for i = 1:length(cell_old)
     cur_array = cell_old{i};
     last_num = cur_array(length(cur_array));
+    % go from (1 + largest value in array) to the max
     for j = (last_num+1):max
         new_cur_array = [cur_array, j];
         cell_new{end+1} = new_cur_array;

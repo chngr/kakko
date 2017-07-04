@@ -1,15 +1,15 @@
 % create_map(): create map from tuple to cell array with representative
 % tuple and matrix of representative tuple
-% Input: set of mixed_tuples to be further processed 
-% Output: map from set of mixed_tuples to cell arrays
+% Input: set of mixed_tuples to be further processed, dimension p 
+% Output: map from set of mixed_tuples to cell arrays, set of unique
+%         basis tuples
 function [map, unique_values] = create_map(mixed_tuples,p)
 tuple_map = containers.Map;
 % for each mixed tuple
 for i = 1:length(mixed_tuples)
     cur_mixed = mixed_tuples{i};
-    % matrix for cur_mixed (current mixed tuple)
     init_mat = tuple_to_matrix(cur_mixed);
-    % generate all possible p-tuples 
+    % generate all possible p-tuples
     tuple_set = gen_k_tuples(p+2,p);
     % stores the tuples that correspond to valid K_p
     tuple_image = {};
@@ -32,6 +32,7 @@ for i = 1:length(mixed_tuples)
         end
     end
     alphabet_values = {};
+    % for every tuple that forms a valid K_p
     for j = 1:length(tuple_image)
         k_p_indices = tuple_image{j};
         tuple_diff = setdiff([1:p+2],k_p_indices);
@@ -59,6 +60,7 @@ for i = 1:length(mixed_tuples)
         end
         alphabet_values{end+1} = [x,a,b,c,d,y];
     end
+    % find representative tuple
     rep_tuple = compare_tuples(alphabet_values);
     tuple_map(mat2str(cur_mixed)) = rep_tuple;
 end
@@ -69,14 +71,17 @@ unique_values = cellfun(@eval,str_values,'UniformOutput',false);
 end
 
 % compare_tuples: finds the largest tuple in set lexicographically:
-% compare a's for largest first, then b's, c's, d's
+%                 compare x's for largest first, then a's, b's, c's, d's,
+%                 y's
 % Input: cell array of tuples
 % Output: largest tuple
 function result = compare_tuples(tuple_list)
 mat_of_tuples = [];
+% fill matrix with tuples as rows
 for i = 1:length(tuple_list)
     mat_of_tuples(i,:) = tuple_list{i};
 end
+% sort rows and return bottom row with largest tuple
 sorted_mat = sortrows(mat_of_tuples);
 rep_tuple = sorted_mat(end,:);
 result = rep_tuple;

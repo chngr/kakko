@@ -1,12 +1,15 @@
 % normalize_matrix(): transforms init_matrix into normalized basis form
-% (representative of isomorphism class)
-% Input: initial init_matrix
-% Output: normalized matrix
+%                     (representative of isomorphism class)
+% Input: initial matrix
+% Output: normalized matrix in triangular form
+% NOTE: Tuple used for the K_p in upper left (if more than one exists in
+%       graph) is the first one that appears from gen_k_tuples() call.
 function result = normalize_matrix(init_mat)
 % find the K_p
 p = length(init_mat) - 2;
 tuple_list = gen_k_tuples(p+2,p);
 k_p_indices = [];
+% for each possible tuple
 for i = 1:length(tuple_list)
     cur_tuple = tuple_list{i};
     sum = 0;
@@ -29,11 +32,14 @@ end
 a = 0; b = 0; c = 0; d = 0;
 tuple_diff = setdiff([1:p+2],k_p_indices);
 for i = 1:length(k_p_indices)
-    if init_mat(k_p_indices(i),tuple_diff(1)) == 1 && init_mat(k_p_indices(i),tuple_diff(2)) == 1
+    if init_mat(k_p_indices(i),tuple_diff(1)) == 1 && ...
+        init_mat(k_p_indices(i),tuple_diff(2)) == 1
         a = a + 1;
-    elseif init_mat(k_p_indices(i),tuple_diff(1)) == 1 && init_mat(k_p_indices(i),tuple_diff(2)) == 0
+    elseif init_mat(k_p_indices(i),tuple_diff(1)) == 1 && ...
+        init_mat(k_p_indices(i),tuple_diff(2)) == 0
         b = b + 1;
-    elseif init_mat(k_p_indices(i),tuple_diff(1)) == 0 && init_mat(k_p_indices(i),tuple_diff(2)) == 1
+    elseif init_mat(k_p_indices(i),tuple_diff(1)) == 0 && ... 
+        init_mat(k_p_indices(i),tuple_diff(2)) == 1
         c = c + 1;
     else 
         d = d + 1;
@@ -65,6 +71,6 @@ for i = (bound_2+1):p
     init_mat(i,p+1) = 0;
     init_mat(i,p+2) = 0;
 end
-% leave y value alone and make init_matrix symmetric
+% leave y value alone and make matrix symmetric
 result = triu(init_mat) + triu(init_mat)';
 end
