@@ -17,5 +17,5 @@ fprintf('dimension: %d\n', dim);
 % computes signature of generated Lie algebra
 sig = signature(result_basis);
 fprintf('signature: %d\n', sig);
-cartan = cartan_mat();
+cartan
 end
