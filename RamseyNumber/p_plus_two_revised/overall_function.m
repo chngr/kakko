@@ -1,5 +1,4 @@
-% overall_function(): wrapper to compute dimension, signature, and 
-%                     Cartan matrix
+% overall_function(): wrapper to compute dimension and signature
 % Input: p -- dimension of K_p
 % Output: dimension, signature, and Cartan matrix of Lie algebra
 function [dim, sig] = overall_function(p)
