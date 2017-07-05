@@ -1,9 +1,10 @@
 % overall_function(): wrapper to compute dimension and signature
-% Input: p -- dimension of K_p
-% Output: dimension, signature, and Cartan matrix of Lie algebra
-function [dim, sig] = overall_function(p)
+% Input: input_file -- name of input_file with graphs on p+3 vertices
+%        p -- dimension of K_p  
+% Output: dimension and signature of Lie algebra
+function [dim, sig] = overall_function(input_file,p)
 % finds basis of unlabelled graphs with K_p
-[map,basis] = gen_basis(p);
+[map,basis] = gen_basis(input_file,p);
 % finds groups after performing E and F repeatedly
 groups = grouping_basis(p,basis,map);
 % converts to operator matrices E and F
