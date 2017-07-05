@@ -1,6 +1,7 @@
 % gen_basis(): basis for all unlabelled graphs on (p+3) vertices with 
 % at least one K_p
-% Input: dimension p of K_p
+% Input: input_file -- name of input_file with graphs on p+3 vertices
+%        p -- dimension of K_p           
 % Output: map with basis, set of representative basis tuples
 function [map, unique_values] = gen_basis(input_file,p)
 tuple_map = containers.Map;
