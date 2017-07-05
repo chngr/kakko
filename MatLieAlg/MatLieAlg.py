@@ -101,6 +101,9 @@ class MatLieAlg:
         self.gens = gens
         self.base = base
         self._space = None
+        self._killing_form = None
+        self._adjoint_rep = None
+        self._basis = None
 
     def _generate(self):
         current_space = MatSpace(self.size,self.gens,base=self.base)
@@ -131,18 +134,21 @@ class MatLieAlg:
         return self._space.dim()
 
     def basis(self):
-        if self._space is None:
+        if self._basis is None or self._space is None:
             self._generate()
-        return self._space.basis()
+        self._basis = self._space.basis()
+        return self._basis
 
     def adjoint_rep(self):
         # Computes the matrices, with respect to some basis, for the adjoint representation
-        B = self.basis()
-        ad = []
-        for b in B:
-            ad_b = matrix([self._space.coordinates(b * a) for a in B]).transpose()
-            ad.append(ad_b)
-        return B,ad
+        if self._adjoint_rep is None:
+            B = self.basis()
+            ad = []
+            for b in B:
+                ad_b = matrix([self._space.coordinates(b * a) for a in B]).transpose()
+                ad.append(ad_b)
+            self._adjoint_rep = ad
+        return self._adjoint_rep
 
     def center(self):
         # Compute the center of the Lie algebra, i.e. ker(ad: G -> gl(G))
@@ -153,15 +159,14 @@ class MatLieAlg:
 
     def killing_form(self,return_basis=False):
         # Compute the matrix of the Killing form for the Lie algebra
-        B, ad = self.adjoint_rep()
-        form = matrix([[(g * h).trace() for h in ad] for g in ad])
-        if return_basis:
-            return form, B
-        return form
+        if self._killing_form is None:
+            ad = self.adjoint_rep()
+            self._killing_form = matrix([[(g * h).trace() for h in ad] for g in ad])
+        return self._killing_form
 
     def signature(self):
         # Return the signature of the Killing form
-        return sum(map(sign,self.killing_form().diagonal()))
+        return sum(map(sign,self.killing_form().jordan_form().diagonal()))
 
 def basis_matrix(size,i,j):
     # Returns size-by-size matrix with only a 1 at the entry (i,j)
