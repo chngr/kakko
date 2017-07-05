@@ -27,9 +27,11 @@ for i = 1:intmax
     for j = 1:length(new_list)
         cur_tuple = new_list{j};       
         if mod(i,2) ~= 0
-            temp_list = [temp_list, gen_opr_on_tuple(cur_tuple,odd_op,p,r,map)];
+            [unique_set, ~] = gen_opr_on_tuple(cur_tuple,odd_op,p,r,map);
+            temp_list = [temp_list, unique_set];
         else
-            temp_list = [temp_list, gen_opr_on_tuple(cur_tuple,even_op,p,r,map)];
+            [unique_set, ~] = gen_opr_on_tuple(cur_tuple,even_op,p,r,map);
+            temp_list = [temp_list, unique_set];
         end
     end
     % eleminate duplicates in temp_list
