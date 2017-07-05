@@ -10,7 +10,7 @@ even_op = '';
 old_list = {};
 new_list = {};
 new_list{end+1} = tuple;
-p = r-2;
+p = r-3;
 % assign sequence of operations depending on x = (0/1)
 % Reminder: E changes monochromatic "1" to "0", F changes "0" to "1"
 if tuple(1) == 1
