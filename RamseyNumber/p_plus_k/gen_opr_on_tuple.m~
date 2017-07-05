@@ -93,12 +93,13 @@ for j = 1:length(k_tuples)
         y = 2 * W(diff(1),diff(2)) + W(diff(1),diff(3));
         z = W(diff(2),diff(3));
         
+        if a+b+c+
+        
         if opr == 'E'
             temp_tuple = [0,a,b,c,d,e,f,g,h,y,z];
         else
             temp_tuple = [1,a,b,c,d,e,f,g,h,y,z];
         end
-
         result_tuple_set{end+1} = map(mat2str(temp_tuple)); 
         % Eleminate duplicates in result_tuple_set (mat with same result)
         str = unique(cellfun(@mat2str, result_tuple_set, 'UniformOutput',false));
