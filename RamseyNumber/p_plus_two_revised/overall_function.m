@@ -2,7 +2,7 @@
 %                     Cartan matrix
 % Input: p -- dimension of K_p
 % Output: dimension, signature, and Cartan matrix of Lie algebra
-function [dim, sig, cartan] = overall_function(p)
+function [dim, sig] = overall_function(p)
 % finds basis of unlabelled graphs with K_p
 [map,basis] = gen_basis(p);
 % finds groups after performing E and F repeatedly
@@ -13,9 +13,10 @@ gen_mat = {E,F};
 gen_names = {'E','F'};
 % computes dimension and basis of generated Lie algebra 
 [dim,result_basis] = bracket_operation(gen_mat,gen_names);
-fprintf('dimension: %d\n', dim);
+% computes Killing form of generated Lie algebra
+killing_mat = killing_form(result_basis);
 % computes signature of generated Lie algebra
-sig = signature(result_basis);
+sig = signature(killing_mat);
+fprintf('dimension: %d\n', dim);
 fprintf('signature: %d\n', sig);
-cartan = cartan_mat();
 end
