@@ -53,33 +53,42 @@ for j = 1:length(k_tuples)
     end
     
     % --------------- Construct new_tuple ---------------
-    % Generate (a,b,c,d,e): a:11, b:10, c:01; d:00, e: bool
+    % Generate (a,b,c,d,ef,g,h): a:11, b:10, c:01; d:00, e: bool
     if flag == true
-        a = 0; b= 0; c = 0; d = 0;
+        a = 0; b= 0; c = 0; d = 0; e = 0; f = 0; g = 0; h = 0;
         for i = 1:p
-            if W(diff(1),cur_k_tuple(i)) == 1 && ... 
-                    W(diff(2),cur_k_tuple(i)) == 1
+            if W(diff(1),cur_k_tuple(i)) == 1 &&  W(diff(2),cur_k_tuple(i)) == 1 && ... 
+                    W(diff(3),cur_k_tuple(i)) == 1
                 a = a + 1;
-            elseif W(diff(1),cur_k_tuple(i)) == 1 && ...
-                    W(diff(2),cur_k_tuple(i)) == 0
+            elseif W(diff(1),cur_k_tuple(i)) == 1 && W(diff(2),cur_k_tuple(i)) == 1 && ...
+                    W(diff(3),cur_k_tuple(i)) == 0
                 b = b + 1;
-            elseif W(diff(1),cur_k_tuple(i)) == 0 && ...
-                    W(diff(2),cur_k_tuple(i)) == 1
+            elseif W(diff(1),cur_k_tuple(i)) == 1 && W(diff(2),cur_k_tuple(i)) == 0 && ...
+                    W(diff(3),cur_k_tuple(i)) == 1
                 c = c + 1;
-            else
+            elseif W(diff(1),cur_k_tuple(i)) == 1 && W(diff(2),cur_k_tuple(i)) == 0 && ...
+                    W(diff(3),cur_k_tuple(i)) == 0
                 d = d + 1;
+            elseif W(diff(1),cur_k_tuple(i)) == 0 && W(diff(2),cur_k_tuple(i)) == 1 && ...
+                    W(diff(3),cur_k_tuple(i)) == 1
+                e = e + 1;
+            elseif W(diff(1),cur_k_tuple(i)) == 0 && W(diff(2),cur_k_tuple(i)) == 1 && ...
+                    W(diff(3),cur_k_tuple(i)) == 0
+                f = f + 1;
+            elseif W(diff(1),cur_k_tuple(i)) == 0 && W(diff(2),cur_k_tuple(i)) == 0 && ...
+                    W(diff(3),cur_k_tuple(i)) == 1
+                g = g + 1;
+            else 
+                h = h + 1;
             end
         end
-        % switch b and c if c > b
-        if c > b
-            [b,c] = deal(c,b);
-        end
-        e = W(diff(1),diff(2));
+        y = W(diff(1),diff(2))*2 + W(diff(1),diff(3));
+        z = W(diff(2),diff(3));
         
         if opr == 'E'
-            temp_tuple = [0,a,b,c,d,e];
+            temp_tuple = [0,a,b,c,d,e,f,g,h,y,z];
         else
-            temp_tuple = [1,a,b,c,d,e];
+            temp_tuple = [1,a,b,c,d,e,f,g,h,y,z];
         end
         result_tuple_set{end+1} = map(mat2str(temp_tuple)); 
         % Eleminate duplicates in result_tuple_set (mat with same result)

@@ -25,8 +25,8 @@ F_sub = zeros(length(group));
 for i = 1:length(group)
     % ith element in group
     cur_tuple = group{i};
-    E_result_arr = gen_opr_on_tuple(cur_tuple,'E',p,p+2,map);
-    F_result_arr = gen_opr_on_tuple(cur_tuple,'F',p,p+2,map);
+    E_result_arr = gen_opr_on_tuple(cur_tuple,'E',p,p+3,map);
+    F_result_arr = gen_opr_on_tuple(cur_tuple,'F',p,p+3,map);
     for j = 1:length(E_result_arr)
         result_index = get_index_in_group(E_result_arr{j},group);
         E_sub(result_index,i) = 1;
