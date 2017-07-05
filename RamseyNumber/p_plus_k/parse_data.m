@@ -1,8 +1,10 @@
 % parse_data(): used to read graph adjacency matrices into Matlab from
 %               http://users.cecs.anu.edu.au/~bdm/data/graphs.html
-% Input: input_file name, dimension p of K_p
+% Input: input_file -- input file name
+%        r -- order of graph 
+%        p -- dimension of K_p
 % Output: cell array with adjacency matrices having a K_p
-function result = parse_data(input_file,p)
+function result = parse_data(input_file,r,p)
 n = 1; data = []; mat_list = {};
 fid = fopen(input_file);
 % before reaching end of file
@@ -22,15 +24,17 @@ if any(data)
     mat_list{n} = data;
 end
 fclose(fid);
-comp_list = parse_comp_data(mat_list,p);
+comp_list = parse_comp_data(mat_list,r,p);
 result = comp_list;
 end
 
 % parse_comp_data(): returns unique basis with elements having a K_p
-% Input: cell array of basis elements
+% Input: mat_list -- adjacency matrices basis of unlabelled graphs
+%        r -- order of graph 
+%        p -- dimension of K_p
 % Output: cell array of basis elements with a K_p
-function result = parse_comp_data(mat_list,p)
-tuple_list = gen_k_tuples(p+2,p);
+function result = parse_comp_data(mat_list,r,p)
+tuple_list = gen_k_tuples(r,p);
 comp_list = {};
 % for each element in input list
 for i = 1:length(mat_list)
