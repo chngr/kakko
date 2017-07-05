@@ -53,36 +53,43 @@ for j = 1:length(k_tuples)
     end
     
     % --------------- Construct new_tuple ---------------
-    % Generate (a,b,c,d,ef,g,h): a:11, b:10, c:01; d:00, e: bool
+    % Generate [x,a,b,c,d,e,f,g,h,y,z]
     if flag == true
-        a = 0; b= 0; c = 0; d = 0; e = 0; f = 0; g = 0; h = 0;
+        a = 0; b = 0; c = 0; d = 0; e = 0; f = 0; g = 0; h = 0;
         for i = 1:p
-            if W(diff(1),cur_k_tuple(i)) == 1 &&  W(diff(2),cur_k_tuple(i)) == 1 && ... 
-                    W(diff(3),cur_k_tuple(i)) == 1
-                a = a + 1;
-            elseif W(diff(1),cur_k_tuple(i)) == 1 && W(diff(2),cur_k_tuple(i)) == 1 && ...
-                    W(diff(3),cur_k_tuple(i)) == 0
-                b = b + 1;
-            elseif W(diff(1),cur_k_tuple(i)) == 1 && W(diff(2),cur_k_tuple(i)) == 0 && ...
-                    W(diff(3),cur_k_tuple(i)) == 1
-                c = c + 1;
-            elseif W(diff(1),cur_k_tuple(i)) == 1 && W(diff(2),cur_k_tuple(i)) == 0 && ...
-                    W(diff(3),cur_k_tuple(i)) == 0
-                d = d + 1;
-            elseif W(diff(1),cur_k_tuple(i)) == 0 && W(diff(2),cur_k_tuple(i)) == 1 && ...
-                    W(diff(3),cur_k_tuple(i)) == 1
-                e = e + 1;
-            elseif W(diff(1),cur_k_tuple(i)) == 0 && W(diff(2),cur_k_tuple(i)) == 1 && ...
-                    W(diff(3),cur_k_tuple(i)) == 0
-                f = f + 1;
-            elseif W(diff(1),cur_k_tuple(i)) == 0 && W(diff(2),cur_k_tuple(i)) == 0 && ...
-                    W(diff(3),cur_k_tuple(i)) == 1
-                g = g + 1;
-            else 
-                h = h + 1;
+            if W(cur_k_tuple(i),diff(1)) == 1 && ...
+                   W(cur_k_tuple(i),diff(2)) == 1 && ...
+                   W(cur_k_tuple(i),diff(3)) == 1
+               a = a + 1;
+            elseif W(cur_k_tuple(i),diff(1)) == 1 && ...
+                   W(cur_k_tuple(i),diff(2)) == 1 && ...
+                   W(cur_k_tuple(i),diff(3)) == 0
+               b = b + 1;
+            elseif W(cur_k_tuple(i),diff(1)) == 1 && ...
+                   W(cur_k_tuple(i),diff(2)) == 0 && ...
+                   W(cur_k_tuple(i),diff(3)) == 1
+               c = c + 1;
+            elseif W(cur_k_tuple(i),diff(1)) == 1 && ...
+                   W(cur_k_tuple(i),diff(2)) == 0 && ...
+                   W(cur_k_tuple(i),diff(3)) == 0
+               d = d + 1;
+            elseif W(cur_k_tuple(i),diff(1)) == 0 && ...
+                   W(cur_k_tuple(i),diff(2)) == 1 && ...
+                   W(cur_k_tuple(i),diff(3)) == 1
+               e = e + 1;
+            elseif W(cur_k_tuple(i),diff(1)) == 0 && ...
+                   W(cur_k_tuple(i),diff(2)) == 1 && ...
+                   W(cur_k_tuple(i),diff(3)) == 0
+               f = f + 1;
+            elseif W(cur_k_tuple(i),diff(1)) == 0 && ...
+                   W(cur_k_tuple(i),diff(2)) == 0 && ...
+                   W(cur_k_tuple(i),diff(3)) == 1
+               g = g + 1;
+            else
+               h = h + 1;
             end
         end
-        y = W(diff(1),diff(2))*2 + W(diff(1),diff(3));
+        y = 2 * W(diff(1),diff(2)) + W(diff(1),diff(3));
         z = W(diff(2),diff(3));
         
         if opr == 'E'

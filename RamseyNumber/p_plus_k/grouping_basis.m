@@ -3,8 +3,6 @@
 %        basis -- basis of elements 
 %        map -- map from tuple to representative
 % Output: groups -- cell array of grouped bases
-%         basis -- basis of elements
-%         map -- map from tuple to representative
 function groups = grouping_basis(p,basis,map)
 % basis of tuples
 tuple_basis = basis;

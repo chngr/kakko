@@ -1,9 +1,5 @@
 % tuple_to_matrix(): generates normalized adjacency matrix from given 11-tuple
-% Input: tuple [x = 0/1, a, b, c, d, e, f, g, h, y{0-3}, z{0,1}] where
-%   x = 0/1 (blue or red K_p in upper left corner)
-%   (x,a,b,c,d,e,f,g,h,y,z) generated in valid_tuples() or mixed_tuples()
-%   y = 0/1 is (p+1,p+2)-th entry (red or blue edge between two separate
-%       vertices)
+% Input: tuple [x = 0/1, a, b, c, d, e, f, g, h, y \in {0-3}, z = 0/1]
 % Output: matrix of tuple
 function result = tuple_to_matrix(tuple)
 x = tuple(1); y = tuple(10); z = tuple(11);
@@ -67,7 +63,7 @@ for i = (bound_6+1):p
     matrix(i,p+3) = 0;
 end
 % set y,z value and make symmetric
-matrix(p+2,p+3) = mod(y,2);
+matrix(p+1,p+3) = mod(y,2);
 if y > 1
     matrix(p+1,p+2) = 1;
 else
