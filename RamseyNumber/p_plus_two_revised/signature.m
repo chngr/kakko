@@ -1,7 +1,8 @@
 % signature(): computes signature of Lie algebra
-% Input: killing_mat
-% Output: counts for positive, negative, and zero eigenvalues for 
-% matrix of Killing form
+% Input: killing_mat -- matrix of Killing form
+% Output: signature
+%         printed: counts for positive, negative, and zero eigenvalues for 
+%         matrix of Killing form
 function sig = signature(killing_mat)
 eigenvalues = eig(killing_mat);
 % count eigenvalue signs
