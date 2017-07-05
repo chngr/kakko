@@ -1,9 +1,3 @@
-% normalize_matrix(): transforms init_matrix into normalized basis form
-%                     (representative of isomorphism class)
-% Input: initial matrix
-% Output: normalized matrix in triangular form
-% NOTE: Tuple used for the K_p in upper left (if more than one exists in
-%       graph) is the first one that appears from gen_k_tuples() call.
 function result = normalize_matrix(init_mat)
 % find the K_p
 p = length(init_mat) - 2;
