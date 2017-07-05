@@ -7,11 +7,17 @@
 function [E,F] = grouping_to_mat(grouping,p,map)
 E = [];
 F = [];
+E_cell = {};
+F_cell = {};
 for i = 1:length(grouping)
     [E_sub,F_sub] = opr_in_sub(grouping{i},p,map);
     E = blkdiag(E,E_sub);
     F = blkdiag(F,F_sub);
+    E_cell{end+1} = E_sub;
+    F_cell{end+1} = F_sub;
 end
+celldisp(E_cell);
+celldisp(F_cell);
 end
 
 % opr_in_sub(): constructs matrix of E and F in each subgroup
