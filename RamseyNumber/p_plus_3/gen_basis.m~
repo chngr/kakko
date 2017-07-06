@@ -79,17 +79,11 @@ for i = 1:length(basis)
             y = 2 * cur_mat(tuple_diff(permute_indices{q}(1)),tuple_diff(permute_indices{q}(2))) + ...
                 cur_mat(tuple_diff(permute_indices{q}(1)),tuple_diff(permute_indices{q}(3)));
             z = cur_mat(tuple_diff(permute_indices{q}(2)),tuple_diff(permute_indices{q}(3)));
-            % add result tuple to alphabet_values (including every possible permutations)
             alphabet_values{end+1} = [x,a,b,c,d,e,f,g,h,y,z];
         end
     end
-    % alphabet_values contains all permutations of {p+1,p+2,p+3} and all selections of  K_p 
-    
-    % delete duplicates within alphabet_values 
-    alphabet_values_str = unique(cellfun(@mat2str,alphabet_values,'UniformOutput',false));
-    alphabet_values = cellfun(@eval,alphabet_values_str,'UniformOutput',false);
-    
-    % find representative tuple (from alphabet_values) by taking the "max"
+    % delete duplicates within alphabet_values (caused by permutatio)
+    % find representative tuple (from alphabet_values)
     rep_tuple = compare_tuples(alphabet_values);
     for j = 1:length(alphabet_values)
         tuple_map(mat2str(alphabet_values{j})) = rep_tuple;

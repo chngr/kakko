@@ -11,6 +11,12 @@ for i = 1:length(grouping)
     [E_sub,F_sub] = opr_in_sub(grouping{i},p,map);
     E = blkdiag(E,E_sub);
     F = blkdiag(F,F_sub);
+    fprintf('E\n')
+    assignin('base','E',E);
+    disp(length(E))
+    fprintf('\nF\n')
+    assignin('base','F',F);
+    disp(length(F))
 end
 end
 
