@@ -2,7 +2,7 @@
 % overall_function(): wrapper to compute dimension and signature
 % Input: p -- dimension of K_p
 % Output: dimension and signature of generated Lie algebra
-function [dim, sig] = overall_function(p)
+function [dim, sig, killing_mat, eigenvalues] = overall_function(p)
 % finds basis of unlabelled graphs with K_p
 [map,basis] = gen_basis(p);
 % finds groups after performing E and F repeatedly
@@ -16,7 +16,7 @@ gen_names = {'E','F'};
 % computes Killing form of generated Lie algebra
 killing_mat = killing_form(result_basis);
 % computes signature of generated Lie algebra
-sig = signature(killing_mat);
+[eigenvalues, sig] = signature(killing_mat);
 fprintf('dimension: %d\n', dim);
 fprintf('signature: %d\n', sig);
 end
