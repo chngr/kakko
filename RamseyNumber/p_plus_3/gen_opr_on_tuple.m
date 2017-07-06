@@ -7,11 +7,12 @@
 % Output: resulting tuple set after operation
 % NOTE: E turns monochromatic "1" to "0"
 %       F turns monochromatic "0" to "1"
-function unique_tuple_set = gen_opr_on_tuple(tuple,opr,p,r,map)
+function [unique_tuple_set,duplicate_tuple_set] = gen_opr_on_tuple(tuple,opr,p,r,map)
 W = tuple_to_matrix(tuple);
 % find set of all possible tuples
 k_tuples = gen_k_tuples(r,p);
 unique_tuple_set = {};
+duplicate_tuple_set = {};
 set_all = 1:r;
 % flag stores if operation changes graph (K_p found to switch)
 flag = false;
