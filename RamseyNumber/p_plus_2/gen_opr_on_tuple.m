@@ -13,6 +13,7 @@ W = tuple_to_matrix(tuple);
 % find set of all possible tuples
 k_tuples = gen_k_tuples(r,p); 
 unique_tuple_set = {};
+duplicate_tuple_set = {};
 set_all = 1:r;
 % flag stores if operation changes graph (K_p found to switch)
 flag = false;
@@ -22,7 +23,6 @@ for j = 1:length(k_tuples)
     % entering jth tuple
     flag = false;
     cur_k_tuple = k_tuples{j};
-    new_mat = W;
     % diff: vertices not in k_tuple
     diff = setdiff(set_all,cur_k_tuple);
     % error check
@@ -80,11 +80,10 @@ for j = 1:length(k_tuples)
         else
             temp_tuple = [1,a,b,c,d,e];
         end
-        unique_tuple_set{end+1} = map(mat2str(temp_tuple)); 
+        duplicate_tuple_set{end+1} = map(mat2str(temp_tuple)); 
     end
 end
-duplicate_tuple_set = unique_tuple_set;
 % Eleminate duplicates in unique_tuple_set (mat with same result)
-str = unique(cellfun(@mat2str, unique_tuple_set, 'UniformOutput',false));
+str = unique(cellfun(@mat2str,duplicate_tuple_set,'UniformOutput',false));
 unique_tuple_set = cellfun(@eval,str,'UniformOutput',false);
 end

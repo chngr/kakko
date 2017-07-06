@@ -55,12 +55,11 @@ end
 end
 
 % get_freq_in_result(): get frequency of tuple in result of operation
-% Input: tuple -- tuple to get frequency of
-%        dup_set -- set of duplicate tuples
-% Output: frequency
+% Input: 
+
 function freq = get_freq(tuple,dup_set)
 freq = 0;
-for i = 1:length(dup_set)
+for i = 1: length(dup_set)
     if isequal(tuple,dup_set{i})
         freq = freq + 1;
     end
