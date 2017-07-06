@@ -27,7 +27,8 @@ result = comp_list;
 end
 
 % parse_comp_data(): returns unique basis with elements having a K_p
-% Input: cell array of basis elements
+% Input: mat_list -- cell array of basis elements
+%        p -- dimension of K_p
 % Output: cell array of basis elements with a K_p
 function result = parse_comp_data(mat_list,p)
 tuple_list = gen_k_tuples(p+2,p);
