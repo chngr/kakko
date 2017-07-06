@@ -13,10 +13,12 @@ gen_mat = {E,F};
 gen_names = {'E','F'};
 % computes dimension and basis of generated Lie algebra 
 [dim,result_basis] = bracket_operation(gen_mat,gen_names);
+%{
 % computes Killing form of generated Lie algebra
 killing_mat = killing_form(result_basis);
 % computes signature of generated Lie algebra
 sig = signature(killing_mat);
 fprintf('dimension: %d\n', dim);
 fprintf('signature: %d\n', sig);
+%}
 end
