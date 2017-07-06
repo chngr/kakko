@@ -12,7 +12,7 @@ function [unique_tuple_set, duplicate_tuple_set] = gen_opr_on_tuple(tuple,opr,p,
 W = tuple_to_matrix(tuple);
 % find set of all possible tuples
 k_tuples = gen_k_tuples(r,p); 
-result_tuple_set = {};
+unique_tuple_set = {};
 set_all = 1:r;
 % flag stores if operation changes graph (K_p found to switch)
 flag = false;
@@ -32,8 +32,6 @@ for j = 1:length(k_tuples)
     end
     
     % --------------- Do Operation (flip K_p) ---------------
-    % init new_tuple, inversed triangle in upper
-    new_tuple = tuple;
     
     % --------------- Check k-tuple same color ---------------
     sum = 0;
@@ -82,11 +80,11 @@ for j = 1:length(k_tuples)
         else
             temp_tuple = [1,a,b,c,d,e];
         end
-        result_tuple_set{end+1} = map(mat2str(temp_tuple)); 
+        unique_tuple_set{end+1} = map(mat2str(temp_tuple)); 
     end
 end
-duplicate_tuple_set = result_tuple_set;
-% Eleminate duplicates in result_tuple_set (mat with same result)
-str = unique(cellfun(@mat2str, result_tuple_set, 'UniformOutput',false));
+duplicate_tuple_set = unique_tuple_set;
+% Eleminate duplicates in unique_tuple_set (mat with same result)
+str = unique(cellfun(@mat2str, unique_tuple_set, 'UniformOutput',false));
 unique_tuple_set = cellfun(@eval,str,'UniformOutput',false);
 end
