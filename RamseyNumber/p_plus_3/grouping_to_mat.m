@@ -7,16 +7,16 @@
 function [E,F] = grouping_to_mat(grouping,p,map)
 E = [];
 F = [];
+E_cell = {};
+F_cell = {};
 for i = 1:length(grouping)
     [E_sub,F_sub] = opr_in_sub(grouping{i},p,map);
     E = blkdiag(E,E_sub);
     F = blkdiag(F,F_sub);
-    fprintf('E\n')
-    assignin('base','E',E);
-    disp(length(E))
-    fprintf('\nF\n')
-    assignin('base','F',F);
-    disp(length(F))
+    E_cell{end+1} = E_sub;
+    F_cell{end+1} = F_sub;
+    assignin('base','E_cell',E_cell);
+    assignin('base','F_cell',F_cell);
 end
 end
 
@@ -31,15 +31,15 @@ F_sub = zeros(length(group));
 for i = 1:length(group)
     % ith element in group
     cur_tuple = group{i};
-    E_result_arr = gen_opr_on_tuple(cur_tuple,'E',p,p+3,map);
-    F_result_arr = gen_opr_on_tuple(cur_tuple,'F',p,p+3,map);
-    for j = 1:length(E_result_arr)
-        result_index = get_index_in_group(E_result_arr{j},group);
-        E_sub(result_index,i) = 1;
+    [E_result_uniq, E_result_dup] = gen_opr_on_tuple(cur_tuple,'E',p,p+3,map);
+    [F_result_uniq, F_result_dup] = gen_opr_on_tuple(cur_tuple,'F',p,p+3,map);
+    for j = 1:length(E_result_uniq)
+        result_index = get_index_in_group(E_result_uniq{j},group);
+        E_sub(result_index,i) = get_freq(E_result_uniq{j},E_result_dup);
     end
-    for j = 1:length(F_result_arr)
-        result_index = get_index_in_group(F_result_arr{j},group);
-        F_sub(result_index,i) = 1;
+    for j = 1:length(F_result_uniq)
+        result_index = get_index_in_group(F_result_uniq{j},group);
+        F_sub(result_index,i) = get_freq(F_result_uniq{j},F_result_dup);
     end
 end
 end
@@ -53,6 +53,16 @@ for i = 1:length(group)
     if isequal(tuple,group{i})
         index = i;
         break;
+    end
+end
+end
+
+% get_freq(): get frequence of tuple in result of operation
+function freq = get_freq(tuple,dup_set)
+freq = 0;
+for i = 1: length(dup_set)
+    if isequal(tuple,dup_set{i})
+        freq = freq + 1;
     end
 end
 end
