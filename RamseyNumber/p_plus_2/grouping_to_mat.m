@@ -7,8 +7,6 @@
 function [E,F] = grouping_to_mat(grouping,p,map)
 E = [];
 F = [];
-E_test = [];
-F_test = [];
 comp_col = {};
 for i = 1:length(grouping)
     [E_sub,F_sub] = opr_in_sub(grouping{i},p,map);
@@ -19,16 +17,11 @@ for i = 1:length(grouping)
         end
     end
     if present == false
+        comp_col{end+1} = [E_sub,F_sub];
         E = blkdiag(E,E_sub);
         F = blkdiag(F,F_sub);
     end
-    E_test = blkdiag(E_test,E_sub);
-    F_test = blkdiag(F_test,F_sub);
 end
-assignin('base','E',E);
-assignin('base','F',F);
-assignin('base','E_test',E_test);
-assignin('base','F_test',F_test);
 end
 
 % opr_in_sub(): constructs matrix of E and F in each subgroup
