@@ -7,53 +7,18 @@
 function [E,F] = grouping_to_mat(grouping,p,map)
 E = [];
 F = [];
-E_F = {};
 E_cell = {};
 F_cell = {};
-E_test = [];
-F_test = [];
-comp_col = {};
 for i = 1:length(grouping)
     [E_sub,F_sub] = opr_in_sub(grouping{i},p,map);
-    present = false;
-    for j = 1:length(comp_col)
-        if isequal([E_sub,F_sub],comp_col{j})
-            present = true;
-        end
-    end
-    if present == false
-        E = blkdiag(E,E_sub);
-        F = blkdiag(F,F_sub);
-    end
+    E = blkdiag(E,E_sub);
+    F = blkdiag(F,F_sub);
     E_cell{end+1} = E_sub;
     F_cell{end+1} = F_sub;
-    E_test = blkdiag(E_test,E_sub);
-    F_test = blkdiag(F_test,F_sub);
 end
 assignin('base','E_cell',E_cell);
 assignin('base','F_cell',F_cell);
-assignin('base','comp_col', comp_col);
 end
-
-%{
-E_F_combo = {}; % each element is a cell array (pair) of sub_E and sub_F
-% and elemenate duplicates from the set
-E_cell = {};
-F_cell = {};
-% E_cell and F_cell shares same indexing
-for i = 1:length(grouping)
-    [E_sub,F_sub] = opr_in_sub(grouping{i},p,map);
-    E_cell{end+1} = E_sub;
-    F_cell{end+1} = F_sub;
-    E_F{end+1} = blkdiag(E_sub,F_sub);
-end
-% eleminate duplicate blocks of E and F
-E_F_str = unique(cellfun(@mat2str, E_F, 'UniformOutput',false));
-E_F = cellfun(@eval,E_F_str,'UniformOutput',false);
-assignin('base','E_cell',E_cell);
-assignin('base','F_cell',F_cell);
-assignin('base','E_F', E_F);
-%}
 
 % opr_in_sub(): constructs matrix of E and F in each subgroup
 % Input: group -- subgroup to construct matrix of
