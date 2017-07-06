@@ -1,33 +1,35 @@
 % grouping_to_mat(): constructs large E and F matrices (generators for
 %                    space)
-% Input: grouping -- cell array of groups of basis
+% Input: grouping -- cell array of groups of basis 
 %        p -- dimension of K_p
 %        map -- map from tuple to its representative
-% Output: E, F -- matrices representing E and F on the bases
+% Output: E, F -- matrices representing E and F on the bases 
 function [E,F] = grouping_to_mat(grouping,p,map)
 E = [];
 F = [];
-E_F = {};
-E_test = [];
-F_test = [];
-comp_col = {};
+E_F_combo = [];
+E_cell = {};
+F_cell = {};
+% E_cell and F_cell shares same indexing
 for i = 1:length(grouping)
     [E_sub,F_sub] = opr_in_sub(grouping{i},p,map);
-    present = false;
-    for j = 1:length(comp_col)
-        comp_col{end+1} = [E_sub,F_sub];
-        if isequal([E_sub,F_sub],comp_col{j})
-            present = true;
-        end
-    end
-    if present == false
-        E = blkdiag(E,E_sub);
-        F = blkdiag(F,F_sub);
-    end
-    E_test = blkdiag(E_test,E_sub);
-    F_test = blkdiag(F_test,F_sub);
+    E = blkdiag(E,E_sub);
+    F = blkdiag(F,F_sub);
+    E_cell{end+1} = E_sub;
+    F_cell{end+1} = F_sub;
+    assignin('base','E_cell',E_cell);
+    assignin('base','F_cell',F_cell);
 end
 end
+
+%{
+E_cell_str = unique(cellfun(@mat2str, E_cell, 'UniformOutput',false));
+E_cell_uniq = cellfun(@eval,E_cell_str,'UniformOutput',false);
+F_cell_str = unique(cellfun(@mat2str, F_cell, 'UniformOutput',false));
+F_cell_uniq = cellfun(@eval,F_cell_str,'UniformOutput',false);
+assignin('base','E_cell_uniq',E_cell_uniq);
+assignin('base','F_cell_uniq',F_cell_uniq);
+%}
 
 % opr_in_sub(): constructs matrix of E and F in each subgroup
 % Input: group -- subgroup to construct matrix of
