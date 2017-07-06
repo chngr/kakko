@@ -2,12 +2,17 @@
 % lies in span of previously computed collection
 % Input: dimension of space p 
 % Output: dimension (number of independent matrices)
+% NOTE: For case rho_{p+1}(a_p)
 function dimension = ind_bracket(p)
-E_0 = [0, ones(1,p+1) ; zeros(p+1,p+2)];
-E_1 = [0 1 1; 0 0 0 ; 0 0 0];
-E_2 = [0 1; 0 0];
+E_0 = [0 1; 0 0];
+E_1 = [0 2; 0 0];
+E_2 = [0 (p+1); 0 0];
+
+F_0 = [0 0; 1 0];
+
 E = blkdiag(E_0,E_1,E_2);
-F = E';
+F = blkdiag(F_0,F_0,F_0);
+
 vector_list = cell(0);
 % old_list stores old group
 old_list = cell(0);
