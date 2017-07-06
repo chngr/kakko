@@ -1,4 +1,4 @@
-% gen_opr_on_tuple(): function to apply E_p and F_p to a graph
+% gen_opr_on_tuple(): function to apply E_p and F_p
 % Input: tuple -- represents graph
 %        opr -- 'E' or 'F' (string)
 %        p -- dimension of K_p

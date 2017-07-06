@@ -2,7 +2,7 @@
 %                    space)
 % Input: grouping -- cell array of groups of basis 
 %        p -- dimension of K_p
-%        map -- map from tuple to its representative
+%        map -- map from tuple to its representative tuple
 % Output: E, F -- matrices representing E and F on the bases 
 function [E,F] = grouping_to_mat(grouping,p,map)
 E = [];

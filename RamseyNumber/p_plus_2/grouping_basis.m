@@ -1,7 +1,7 @@
 % grouping_basis(): grouping basis by operations of E and F
 % Input: p -- dimension of K_p
 %        basis -- basis of elements 
-%        map -- map from tuple to representative
+%        map -- map from tuple to representative tuple
 % Output: groups -- cell array of grouped bases
 function groups = grouping_basis(p,basis,map)
 % basis of tuples
