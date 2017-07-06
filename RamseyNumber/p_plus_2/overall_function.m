@@ -1,6 +1,7 @@
+% -- FOR P+2 --
 % overall_function(): wrapper to compute dimension and signature
 % Input: p -- dimension of K_p
-% Output: dimension, signature, and Cartan matrix of Lie algebra
+% Output: dimension and signature of generated Lie algebra
 function [dim, sig] = overall_function(p)
 % finds basis of unlabelled graphs with K_p
 [map,basis] = gen_basis(p);
