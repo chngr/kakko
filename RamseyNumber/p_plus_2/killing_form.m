@@ -2,7 +2,6 @@
 % Input: basis for rho_{p+r}(a_p) (general)
 % Output: matrix of Killing form
 function result = killing_form(basis)
-digits(100);
 killing_mat = zeros(length(basis));
 % create basis matrix with column vectors as basis elements
 basis_mat = [];
@@ -16,7 +15,7 @@ for i = 1:length(basis)
     for j = 1:length(basis)
       bracket_mat = bracket(basis{i},basis{j});
       % solve basis_mat [x] = bracket_mat to find coordinates wrt basis
-      coord = vpa(basis_mat\(bracket_mat(:)));
+      coord = basis_mat\(bracket_mat(:));
       adj_mat = [adj_mat, coord];
     end
     adj_group{end+1} = adj_mat;
@@ -24,7 +23,7 @@ end
 % create matrix for Killing form
 for i = 1:length(adj_group)
     for j = 1:length(adj_group)
-        killing_mat(i,j) = vpa(trace(vpa(adj_group{i} * adj_group{j})));
+        killing_mat(i,j) = trace(adj_group{i} * adj_group{j});
     end
 end
 result = killing_mat;

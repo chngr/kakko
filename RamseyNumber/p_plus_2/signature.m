@@ -4,8 +4,7 @@
 %         printed: counts for positive, negative, and zero eigenvalues for 
 %         matrix of Killing form
 function [eigenvalues, sig] = signature(killing_mat)
-digits(100);
-eigenvalues = vpa(eig(killing_mat));
+eigenvalues = eig(killing_mat);
 % count eigenvalue signs
 pos_count = 0; zero_count = 0; neg_count = 0;
 for i = 1:length(eigenvalues)

@@ -1,3 +1,5 @@
+from sys import argv
+
 # bracket(): bracket operator
 # Input: Sage matrices A and B
 # Output: Lie bracket [A,B]
@@ -21,7 +23,6 @@ def adjoint_rep(basis):
         mat_list = []
         for right in basis:
             bracket_vec = vector(bracket(left,right).transpose().list())
-            print(bracket_vec)
             coords = vs.coordinates(bracket_vec)
             mat_list.append(coords)
         new_mat = matrix(mat_list).transpose()
@@ -40,7 +41,7 @@ def killing_form(ad):
 # Output: signature
 #         printed: counts for positive, negative, and zero eigenvalues for 
 #         matrix of Killing form
-def signature(killing_mat):
+def signature(killing_mat)
     eig_vec = killing_mat.eigenvalues()
     pos_count = 0
     zero_count = 0
@@ -58,16 +59,14 @@ def signature(killing_mat):
     print("Zero eigenvalue count: %d"%zero_count)
     print("Signature: %d"%sig)
 
-file_name = "basis.txt"
+file_name = argv[1];
 with open(file_name, 'r') as f:
     data = f.read().replace('\n', '')
 
-print(data)
-mat_list = eval(data)
+mat_list = exec(data)
 basis_list = []
-for i in range(len(mat_list)):
+for i in range(len(mat_list))
     cur_mat = matrix(mat_list[i])
-    print(cur_mat)
     basis_list.append(cur_mat)
 ad = adjoint_rep(basis_list)
 kil = killing_form(ad)
