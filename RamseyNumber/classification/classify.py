@@ -24,7 +24,7 @@ def bracket_operation(gen_mat,gen_names):
         new_list.append(generator) 
     # initialize name_new_list
     name_new_list = [] 
-    for name in gen_name:
+    for name in gen_names:
         name_new_list.append(name) 
 
     # loop until no new independent elements generated
@@ -63,10 +63,9 @@ def bracket_operation(gen_mat,gen_names):
         # if temp_list is empty, independent basis generated
         if len(temp_list) == 0:
             dim = len(old_list)
-            print("number of independent matrices: %d", dim)
+            print("number of independent matrices: %d" % dim)
             result_basis = old_list
-
-    return result_basis
+            return result_basis
 
 # in_span(): checks whether matrix entry is in the span of
 # the matrices in list
@@ -141,9 +140,8 @@ with open(file_name, 'r') as f:
     data = f.read().replace('\n', '')
 # read in generator list {E,F}
 gen_list = eval(data)
-# gen_names = ['E','F']
-# basis_list = bracket_operation(gen_list)
-basis_list = []
+gen_names = ['E','F']
+basis_list = bracket_operation(gen_list,gen_names)
 for i in range(len(gen_list)):
     cur_mat = matrix(QQ,gen_list[i])
     basis_list.append(cur_mat)
