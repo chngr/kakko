@@ -14,15 +14,15 @@ def adjoint_rep(basis):
     basis_vec = []
     ad = []
     for b in basis:
-        basis_vec.append(b.transpose().list())
-    basis_matrix = matrix([b for b in basis_vec]).transpose()
+        basis_vec.append(b.list())
+    basis_matrix = matrix([b for b in basis_vec])
     F = QQ
     dim = len(basis_vec[0])
     vs = (F**dim).span_of_basis(basis_vec) 
     for left in basis:
         mat_list = []
         for right in basis:
-            bracket_vec = vector(bracket(left,right).transpose().list())
+            bracket_vec = vector(bracket(left,right).list())
             coords = vs.coordinates(bracket_vec)
             mat_list.append(coords)
         new_mat = matrix(mat_list).transpose()
@@ -33,7 +33,7 @@ def adjoint_rep(basis):
 # Input: basis for rho_{p+r}(a_p) (general)
 # Output: matrix of Killing form
 def killing_form(ad):
-    killing_form = matrix([[(g * h).trace() for h in ad] for g in ad])
+    killing_form = matrix([[(general * h).trace() for h in ad] for g in ad])
     return killing_form
 
 # signature(): computes signature of Lie algebra
