@@ -1,0 +1,23 @@
+% basis_2_txt(basis)
+% input: basis(cell array of basis matrices)
+% Writes basis to .txt file
+
+function basis_2_txt(basis)
+format long
+fid = fopen('basis.txt','w');
+fprintf(fid,'[');
+for i = 1:length(basis) % loop through elements in basis
+    fprintf(fid,'[');
+    for j = 1: length(basis{i}) % loop through rows of basis
+        fprintf(fid,'[');
+        cur_row = basis{i}(j,:);
+        for k = 1: length(cur_row) % loop through each entry in cur_row
+            fprintf(fid, '%d',cur_row(k));
+            if k ~= length(cur_row)
+            fprintf(fid, ', ');
+        end
+    end
+end
+fprintf(fid,']');
+fclose(fid);
+end
