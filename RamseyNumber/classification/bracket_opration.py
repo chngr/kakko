@@ -24,7 +24,7 @@ def bracket_operation(gen_mat,gen_names)
 				name_new_entry = name_bracket(name_new_list[i],name_new_list[j]) 
 
 				# if not in span of previous elements
-				if !in_span((old_list + new_list + temp_list), new_entry):
+				if !in_span(old_list + new_list + temp_list, new_entry):
 					# add new entry
 					temp_list.append(new_entry) 
 					name_temp_list.append(name_new_entry) 
@@ -36,7 +36,7 @@ def bracket_operation(gen_mat,gen_names)
 				name_new_entry = name_bracket(name_old_list[i], name_new_list[j]) 
 				
 				# if not in span of previous elements
-				if !in_span((old_list + new_list + temp_list), new_entry):
+				if !in_span(old_list + new_list + temp_list, new_entry):
 					# add new entry
 					temp_list.append(new_entry)
 					name_temp_list.append(name_new_entry)
