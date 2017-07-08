@@ -13,8 +13,9 @@ def name_bracket(A,B):
     return "[" + A + "," + B + "]"
 
 # bracket_operation(): compute basis from generators
-# input: gen_mat: generator matrices
-# Output: basis of lie algebra generated
+# Input: gen_mat -- Sage generator matrices (list)
+#        gen_names -- string names of generator matrices (list)
+# Output: basis of Lie algebra generated
 def bracket_operation(gen_mat,gen_names):
     # initialization
     old_list = [] 
@@ -32,8 +33,8 @@ def bracket_operation(gen_mat,gen_names):
         temp_list = [] 
         name_temp_list = [] 
         # take pairwise brackets for all elements in new_list
-        for i in range(len(new_list)-1):
-            for j in range(i+1,len(new_list)-1):
+        for i in range(len(new_list)):
+            for j in range(i+1,len(new_list)):
                 new_entry = bracket(new_list[i],new_list[j]) 
                 name_new_entry = name_bracket(name_new_list[i],name_new_list[j]) 
 
@@ -44,8 +45,8 @@ def bracket_operation(gen_mat,gen_names):
                     name_temp_list.append(name_new_entry) 
 
         # take pairwise brackets of old_list and new_list
-        for i in range(len(old_list)-1):
-            for j in range(len(new_list)-1):
+        for i in range(len(old_list)):
+            for j in range(len(new_list)):
                 new_entry = bracket(old_list[i], new_list[j]) 
                 name_new_entry = name_bracket(name_old_list[i], name_new_list[j]) 
                 
@@ -60,10 +61,11 @@ def bracket_operation(gen_mat,gen_names):
         new_list = temp_list
         name_old_list = name_old_list + name_new_list
         name_new_list = name_temp_list
+        print("Number of basis vectors: %d"%len(old_list))
         # if temp_list is empty, independent basis generated
         if len(temp_list) == 0:
             dim = len(old_list)
-            print("number of independent matrices: %d" % dim)
+            print("Number of independent matrices: %d" % dim)
             result_basis = old_list
             return result_basis
 
@@ -97,7 +99,6 @@ def adjoint_rep(basis):
         mat_list = []
         for right in basis:
             bracket_vec = vector(QQ,bracket(left,right).list())
-            print(bracket_vec)
             coords = vs.coordinates(bracket_vec)
             mat_list.append(coords)
         new_mat = matrix(mat_list).transpose()
@@ -114,7 +115,7 @@ def killing_form(ad):
 # signature(): computes signature of Lie algebra
 # Input: killing_mat -- matrix of Killing form
 # Output: signature
-#         printed: counts for positive, negative, and zero eigenvalues for 
+#         printed -- counts for positive, negative, and zero eigenvalues for 
 #         matrix of Killing form
 def signature(killing_mat):
     eig_vec = killing_mat.eigenvalues()
@@ -140,11 +141,11 @@ with open(file_name, 'r') as f:
     data = f.read().replace('\n', '')
 # read in generator list {E,F}
 gen_list = eval(data)
-gen_names = ['E','F']
-basis_list = bracket_operation(gen_list,gen_names)
+mat_list = [];
 for i in range(len(gen_list)):
-    cur_mat = matrix(QQ,gen_list[i])
-    basis_list.append(cur_mat)
+    mat_list.append(matrix(QQ,gen_list[i]))
+gen_names = ['E','F']
+basis_list = bracket_operation(mat_list,gen_names)
 # compute adjoint rep, Killing form, and signature
 ad = adjoint_rep(basis_list)
 kil = killing_form(ad)
