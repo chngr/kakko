@@ -1,3 +1,5 @@
+from math import *
+
 # CLASSIFY.PY
 
 # bracket(): bracket operator
@@ -136,9 +138,13 @@ def signature(killing_mat):
     print("Negative eigenvalue count: %d"%neg_count)
     print("Zero eigenvalue count: %d"%zero_count)
     print("Signature: %d"%sig)
+    return eig_vec
 
-# classify_alg(): classifies Lie algebra given 
-def classify_alg(dim, sig):
+# center(): computes center of Lie algebra
+# Input: adjoint representation matrices
+# Output: center 
+def center(adjoint):
+    pass
 
 # read in text file
 file_name = "basis.txt"
@@ -151,7 +157,14 @@ for i in range(len(gen_list)):
     mat_list.append(matrix(QQ,gen_list[i]))
 gen_names = ['E','F']
 basis_list = bracket_operation(mat_list,gen_names)
+# check what commutes
+for i in range(len(basis_list)):
+    if bracket(E,basis_list[i]) == matrix(E.ncols()) and \
+    bracket(F,basis_list[i]) == matrix(F.ncols()):
+        print(basis_list[i])
+print('Reached -- above values are those that commute with E and F')
 # compute adjoint rep, Killing form, and signature
 ad = adjoint_rep(basis_list)
 kil = killing_form(ad)
-sig = signature(kil)
+eig_vec = signature(kil)
+print(eig_vec)
