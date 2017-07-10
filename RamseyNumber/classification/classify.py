@@ -158,14 +158,54 @@ def get_tuples(dim, list_len):
     max_val = floor(dim/3)
     test_list = []
     if list_len > 1:
-        result_list = tuple_helper(get_tuples(max_val,N-1),max_val)
+        result_list = tuple_helper(get_tuples(max_val,list_len-1),max_val)
     else:
-        for i 
+        for i in range(max_val+1):
+            test_list[i] = [i]
+        result_list = test_list
+        return result_list
+
+def tuple_helper(old_list, max_val):
+    new_list = []
+    for i in range(len(old_list)):
+        cur_tuple = old_list[i]
+        for j in range(max_val+1):
+            new_cur_tuple = cur_tuple.append(j)
+            new_list.append(new_cur_tuple)
 
 
 # classify_alg(): classifies Lie algebra given dim and sig 
 # solve recursively
-def classify_alg(dim, sig, coef):
+def classify_alg(dim, sig):
+    solution_list = []
+    dim_list = []
+    sig_list = []
+    excep_dim = [14,56,78,133,248]
+    max_len = floor((1 + sqrt(1+8*dim))/2)
+    list_len = 3*max_len + 5
+    tuple_list = get_tuples(dim,list_len)
+
+    for i in range(max_len): # init 20 elements of signature 
+        # start from 2
+        sig_list[i] = i+2
+        dim_list[i] = (i+2) * (i+2) - 1
+        # start from 3
+    for i in range(max_len):
+        sig_list[max_len+i] = -(i+3)
+        dim_list[max_len+i] = (i+3)*(i+3-1)/2
+        # start from 3
+    for i in range(max_len):
+        sig_list[2*max_len+i] = i
+        dim_list[2*max_len+i] = 2*(i+3)*(i+3)+i
+    sig_list = sig_list + 
+    dim_list = dim_list + excep_dim
+
+    for k in range(len(tuple_list)):
+        cur_dim = sum([i*j for (i,j) in zip(tuple_list, dim_list)])
+        cur_sig = sum([i*j for (i,j) in zip(tuple_list, sig_list)])
+        if cur_dim == dim and cur_sig == sig:
+            solution_list.append(tuple_list[k])
+    return solution_list
 
 
 
