@@ -10,6 +10,9 @@ groups = grouping_basis(p,basis,map);
 % converts to operator matrices E and F
 [E,F] = grouping_to_mat(groups,p,map);
 gen_mat = {E,F};
+% Write result_basis to .txt file
+basis_2_txt({E,F});
+disp('Finished writing to .txt')
 gen_names = {'E','F'};
 % computes dimension and basis of generated Lie algebra 
 [dim,result_basis] = bracket_operation(gen_mat,gen_names);

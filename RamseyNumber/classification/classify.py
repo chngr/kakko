@@ -115,7 +115,7 @@ def killing_form(ad):
 # signature(): computes signature of Lie algebra
 # Input: killing_mat -- matrix of Killing form
 # Output: signature
-#         printed -- counts for positive, negative, and zero eigenvalues for 
+#         printed: counts for positive, negative, and zero eigenvalues for 
 #         matrix of Killing form
 def signature(killing_mat):
     eig_vec = killing_mat.eigenvalues()
