@@ -43,6 +43,7 @@ def bracket_operation(gen_mat,gen_names):
                     # add new entry
                     temp_list.append(new_entry) 
                     name_temp_list.append(name_new_entry) 
+                    print(name_new_entry)
 
         # take pairwise brackets of old_list and new_list
         for i in range(len(old_list)):
@@ -55,6 +56,7 @@ def bracket_operation(gen_mat,gen_names):
                     # add new entry
                     temp_list.append(new_entry)
                     name_temp_list.append(name_new_entry)
+                    print(name_new_entry)
 
         # update lists for new iteration of loop
         old_list = old_list + new_list
@@ -134,6 +136,9 @@ def signature(killing_mat):
     print("Negative eigenvalue count: %d"%neg_count)
     print("Zero eigenvalue count: %d"%zero_count)
     print("Signature: %d"%sig)
+
+# classify_alg(): classifies Lie algebra given 
+def classify_alg(dim, sig):
 
 # read in text file
 file_name = "basis.txt"
