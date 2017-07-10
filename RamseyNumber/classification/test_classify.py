@@ -79,11 +79,11 @@ def bracket_operation(gen_mat,gen_names):
 # Output: boolean true if in span, false otherwise
 def in_span(in_list, entry):
     col_len = (in_list[0].ncols())**2
-    comp_mat = matrix(QQ,col_len,0)
+    comp_mat = matrix(col_len,0)
     for i in range(len(in_list)):
-        cur_mat = vector(QQ,in_list[i].transpose().list())
+        cur_mat = vector(in_list[i].transpose().list())
         comp_mat = comp_mat.augment(cur_mat)
-    entry_vec = vector(QQ,entry.transpose().list())
+    entry_vec = vector(entry.transpose().list())
     comp_mat = comp_mat.augment(entry_vec)
     return rank(comp_mat) != comp_mat.ncols()
 
@@ -105,7 +105,7 @@ def adjoint_rep(basis):
             bracket_vec = vector(QQ,bracket(left,right).list())
             coords = vs.coordinates(bracket_vec)
             mat_list.append(coords)
-        new_mat = matrix(QQ,mat_list).transpose()
+        new_mat = matrix(mat_list).transpose()
         ad.append(new_mat)
     return ad
 
@@ -113,8 +113,7 @@ def adjoint_rep(basis):
 # Input: basis for rho_{p+r}(a_p) (general)
 # Output: matrix of Killing form
 def killing_form(ad):
-    killing_form = matrix(QQ,[[(g * h).trace() for h in ad] for g in ad])
-    print(killing_form)
+    killing_form = matrix([[(g * h).trace() for h in ad] for g in ad])
     return killing_form
 
 # signature(): computes signature of Lie algebra
@@ -123,7 +122,7 @@ def killing_form(ad):
 #         printed: counts for positive, negative, and zero eigenvalues for 
 #         matrix of Killing form
 def signature(killing_mat):
-    eig_vec = killing_mat.jordan_form().diagonal()
+    eig_vec = killing_mat.eigenvalues()
     pos_count = 0
     zero_count = 0
     neg_count = 0
@@ -141,33 +140,11 @@ def signature(killing_mat):
     print("Signature: %d"%sig)
     return eig_vec
 
-'''
 # center(): computes center of Lie algebra
 # Input: adjoint representation matrices
 # Output: center 
-def center(adj):
-    big_ad_col = []
-    for i in range(len(adj))
-        cur_mat = adj[i]
-        big_ad_col.append(cur_mat.transpose.list())
-    return big_ad.kernel().dim() 
-'''
-
-# list of tuples 
-def get_tuples(dim, list_len):
-    max_val = floor(dim/3)
-    test_list = []
-    if list_len > 1:
-        result_list = tuple_helper(get_tuples(max_val,N-1),max_val)
-    else:
-        for i 
-
-
-# classify_alg(): classifies Lie algebra given dim and sig 
-# solve recursively
-def classify_alg(dim, sig, coef):
-
-
+def center(adjoint):
+    pass
 
 # read in text file
 file_name = "basis.txt"
@@ -178,6 +155,8 @@ gen_list = eval(data)
 mat_list = [];
 for i in range(len(gen_list)):
     mat_list.append(matrix(QQ,gen_list[i]))
+E = mat_list[0]
+F = mat_list[1]
 gen_names = ['E','F']
 basis_list = bracket_operation(mat_list,gen_names)
 # check what commutes
