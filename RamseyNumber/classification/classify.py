@@ -79,11 +79,11 @@ def bracket_operation(gen_mat,gen_names):
 # Output: boolean true if in span, false otherwise
 def in_span(in_list, entry):
     col_len = (in_list[0].ncols())**2
-    comp_mat = matrix(col_len,0)
+    comp_mat = matrix(QQ,col_len,0)
     for i in range(len(in_list)):
-        cur_mat = vector(in_list[i].transpose().list())
+        cur_mat = vector(QQ,in_list[i].transpose().list())
         comp_mat = comp_mat.augment(cur_mat)
-    entry_vec = vector(entry.transpose().list())
+    entry_vec = vector(QQ,entry.transpose().list())
     comp_mat = comp_mat.augment(entry_vec)
     return rank(comp_mat) != comp_mat.ncols()
 
@@ -105,7 +105,7 @@ def adjoint_rep(basis):
             bracket_vec = vector(QQ,bracket(left,right).list())
             coords = vs.coordinates(bracket_vec)
             mat_list.append(coords)
-        new_mat = matrix(mat_list).transpose()
+        new_mat = matrix(QQ,mat_list).transpose()
         ad.append(new_mat)
     return ad
 
@@ -113,7 +113,7 @@ def adjoint_rep(basis):
 # Input: basis for rho_{p+r}(a_p) (general)
 # Output: matrix of Killing form
 def killing_form(ad):
-    killing_form = matrix([[(g * h).trace() for h in ad] for g in ad])
+    killing_form = matrix(QQ,[[(g * h).trace() for h in ad] for g in ad])
     return killing_form
 
 # signature(): computes signature of Lie algebra
@@ -140,11 +140,17 @@ def signature(killing_mat):
     print("Signature: %d"%sig)
     return eig_vec
 
+'''
 # center(): computes center of Lie algebra
 # Input: adjoint representation matrices
 # Output: center 
-def center(adjoint):
-    pass
+def center(adj):
+    big_ad_col = []
+    for i in range(len(adj))
+        cur_mat = adj[i]
+        big_ad_col.append(cur_mat.transpose.list())
+    return big_ad.kernel().dim() 
+'''
 
 # read in text file
 file_name = "basis.txt"
