@@ -17,7 +17,7 @@ gen_names = {'E','F'};
 % computes dimension and basis of generated Lie algebra 
 [dim,result_basis] = bracket_operation(gen_mat,gen_names);
 %output all basis to txt file
-basis_2_txt(result_basis,'basis.txt')
+
 % computes Killing form of generated Lie algebra
 killing_mat = killing_form(result_basis);
 basis_2_txt({killing_mat},'killing.txt')

@@ -1,9 +1,9 @@
 % basis_2_txt(basis)
 % Input: basis -- cell array of basis matrices (e.g. E and F)
 % Output: writes basis to .txt file
-function basis_2_txt(basis)
+function basis_2_txt(basis, txt_name)
 format long
-fid = fopen('basis.txt','w');
+fid = fopen(txt_name,'w');
 fprintf(fid,'[');
 for i = 1:length(basis) % loop through elements in basis
     if i ~=1
