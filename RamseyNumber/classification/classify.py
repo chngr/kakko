@@ -219,8 +219,6 @@ def print_2_txt(mat):
 
 # MAIN SCRIPT
 
-print(classify_alg(8,2))
-'''
 # read in text file
 file_name = "basis.txt"
 with open(file_name, 'r') as f:
@@ -246,4 +244,3 @@ kil = killing_form(ad)
 eig_vec = signature(kil)
 print(eig_vec)
 print_2_txt(kil)
-'''
