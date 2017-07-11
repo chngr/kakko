@@ -1,6 +1,6 @@
-from math import *
-
 # CLASSIFY.PY
+
+from math import *
 
 # bracket(): bracket operator
 # Input: Sage matrices A and B
@@ -29,7 +29,6 @@ def bracket_operation(gen_mat,gen_names):
     name_new_list = [] 
     for name in gen_names:
         name_new_list.append(name) 
-
     # loop until no new independent elements generated
     while True:
         temp_list = [] 
@@ -39,39 +38,33 @@ def bracket_operation(gen_mat,gen_names):
             for j in range(i+1,len(new_list)):
                 new_entry = bracket(new_list[i],new_list[j]) 
                 name_new_entry = name_bracket(name_new_list[i],name_new_list[j]) 
-
                 # if not in span of previous elements
                 if not in_span(old_list + new_list + temp_list, new_entry):
                     # add new entry
                     temp_list.append(new_entry) 
                     name_temp_list.append(name_new_entry) 
                     print(name_new_entry)
-
         # take pairwise brackets of old_list and new_list
         for i in range(len(old_list)):
             for j in range(len(new_list)):
                 new_entry = bracket(old_list[i], new_list[j]) 
-                name_new_entry = name_bracket(name_old_list[i], name_new_list[j]) 
-                
+                name_new_entry = name_bracket(name_old_list[i], name_new_list[j])          
                 # if not in span of previous elements
                 if not in_span(old_list + new_list + temp_list, new_entry):
                     # add new entry
                     temp_list.append(new_entry)
                     name_temp_list.append(name_new_entry)
                     print(name_new_entry)
-
         # update lists for new iteration of loop
         old_list = old_list + new_list
         new_list = temp_list
         name_old_list = name_old_list + name_new_list
         name_new_list = name_temp_list
-        print("Number of basis vectors: %d"%len(old_list))
         # if temp_list is empty, independent basis generated
         if len(temp_list) == 0:
             dim = len(old_list)
             print("Number of independent matrices: %d" % dim)
-            result_basis = old_list
-            return result_basis
+            return old_list
 
 # in_span(): checks whether matrix entry is in the span of
 # the matrices in list
@@ -146,7 +139,7 @@ def signature(killing_mat):
 # Output: center vector space
 def center(adj):
     big_ad_col = []
-    for i in range(len(adj))
+    for i in range(len(adj)):
         cur_mat = adj[i]
         big_ad_col.append(cur_mat.transpose.list())
     return big_ad.kernel().dim() 
@@ -158,71 +151,87 @@ def classify_alg(dim, sig):
     solution_list = []
     dim_list = []
     sig_list = []
-    excep_dim = [14,56,78,133,248]
+    # for later -- find sigs of remaining exceptionals
+    # excep_dim = [14,56,78,133,248]
+    # excep_sig = [-14,...]
+    excep_dim = [14]
+    excep_sig = [-14]
     max_len = floor((1 + sqrt(1+8*dim))/2)
-    list_len = 3*max_len + 5
-    tuple_list = get_tuples(dim,list_len)
-    # for sl_n
-    for i in range(max_len):
-        # start from 2
-        sig_list[i] = i+2
-        dim_list[i] = (i+2)**2 - 1
-    # for so_n
-    for i in range(max_len):
-        # start from 3
-        sig_list[max_len+i] = -(i+3)
-        dim_list[max_len+i] = (i+3)*(i+3-1)/2
-    # for sp_{2n}
-    for i in range(max_len):
-        # start from 3
-        sig_list[2*max_len+i] = i
-        dim_list[2*max_len+i] = 2*(i+3)*(i+3)+i
-    sig_list = sig_list + 
+    list_len = 3*max_len - 2 
+    max_val = floor(dim/3)
+    tuple_list = get_tuples(max_val,list_len)
+    # for sl_n: start from n = 2
+    for i in range(2,max_len+1):
+        sig_list.append(i-1)
+        dim_list.append(i**2 - 1)
+    # for so_n: start from n = 3
+    for i in range(3,max_len+1):
+        sig_list.append(-i)
+        dim_list.append(int(i*(i-1)/2))
+    # for sp_{2n}: start from n = 1
+    for i in range(1,max_len+1):
+        sig_list.append(i)
+        dim_list.append(2*i**2 + i)
+    sig_list = sig_list + excep_sig
     dim_list = dim_list + excep_dim
     for k in range(len(tuple_list)):
-        cur_dim = sum([i*j for (i,j) in zip(tuple_list, dim_list)])
-        cur_sig = sum([i*j for (i,j) in zip(tuple_list, sig_list)])
+        cur_dim = sum([i*j for (i,j) in zip(tuple_list[k], dim_list)])
+        cur_sig = sum([i*j for (i,j) in zip(tuple_list[k], sig_list)])
         if cur_dim == dim and cur_sig == sig:
             solution_list.append(tuple_list[k])
+    for i in range(len(solution_list)):
+        cur_solution = solution_list[i]
     return solution_list
 
-# gen_tuples(): generates list of frequency tuples recursively
-# Input: dimension and length of list 
-# Output: list of frequency tuples
-def get_tuples(dim, list_len):
-    max_val = floor(dim/3)
+# get_tuples(): generates list of frequency tuples recursively
+# Input: frequency max_value (floor(dim/3)) and length of list 
+# Output: list of frequency tuples with entries from 0 to floor(dim/3),
+#         each with length list_len
+def get_tuples(max_val, list_len):
     test_list = []
     if list_len > 1:
-        result_list = tuple_helper(get_tuples(max_val,list_len-1),max_val)
+        return tuple_helper(get_tuples(max_val,list_len-1),max_val)
     else:
         for i in range(max_val+1):
-            test_list[i] = [i]
-        result_list = test_list
-        return result_list
+            test_list.append([i])
+        return test_list
 
 # tuple_helper(): helper function to perform recursion
 # Input: old list and max value
-# Output: list of tuples 
+# Output: list of tuples with (length + 1) with everything up to max value
 def tuple_helper(old_list, max_val):
     new_list = []
     for i in range(len(old_list)):
         cur_tuple = old_list[i]
         for j in range(max_val+1):
-            new_cur_tuple = cur_tuple.append(j)
+            new_cur_tuple = []
+            new_cur_tuple = cur_tuple + [j]
             new_list.append(new_cur_tuple)
-            return new_list
+    return new_list
+
+# print_2_txt(): prints matrix of Killing form to text file
+# Input: Killing form matrix
+# Output: textfile with Killing form as string
+def print_2_txt(mat):
+    f = open('killing.txt', 'w')
+    f.write(mat.str())
+    f.close()
 
 # MAIN SCRIPT
 
+print(classify_alg(8,2))
+'''
 # read in text file
 file_name = "basis.txt"
 with open(file_name, 'r') as f:
     data = f.read().replace('\n', '')
 # read in generator list {E,F}
 gen_list = eval(data)
-mat_list = [];
+mat_list = []
 for i in range(len(gen_list)):
     mat_list.append(matrix(QQ,gen_list[i]))
+E = mat_list[0]
+F = mat_list[0]
 gen_names = ['E','F']
 basis_list = bracket_operation(mat_list,gen_names)
 # check what commutes
@@ -236,3 +245,5 @@ ad = adjoint_rep(basis_list)
 kil = killing_form(ad)
 eig_vec = signature(kil)
 print(eig_vec)
+print_2_txt(kil)
+'''
