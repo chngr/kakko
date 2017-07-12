@@ -1,13 +1,14 @@
-% gen_k_tuples(): generates list of nonidentical unordered k-tuples using 
-% elements from {1,2,...,n}
-% Input: upper bound for list n, number of elements selected k
-% Output: cell object with k-tuples
+% gen_k_tuples(): generates list of increasing (unordered) k-tuples using 
+%                 elements from {1,2,...,n}
+% Input: n -- upper bound for list 
+%        k -- number of elements selected
+% Output: k_tuples -- cell array with k_tuples
 function k_tuples = gen_k_tuples(n,k)
-test_cell = cell(0);
-% base case
+test_cell = {};
+% recursion
 if k > 1
     k_tuples = cell_helper(gen_k_tuples(n,k-1),n); 
-% else, perform recursion 
+% base case
 else
    for i = 1:n
        test_cell{i} = [i];
@@ -15,11 +16,13 @@ else
    k_tuples = test_cell;
 end
 end
+
 % cell_helper(): helper method to perform recursion
-% Input: list of x - 1 tuples in cell_old 
-% Output: list of x tuples going up to the max item
+% Input: cell_old -- input list with tuples of length x
+%        max -- max element (n)
+% Output: cell_new -- output list with tuples of length (x + 1)
 function cell_new = cell_helper(cell_old, max)
-cell_new = cell(0);
+cell_new = {};
 for i = 1:length(cell_old)
     cur_array = cell_old{i};
     last_num = cur_array(length(cur_array));

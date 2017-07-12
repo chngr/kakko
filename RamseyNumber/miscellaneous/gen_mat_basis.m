@@ -1,19 +1,19 @@
 % gen_mat_basis(): generates basis of 2^{n choose 2} symmetric adjacency 
-% matrices 
-% Input: dimension of vector space n
-% Output: cell object with matrices
+%                  matrices (basis for labelled graphs)
+% Input: n -- number of vertices in graph
+% Output: basis -- cell array of basis matrices
 function basis = gen_mat_basis(n)
 str_length = nchoosek(n,2);
 dim = 2^(str_length);
 basis = cell([1,dim]);
-% up to length of dimension
+% generate all possible binary strings to fill above the diagonal
 for cell_idx = 0:(dim-1)
-    % convert decimal to binary, and pad binary string with 0s
     bin_str = dec2bin(cell_idx);
+    % pad with zeros if not of proper length
     if length(bin_str) < str_length
         bin_str = sprintf('%0*s', str_length, bin_str);
     end
-    % store strings in matrices
+    % fill matrix with string
     A = zeros(n);
     idx_pointer = 0;
     for i = 1:n
@@ -24,6 +24,7 @@ for cell_idx = 0:(dim-1)
             end
         end
     end
+    % make matrix symmetric
     A = triu(A,1)' + A;
     basis{cell_idx+1} = A;
 end

@@ -1,7 +1,7 @@
 % ramsey_eigen_quads(): computes eigenvalue multiplicities for H for 
-% quadruples
-% Input: order of graph r 
-% Output: cell object of eigenvalue multiplicities
+%                       quadruples
+% Input: r -- number of vertices
+% Output: eigenlist -- cell array of eigenvalue multiplicities
 function eigenlist = ramsey_eigen_quads(r)
 basis = gen_mat_basis(r);
 quads = gen_4_tuples(r);

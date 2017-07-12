@@ -1,7 +1,7 @@
 % ramsey_eigen_triples(): computes eigenvalue multiplicities for H for 
-% triples
-% Input: order of graph r 
-% Output: cell object of eigenvalue multiplicities
+%                         triples
+% Input: r -- number of vertices
+% Output: eigenlist -- cell array of eigenvalue multiplicities
 function eigenlist = ramsey_eigen_triples(r)
 basis = gen_mat_basis(r);
 triples = gen_3_tuples(r);

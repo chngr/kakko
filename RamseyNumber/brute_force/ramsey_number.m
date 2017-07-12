@@ -1,11 +1,11 @@
 % ramsey_number(): computes Ramsey number R(m,n) for m, n >= 2
-% Input: sizes m and n of monochromatic cliques
-% Output: R(m,n) with current progress printed
+% Input: m, n -- sizes of monochromatic red and blue cliques
+% Output: result -- R(m,n) with current progress printed
 function result = ramsey_number(m,n)
 % loop over number of vertices
 for i = max(m,n):intmax
     fprintf('Current value of loop: %d\n',i);
-    % counter for number of graphs with a monochromatic clique
+    % counter for number of valid graphs with a monochromatic clique
     passed_count = 0;
     m_tuples = gen_k_tuples(i,m);
     n_tuples = gen_k_tuples(i,n);
@@ -24,6 +24,7 @@ for i = max(m,n):intmax
                     sum = sum + basis_mat(cur_m_tuple(p), cur_m_tuple(q));
                 end
             end
+            % check that tuple forms a red K_m
             if sum == nchoosek(m,2)
                 mat_boolean = true;
                 passed_count = passed_count + 1;
@@ -40,6 +41,7 @@ for i = max(m,n):intmax
                         sum = sum + basis_mat(cur_n_tuple(p), cur_n_tuple(q));
                     end
                 end
+                % check that tuple forms a blue K_n
                 if sum == 0
                     mat_boolean = true;
                     passed_count = passed_count + 1;

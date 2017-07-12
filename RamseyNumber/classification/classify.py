@@ -90,7 +90,6 @@ def adjoint_rep(basis):
     for b in basis:
         basis_vec.append(b.list())
     vs = span(matrix(basis_vec),QQ)
-    print("Our vector space looks like this!")
     print(vs)
     for left in basis:
         mat_list = []
