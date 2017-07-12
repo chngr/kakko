@@ -1,7 +1,7 @@
 % function to generate sln basis matrices
 % input: n
 % output: dimension and basis for sl_n
-function [dim,result_basis] = generate_sln(n)
+function [result_basis, gen_names] = generate_sln(n)
 basis = {};
 gen_names = {};
 % create e_ij
@@ -17,6 +17,5 @@ for i = 1: n
         end
     end
 end
-% generate sl_n
-[dim,result_basis] = bracket_operation(basis,gen_names);
+result_basis = basis;
 end
