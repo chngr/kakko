@@ -6,7 +6,7 @@
 % Output: result -- adjoint matrix
 function result = adjoint_mat(mat, basis, basis_mat)
 adj_mat = [];
-for i = 1:length(basis);
+for i = 1:length(basis)
   bracket_mat = bracket(mat,basis{i});
   % solve basis_mat [x] = bracket_mat to find coordinates wrt basis
   coord = basis_mat\(bracket_mat(:));
