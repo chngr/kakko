@@ -7,7 +7,6 @@ function cartan_basis = find_cartan_basis(basis, basis_mat)
 elem_found = false;
 while ~elem_found
     cur_elem = compute_random_element(basis);
-    assignin('base','cur_elem',cur_elem);
     adj = adjoint_mat(cur_elem, basis, basis_mat);
     kernel = null(adj^(length(basis)));
     kernel_col = num2cell(kernel,1);
@@ -48,7 +47,7 @@ function result = is_abelian(basis)
 is_abelian = true;
 for i = 1:length(basis)
     for j = i+1:length(basis)
-        if ~isequal(bracket(basis{i},basis{j}),sym(zeros(length(basis{1}))))
+        if ~isequal(bracket(basis{i},basis{j}),zeros(length(basis{1})))
             is_abelian = false;
         end
     end

@@ -2,7 +2,7 @@
 % overall_function(): wrapper to compute dimension and signature
 % Input: p -- dimension of K_p
 % Output: dimension and signature of generated Lie algebra
-function [cartan_basis] = overall_function(p)
+function [cartan_basis, cartan_mat] = overall_function(n)
 %{ 
 %finds basis of unlabelled graphs with K_p
 [map,basis] = gen_basis(p);
@@ -15,23 +15,7 @@ basis_2_txt({E,F},'E_F.txt');
 disp('Finished writing to .txt')
 %}
 
-%{
-% SL2 TEST
-E = [0 1; 0 0];
-F = [0 0; 1 0];
-gen_mat = {sym(E),sym(F)};
-gen_names = {'E','F'};
-%}
-
-% SL3 TEST
-A = [0 1 0; 0 0 0; 0 0 0];
-B = [0 0 0; 1 0 0; 0 0 0];
-C = [0 0 0; 0 0 1; 0 0 0];
-D = [0 0 0; 0 0 0; 0 1 0];
-gen_mat = {sym(A),sym(B),sym(C),sym(D)};
-gen_names = {'A','B','C','D'};
-
-
+[gen_mat,gen_names] = generate_sln(n);
 % computes dimension and basis of generated Lie algebra 
 [dim,result_basis] = bracket_operation(gen_mat,gen_names);
 % output all basis to txt file
@@ -45,10 +29,11 @@ fprintf('dimension: %d\n', dim);
 fprintf('signature: %d\n', sig);
 % finds Cartan basis
 cartan_basis = find_cartan_basis(result_basis, basis_mat);
-%{
-% find positive roots
+assignin('base','cartan_basis',cartan_basis);
+root_mat = diagonal_to_mat(cartan_basis, result_basis, basis_mat);
+assignin('base','root_mat',root_mat);
 pos_roots = find_pos_roots(root_mat);
-% find Cartan matrix
+assignin('base','pos_roots',pos_roots);
 cartan_mat = find_cartan_mat(pos_roots);
-%}
+assignin('base','cartan_mat',cartan_mat);
 end
