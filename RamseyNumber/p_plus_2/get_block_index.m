@@ -33,7 +33,7 @@ end
 % output: index of column with min_head
 function min_index = find_min_head(index_arr, pair_arr)
 % index of column with min head
-min_index = 0;
+min_index = 1;
 min_head = pair_arr{index_arr(1)}(1);
 for i = 1 : length(index_arr)
     if pair_arr{index_arr(i)}(1) < min_head
