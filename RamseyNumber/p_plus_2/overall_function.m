@@ -16,13 +16,19 @@ gen_mat = {sym(E),sym(F)};
 gen_names = {'E','F'};
 % computes dimension and basis of generated Lie algebra 
 [dim,result_basis] = bracket_operation(gen_mat,gen_names);
-%output all basis to txt file
+% output all basis to txt file
 basis_2_txt(result_basis,'basis.txt')
 % computes Killing form of generated Lie algebra
-killing_mat = killing_form(result_basis);
+[basis_mat, kil_mat, adj_group] = killing_form(result_basis);
 basis_2_txt({killing_mat},'killing.txt')
 % computes signature of generated Lie algebra
 [eigenvalues, sig] = signature(killing_mat);
 fprintf('dimension: %d\n', dim);
 fprintf('signature: %d\n', sig);
+% finds Cartan basis
+cartan_basis = find_cartan_basis(basis, basis_mat);
+% find positive roots
+pos_roots = find_pos_roots(root_mat);
+% find Cartan matrix
+cartan_mat = find_cartan_mat(pos_roots);
 end

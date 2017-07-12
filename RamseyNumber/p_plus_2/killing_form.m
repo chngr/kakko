@@ -2,7 +2,7 @@
 % Input: basis for rho_{p+r}(a_p) (general)
 % Output: basis_mat -- matrix of basis
 %         kil_mat -- matrix of Killing form
-function basis_mat, kil_mat = killing_form(basis)
+function [basis_mat, kil_mat, adj_group] = killing_form(basis)
 killing_mat = zeros(length(basis));
 % create basis matrix with column vectors as basis elements
 basis_mat = [];
