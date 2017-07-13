@@ -72,11 +72,11 @@ def bracket_operation(gen_mat,gen_names):
 # Output: boolean true if in span, false otherwise
 def in_span(in_list, entry):
     col_len = (in_list[0].ncols())**2
-    comp_mat = matrix(RR,col_len,0)
+    comp_mat = matrix(QQ,col_len,0)
     for i in range(len(in_list)):
-        cur_mat = vector(RR,in_list[i].transpose().list())
+        cur_mat = vector(QQ,in_list[i].transpose().list())
         comp_mat = comp_mat.augment(cur_mat)
-    entry_vec = vector(RR,entry.transpose().list())
+    entry_vec = vector(QQ,entry.transpose().list())
     comp_mat = comp_mat.augment(entry_vec)
     return rank(comp_mat) != comp_mat.ncols()
 
@@ -89,14 +89,14 @@ def adjoint_rep(basis):
     ad = []
     for b in basis:
         basis_vec.append(b.transpose().list())
-    basis_mat = matrix(RR,basis_vec).transpose()
+    basis_mat = matrix(QQ,basis_vec).transpose()
     for left in basis:
         mat_list = []
         for right in basis:
-            bracket_vec = vector(RR,bracket(left,right).transpose().list())
+            bracket_vec = vector(QQ,bracket(left,right).transpose().list())
             coords = basis_mat.solve_right(bracket_vec)
             mat_list.append(coords.list())
-        new_mat = matrix(RR,mat_list).transpose()
+        new_mat = matrix(QQ,mat_list).transpose()
         ad.append(new_mat)
     return ad
 
@@ -104,7 +104,7 @@ def adjoint_rep(basis):
 # Input: basis for rho_{p+r}(a_p) (general)
 # Output: matrix of Killing form
 def killing_form(ad):
-    killing_form = matrix(RR,[[(g * h).trace() for g in ad] for h in ad])
+    killing_form = matrix(QQ,[[(g * h).trace() for g in ad] for h in ad])
     print_2_txt(kil,'killing_py.txt')
     return killing_form
 
@@ -114,7 +114,7 @@ def killing_form(ad):
 #         printed: counts for positive, negative, and zero eigenvalues for 
 #         matrix of Killing form
 def signature(killing_mat):
-    eig_vec = killing_mat.jordan_form().diagonal()  
+    eig_vec = killing_mat.eigenvalues()
     pos_count = 0
     zero_count = 0
     neg_count = 0
@@ -219,33 +219,36 @@ def print_2_txt(mat, name):
 # MAIN SCRIPT
 
 # read in text file
-with open('basis.txt', 'r') as f:
+with open('E_F.txt', 'r') as f:
     data = f.read().replace('\n', '')
 # read in generator list {E,F}
 gen_list = eval(data)
 mat_list = []
 for i in range(len(gen_list)):
-    mat_list.append(matrix(RR,gen_list[i]))
+    mat_list.append(matrix(QQ,gen_list[i]))
 E = mat_list[0]
 F = mat_list[1]
 gen_names = ['E','F']
 basis_list = bracket_operation(mat_list,gen_names)
 
+'''
 # print basis list to text file
 with open('basis_list.txt', 'w') as basis_list_fid:
     for mat in basis_list:
         basis_list_fid.write(mat.str())
         basis_list_fid.write('\n\n')
+'''
 
 # compute adjoint rep, Killing form, and signature
 ad = adjoint_rep(basis_list)
 
+''''
 # print basis list to text file
 with open('adj_list.txt', 'w') as adj_list_fid:
     for mat in ad:
         adj_list_fid.write(mat.str())
         adj_list_fid.write('\n\n')
+'''
 
 kil = killing_form(ad)
-eig_vec = signature(kil)
-print(eig_vec)
+print(kil.determinant())

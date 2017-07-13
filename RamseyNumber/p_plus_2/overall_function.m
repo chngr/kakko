@@ -12,6 +12,8 @@ groups = grouping_basis(p,basis,map);
 [E,F] = grouping_to_mat(groups,p,map);
 % write result_basis to .txt file
 basis_2_txt({E,F},'E_F.txt');
+
+%{
 % create cell arrays of generators
 gen_mat = {sym(E),sym(F)};
 gen_names = {'E','F'};
@@ -25,6 +27,7 @@ basis_2_txt({kil_mat},'killing.txt')
 fprintf('dimension: %d\n', dim);
 fprintf('signature: %d\n', sig);
 fprintf('determinant of Killing matrix: %d\n', determinant);
+%}
 
 %{
 % finds Cartan basis
