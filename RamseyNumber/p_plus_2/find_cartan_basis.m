@@ -47,7 +47,7 @@ function result = is_abelian(basis)
 is_abelian = true;
 for i = 1:length(basis)
     for j = i+1:length(basis)
-        if ~isequal(bracket(basis{i},basis{j}),zeros(length(basis{1})))
+        if ~isequal(bracket(basis{i},basis{j}),sym(zeros(length(basis{1}))))
             is_abelian = false;
         end
     end

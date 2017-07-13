@@ -10,7 +10,7 @@ for i = 1: n
         if j == i
             continue
         else
-            e_ij = zeros(n);
+            e_ij = sym(zeros(n));
             e_ij(i,j) = 1;
             basis{end+1} = e_ij;
             gen_names{end+1} = strcat('e_',int2str(i),int2str(j));
