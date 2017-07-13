@@ -1,4 +1,4 @@
-# CLASSIFY.PY
+# p_plus_one.py
 
 from math import *
 
@@ -72,31 +72,31 @@ def bracket_operation(gen_mat,gen_names):
 # Output: boolean true if in span, false otherwise
 def in_span(in_list, entry):
     col_len = (in_list[0].ncols())**2
-    comp_mat = matrix(QQ,col_len,0)
+    comp_mat = matrix(RR,col_len,0)
     for i in range(len(in_list)):
-        cur_mat = vector(QQ,in_list[i].transpose().list())
+        cur_mat = vector(RR,in_list[i].transpose().list())
         comp_mat = comp_mat.augment(cur_mat)
-    entry_vec = vector(QQ,entry.transpose().list())
+    entry_vec = vector(RR,entry.transpose().list())
     comp_mat = comp_mat.augment(entry_vec)
     return rank(comp_mat) != comp_mat.ncols()
 
 # adjoint_rep(): computes adjoint representation matrices of 
-# Lie algebra
-# Input: basis for rho_{p+r}(a_p) (general)
+#                Lie algebra
+# Input: basis for Lie algebra 
 # Output: list of adjoint representation matrices
 def adjoint_rep(basis):
     basis_vec = []
     ad = []
     for b in basis:
         basis_vec.append(b.transpose().list())
-    basis_mat = matrix(QQ,basis_vec).transpose()
+    basis_mat = matrix(RR,basis_vec).transpose()
     for left in basis:
         mat_list = []
         for right in basis:
-            bracket_vec = vector(QQ,bracket(left,right).transpose().list())
+            bracket_vec = vector(RR,bracket(left,right).transpose().list())
             coords = basis_mat.solve_right(bracket_vec)
-            mat_list.append(coords.transpose().list())
-        new_mat = matrix(QQ,mat_list).transpose()
+            mat_list.append(coords.list())
+        new_mat = matrix(RR,mat_list).transpose()
         ad.append(new_mat)
     return ad
 
@@ -104,8 +104,8 @@ def adjoint_rep(basis):
 # Input: basis for rho_{p+r}(a_p) (general)
 # Output: matrix of Killing form
 def killing_form(ad):
-    killing_form = matrix(QQ,[[(g * h).trace() for h in ad] for g in ad])
-    print(killing_form)
+    killing_form = matrix(RR,[[(g * h).trace() for g in ad] for h in ad])
+    print_2_txt(kil,'killing_py.txt')
     return killing_form
 
 # signature(): computes signature of Lie algebra
@@ -114,7 +114,7 @@ def killing_form(ad):
 #         printed: counts for positive, negative, and zero eigenvalues for 
 #         matrix of Killing form
 def signature(killing_mat):
-    eig_vec = killing_mat.jordan_form().diagonal()
+    eig_vec = killing_mat.jordan_form().diagonal()  
     pos_count = 0
     zero_count = 0
     neg_count = 0
@@ -207,38 +207,45 @@ def tuple_helper(old_list, max_val):
             new_list.append(new_cur_tuple)
     return new_list
 
-# print_2_txt(): prints matrix of Killing form to text file
-# Input: Killing form matrix
-# Output: textfile with Killing form as string
-def print_2_txt(mat):
-    f = open('killing.txt', 'w')
+# print_2_txt(): prints matrix to text file
+# Input: mat -- matrix to print
+#        name -- name of text file
+# Output: textfile with matrix as string
+def print_2_txt(mat, name):
+    f = open(name, 'w')
     f.write(mat.str())
     f.close()
 
 # MAIN SCRIPT
 
 # read in text file
-file_name = "basis.txt"
-with open(file_name, 'r') as f:
+with open('basis.txt', 'r') as f:
     data = f.read().replace('\n', '')
 # read in generator list {E,F}
 gen_list = eval(data)
 mat_list = []
 for i in range(len(gen_list)):
-    mat_list.append(matrix(QQ,gen_list[i]))
+    mat_list.append(matrix(RR,gen_list[i]))
 E = mat_list[0]
-F = mat_list[0]
+F = mat_list[1]
 gen_names = ['E','F']
 basis_list = bracket_operation(mat_list,gen_names)
-# check what commutes
-for i in range(len(basis_list)):
-    if bracket(E,basis_list[i]) == matrix(E.ncols()) and \
-    bracket(F,basis_list[i]) == matrix(F.ncols()):
-        print(basis_list[i])
-print('Reached -- above values are those that commute with E and F')
+
+# print basis list to text file
+with open('basis_list.txt', 'w') as basis_list_fid:
+    for mat in basis_list:
+        basis_list_fid.write(mat.str())
+        basis_list_fid.write('\n\n')
+
 # compute adjoint rep, Killing form, and signature
 ad = adjoint_rep(basis_list)
+
+# print basis list to text file
+with open('adj_list.txt', 'w') as adj_list_fid:
+    for mat in ad:
+        adj_list_fid.write(mat.str())
+        adj_list_fid.write('\n\n')
+
 kil = killing_form(ad)
 eig_vec = signature(kil)
 print(eig_vec)
-print_2_txt(kil)
