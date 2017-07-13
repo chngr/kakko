@@ -6,6 +6,16 @@ n = size(mat,2);
 range_set = get_range_set(mat);
 block_index_set = get_block_index(range_set,n);
 result_mat = block_to_mat(block_index_set,mat);
+if check_blocks(result_mat)
+    fprintf('block matrix not square!!')
+end
+end
+
+% function: check_blocks -- check if rearranged matrix has square
+% input: mat
+% output: boolean if the blocks qualify as square matrices
+function check_blocks(mat)
+    
 end
 
 % :)
@@ -16,8 +26,6 @@ function range_set = get_range_set(mat)
 % get range_pair for each column
 range_set = {};
 head_flag = false;
-head = 0;
-tail = 0;
 for i = 1:size(mat,2) % iterate through each column
     cur_col = mat(:,i);
     % going through elements ith column
