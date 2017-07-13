@@ -2,9 +2,8 @@
 % overall_function(): wrapper to compute dimension and signature
 % Input: p -- dimension of K_p
 % Output: dimension and signature of generated Lie algebra
-function [cartan_basis, cartan_mat] = overall_function(n)
-%{ 
-%finds basis of unlabelled graphs with K_p
+function [cartan_basis, cartan_mat] = overall_function(p)
+% finds basis of unlabelled graphs with K_p
 [map,basis] = gen_basis(p);
 % finds groups after performing E and F repeatedly
 groups = grouping_basis(p,basis,map);
@@ -12,10 +11,7 @@ groups = grouping_basis(p,basis,map);
 [E,F] = grouping_to_mat(groups,p,map);
 % Write result_basis to .txt file
 basis_2_txt({E,F},'E_F.txt');
-disp('Finished writing to .txt')
-%}
 
-[gen_mat,gen_names] = generate_sln(n);
 % computes dimension and basis of generated Lie algebra 
 [dim,result_basis] = bracket_operation(gen_mat,gen_names);
 % output all basis to txt file
