@@ -1,7 +1,8 @@
 % in_span(): checks whether matrix entry is in the span of
-% the matrices in list
-% Input: cell array list of matrices, entry to check independence of
-% Output: boolean true if in span, false otherwise
+%            the matrices in list
+% Input: list -- cell array list of matrices
+%        entry -- entry to check independence of
+% Output: result -- boolean true if in span, false otherwise
 function result = in_span(list, entry)
 comp_mat = [];
 for i = 1:length(list)

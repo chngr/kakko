@@ -1,7 +1,8 @@
 % -- FOR P+1 --
 % overall_function(): wrapper to compute dimension and signature
 % Input: p -- dimension of K_p  
-% Output: dimension and signature of Lie algebra
+% Output: dim -- dimension of Lie algebra
+%         sig -- signature of Lie algebra
 function [dim, sig] = overall_function(p)
 % submatrices for E and F
 E_0 = [0 1; 0 0];

@@ -1,6 +1,6 @@
 % killing_form(): computes killing form of Lie algebra
-% Input: basis for rho_{p+r}(a_p) (general)
-% Output: matrix of Killing form
+% Input: basis -- basis for Lie algebra
+% Output: result -- matrix of Killing form
 function result = killing_form(basis)
 killing_mat = zeros(length(basis));
 % create basis matrix with column vectors as basis elements
