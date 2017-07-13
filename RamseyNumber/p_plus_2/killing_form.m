@@ -1,7 +1,7 @@
 % killing_form(): computes killing form of Lie algebra
 % Input: basis -- basis for Lie algebra
 % Output: result -- matrix of Killing form
-function result = killing_form(basis)
+function [basis_mat, killing_mat, determinant] = killing_form(basis)
 killing_mat = zeros(length(basis));
 % create basis matrix with column vectors as basis elements
 basis_mat = [];
@@ -26,5 +26,5 @@ for i = 1:length(adj_group)
         killing_mat(i,j) = trace(adj_group{i} * adj_group{j});
     end
 end
-result = killing_mat;
+determinant = det(killing_mat);
 end
