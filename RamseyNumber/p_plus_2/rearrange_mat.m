@@ -2,8 +2,9 @@
 % input: matrix (N*n) N: dimension of g, n: dimension of cartan h
 % output: rearranged matrix in block form
 function result_mat = rearrange_mat(mat)
+n = size(mat,2);
 range_set = get_range_set(mat);
-block_index_set = get_block_index(range_set);
+block_index_set = get_block_index(range_set,n);
 result_mat = block_to_mat(block_index_set,mat);
 end
 
@@ -22,13 +23,12 @@ for i = 1:size(mat,2) % iterate through each column
     % going through elements ith column
     head = 0; tail = 0;
     head_flag = false;
-    for j = 1:length(cur_col) 
+    for j = 1:length(cur_col)
         % mark head
         if cur_col(j) ~= 0 && head_flag == false
             head_flag = true;
             head = j;
             tail = j;
-            fprintf('mark head of col %d : %d\n',i, head)
         end
         % mark tail
         if cur_col(j) ~= 0 && head_flag == true
@@ -39,6 +39,7 @@ for i = 1:size(mat,2) % iterate through each column
 end
 end
 
+%:)
 % function: get_block_index -- partition columns into block groups
 % input: cell array of range-pairs(i.e the range of non-zero entries in each column)
 %        n: size of matrix
@@ -70,11 +71,11 @@ end
 
 %:)
 % function find_min_pair: finds index of column with min head in the column set
-% input: pair_arr 
+% input: pair_arr
 % output: index of column with min_head
 function min_index = find_min_head(index_arr, pair_arr)
 % index of column with min head
-min_index = 0;
+min_index = index_arr(1);
 min_head = pair_arr{index_arr(1)}(1);
 for i = 1 : length(index_arr)
     if pair_arr{index_arr(i)}(1) < min_head
