@@ -23,11 +23,10 @@ def bracket_operation(gen_mat,gen_names):
     old_list = [] 
     name_old_list = [] 
     new_list = [] 
-    for generator in gen_mat:
-        new_list.append(generator) 
     # initialize name_new_list
     name_new_list = [] 
     for name in gen_names:
+        print(name)
         name_new_list.append(name) 
     # loop until no new independent elements generated
     while True:
@@ -216,8 +215,6 @@ def print_2_txt(mat, name):
     f.write(mat.str())
     f.close()
 
-# MAIN SCRIPT
-
 # read in text file
 with open('E_F.txt', 'r') as f:
     data = f.read().replace('\n', '')
@@ -231,24 +228,24 @@ F = mat_list[1]
 gen_names = ['E','F']
 basis_list = bracket_operation(mat_list,gen_names)
 
-'''
+
 # print basis list to text file
 with open('basis_list.txt', 'w') as basis_list_fid:
     for mat in basis_list:
         basis_list_fid.write(mat.str())
         basis_list_fid.write('\n\n')
-'''
 
 # compute adjoint rep, Killing form, and signature
 ad = adjoint_rep(basis_list)
 
-''''
+
 # print basis list to text file
 with open('adj_list.txt', 'w') as adj_list_fid:
     for mat in ad:
         adj_list_fid.write(mat.str())
         adj_list_fid.write('\n\n')
-'''
+
 
 kil = killing_form(ad)
 print(kil.determinant())
+'''
