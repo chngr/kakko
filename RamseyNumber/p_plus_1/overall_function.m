@@ -1,21 +1,22 @@
 % -- FOR P+1 --
 % overall_function(): wrapper to compute dimension and signature
 % Input: p -- dimension of K_p  
-% Output: dim -- dimension of Lie algebra
-%         sig -- signature of Lie algebra
-function [dim, sig] = overall_function(p)
+% Output: result_basis -- basis of generated Lie algebra
+%         printed: dimension and signature
+% NOTE: Valid for p >= 3.
+function result_basis = overall_function(p)
 % submatrices for E and F
-E_0 = [0 1; 0 0];
-E_1 = [0 2; 0 0];
-E_2 = [0 (p+1); 0 0];
-F_0 = [0 0; 1 0];
+E_1 = [0 1; 0 0];
+E_2 = [0 2; 0 0];
+E_3 = [0 (p+1); 0 0];
+F_1 = [0 0; 1 0];
 % concatenate submatrices along diagonal
-E = blkdiag(E_0,E_1,E_2);
-F = blkdiag(F_0,F_0,F_0);
+E = blkdiag(E_1,E_2,E_3);
+F = blkdiag(F_1,F_1,F_1);
 gen_mat = {E,F};
 gen_names = {'E','F'};
-% write to output file
-basis_2_txt(gen_mat);
+% write E and F to output file
+mat_to_txt(gen_mat,'p_plus_1_gen.txt');
 % computes dimension and basis of generated Lie algebra 
 [dim,result_basis] = bracket_operation(gen_mat,gen_names);
 % computes Killing form of generated Lie algebra

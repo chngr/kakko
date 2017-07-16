@@ -1,4 +1,4 @@
-% killing_form(): computes killing form of Lie algebra
+% killing_form(): computes Killing form of Lie algebra
 % Input: basis -- basis for Lie algebra
 % Output: result -- matrix of Killing form
 function result = killing_form(basis)
