@@ -12,25 +12,25 @@ format long
 fid = fopen(dest_name,'w');
 fprintf(fid,'[');
 for i = 1:length(mat_set) % loop through elements in mat_set
-    if i ~= 1
-        fprintf(fid,', ');
-    end
     fprintf(fid,'[');
     for j = 1:length(mat_set{i}) % loop through rows in element
-        if j ~= 1
-            fprintf(fid, ', ');
-        end
         fprintf(fid,'[');
         cur_row = mat_set{i}(j,:);
         for k = 1:length(cur_row) % loop through entries in rows
-            if k ~= 1
-                fprintf(fid, ', ');
-            end
             fprintf(fid,'%d',cur_row(k));
+            if k ~= length(cur_row)
+                fprintf(fid,', ');
+            end
         end
         fprintf(fid,']');
+        if j ~= length(mat_set{i})
+            fprintf(fid,',\n');
+        end
     end
-    fprintf(fid, ']');
+    fprintf(fid,']');
+    if i ~= length(mat_set)
+        fprintf(fid,',\n\n');
+    end
 end
 fprintf(fid,']');
 fclose(fid);
