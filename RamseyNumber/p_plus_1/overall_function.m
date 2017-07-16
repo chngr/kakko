@@ -1,6 +1,6 @@
 % -- FOR P+1 --
 % overall_function(): wrapper to compute dimension and signature
-% Input: p -- dimension of K_p  
+% Input: p -- dimension of K_p
 % Output: result_basis -- basis of generated Lie algebra
 %         printed: dimension and signature
 % NOTE: Valid for p >= 3.

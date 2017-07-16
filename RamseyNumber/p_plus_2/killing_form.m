@@ -1,7 +1,7 @@
-% killing_form(): computes killing form of Lie algebra
+% killing_form(): computes Killing form of Lie algebra
 % Input: basis -- basis for Lie algebra
 % Output: result -- matrix of Killing form
-function [basis_mat, killing_mat, determinant] = killing_form(basis)
+function result = killing_form(basis)
 killing_mat = zeros(length(basis));
 % create basis matrix with column vectors as basis elements
 basis_mat = [];
@@ -15,10 +15,10 @@ for i = 1:length(basis)
     for j = 1:length(basis)
       bracket_mat = bracket(basis{i},basis{j});
       % solve basis_mat [x] = bracket_mat to find coordinates wrt basis
-      coord = sym(basis_mat\(bracket_mat(:)));
+      coord = basis_mat\(bracket_mat(:));
       adj_mat = [adj_mat, coord];
     end
-    adj_group{end+1} = sym(adj_mat);
+    adj_group{end+1} = adj_mat;
 end
 % create matrix for Killing form
 for i = 1:length(adj_group)
@@ -26,5 +26,5 @@ for i = 1:length(adj_group)
         killing_mat(i,j) = trace(adj_group{i} * adj_group{j});
     end
 end
-determinant = det(killing_mat);
+result = killing_mat;
 end

@@ -9,7 +9,7 @@ from random import randint
 
 # sln_generator(): generates generator matrices and names for sl_n
 # Input: n -- dimension of sl_n
-# Output: list -- list[0] holds gen_mat, list[1] holds gen_names
+# Output: list -- list[0] holds generator matrices, list[1] holds generator names
 def sln_generator(n):
     gen_mat = []
     gen_names = []

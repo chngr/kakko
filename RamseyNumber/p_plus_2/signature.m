@@ -1,14 +1,12 @@
 % signature(): computes signature of Lie algebra
 % Input: killing_mat -- matrix of Killing form
 % Output: sig -- signature of Lie algebra
-%         printed: counts for positive, negative, and zero eigenvalues for 
-%         matrix of Killing form
+%         printed: list of eigenvalues of Killing form
+%                  counts for positive, negative, and zero eigenvalues 
 function sig = signature(killing_mat)
-eigenvalues = sym(eig(killing_mat));
-disp(eigenvalues);
-assignin('base','eigenvalues',eigenvalues);
+eigenvalues = eig(killing_mat);
 % count eigenvalue signs
-pos_count = 0; zero_count = 0; neg_count = 0;
+pos_count = 0; neg_count = 0; zero_count = 0;
 for i = 1:length(eigenvalues)
     if eigenvalues(i) > 0
         pos_count = pos_count + 1;
