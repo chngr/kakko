@@ -1,11 +1,12 @@
 % gen_basis(): basis for all unlabelled graphs on (p+2) vertices with 
-% at least one K_p
-% Input: dimension p of K_p
-% Output: map with basis, set of unique basis tuples
-%         -- see create_map() for details
+%              at least one K_p
+% Input: p -- dimension of K_p
+% Output: map -- from tuple to its representative 
+%         basis -- set of unique representative tuples
 function [map, basis] = gen_basis(p)
 valid_tuples = valid_tuples(p);
 mixed_tuples = mixed_tuples(p);
+% create map from mixed_tuples
 [map, unique_values] = create_map(mixed_tuples,p);
 % fill map with valid_tuples
 for i = 1:length(valid_tuples)
@@ -15,7 +16,10 @@ end
 basis = unique_values;
 end
 
-% If R has one K_p^{red} (in general) -- generate tuples (x,a,b,c,d,y) with:
+% valid_tuples(): generates set of valid tuples, with exactly one K_p
+% Input: p -- dimension of K_p
+% Output: result -- cell array of valid tuples
+% If R has one K_p^{red}: generate tuples (x,a,b,c,d,y) with
 %   a + b + c + d = p
 %   b >= c
 %   a + b <= p - 2 (x = 1)
@@ -50,7 +54,10 @@ end
 result = valid_tuples;
 end
 
-% If R has more than one K_p^{red} -- generate tuples (x,a,b,c,d,y) with:
+% mixed_tuples(): generates set of mixed tuples (some valid, some invalid)
+% Input: p -- dimension of K_p
+% Output: result -- cell array of mixed tuples
+% If R has more than one K_p^{red}: generate tuples (x,a,b,c,d,y) with:
 %   a + b + c + d = p
 %   b >= c
 %   a + b >= p - 1 (x = 1)

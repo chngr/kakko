@@ -7,9 +7,7 @@
 function result_basis = overall_function(p)
 % find basis of unlabelled graphs with K_p
 [map, basis] = gen_basis(p);
-disp(length(basis))
 
-%{
 % find groups after performing E and F repeatedly
 groups = grouping_basis(p,basis,map);
 % convert to operator matrices E and F
@@ -19,6 +17,8 @@ gen_mat = {E,F};
 gen_names = {'E','F'};
 % write E and F to .txt file
 mat_to_txt(gen_mat,'p_plus_2_gen.txt');
+
+%{
 % computes dimension and basis of generated Lie algebra 
 [dim,result_basis] = bracket_operation(gen_mat,gen_names);
 % computes Killing form of generated Lie algebra

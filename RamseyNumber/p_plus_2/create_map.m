@@ -1,8 +1,8 @@
-% create_map(): create map from tuple to cell array with representative
-% tuple and matrix of representative tuple
-% Input: set of mixed_tuples to be further processed, dimension p 
-% Output: map from set of mixed_tuples to cell arrays, set of unique
-%         basis tuples
+% create_map(): create map from tuple to its representative tuple
+% Input: mixed_tuples -- set of tuples with potential duplicates
+%        p -- dimension of K_p
+% Output: map -- from tuple to representative 
+%         unique_values -- set of unique tuples in basis
 function [map, unique_values] = create_map(mixed_tuples,p)
 tuple_map = containers.Map;
 % for each mixed tuple
@@ -11,7 +11,7 @@ for i = 1:length(mixed_tuples)
     init_mat = tuple_to_matrix(cur_mixed);
     % generate all possible p-tuples
     tuple_set = gen_k_tuples(p+2,p);
-    % stores the tuples that correspond to valid K_p
+    % store the tuples that correspond to valid K_p
     tuple_image = {};
     % for each tuple in the tuple set
     for j = 1:length(tuple_set)
@@ -20,7 +20,7 @@ for i = 1:length(mixed_tuples)
         % check if edge subset forms a monochromatic K_p
         sum = 0;
         for k = 1:length(cur_tuple)
-            for l = (k+1):length(cur_tuple)
+            for l = k+1:length(cur_tuple)
                 sum = sum + init_mat(cur_tuple(k),cur_tuple(l));
             end
         end
@@ -31,6 +31,7 @@ for i = 1:length(mixed_tuples)
             tuple_image{end+1} = cur_tuple;
         end
     end
+    % store values of x, a, b, c, d, y
     alphabet_values = {};
     % for every tuple that forms a valid K_p
     for j = 1:length(tuple_image)
@@ -60,21 +61,22 @@ for i = 1:length(mixed_tuples)
         end
         alphabet_values{end+1} = [x,a,b,c,d,y];
     end
-    % find representative tuple
+    % find representative tuple and store in map
     rep_tuple = compare_tuples(alphabet_values);
     tuple_map(mat2str(cur_mixed)) = rep_tuple;
 end
 map = tuple_map;
 map_values = values(map);
+% find unique values
 str_values = unique(cellfun(@mat2str,map_values,'UniformOutput',false));
 unique_values = cellfun(@eval,str_values,'UniformOutput',false);
 end
 
-% compare_tuples: finds the largest tuple in set lexicographically:
+% compare_tuples(): finds the largest tuple in set lexicographically:
 %                 compare x's for largest first, then a's, b's, c's, d's,
 %                 y's
-% Input: cell array of tuples
-% Output: largest tuple
+% Input: tuple_list -- cell array of tuples
+% Output: result -- largest tuple by above ordering
 function result = compare_tuples(tuple_list)
 mat_of_tuples = [];
 % fill matrix with tuples as rows
