@@ -12,8 +12,8 @@ cur_dir = cd;
 dest_name = fullfile(cur_dir,'..','classification',txt_name);
 % write file
 format long
-fid = fopen(dest_name,'wt');
-mat_line = strcat('mat_',int2str(p),'_plus_2 := ');
+fid = fopen(dest_name,'w');
+mat_line = strcat('mat_',int2str(p),'_plus_3 := ');
 fprintf(fid,mat_line);
 fprintf(fid,'[');
 for i = 1:length(mat_set) % loop through elements in mat_set
