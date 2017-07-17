@@ -39,7 +39,7 @@ for i = 1:length(mat_list)
     cur_mat = mat_list{i};
     k_p_found = false;
     % for each possible tuple
-    for j = 1:length(tuple_list);
+    for j = 1:length(tuple_list)
         cur_tuple = tuple_list{j};
         % check if has a monochromatic K_p
         sum = 0;
