@@ -1,10 +1,8 @@
-from math import *
-
-# print_2_txt(): prints matrix to text file
-# Input: mat -- matrix to print
+# mat_to_txt(): prints matrix to text file
+# Input: mat_set -- set of matrices to print
 #        name -- name of text file
 # Output: textfile with matrix as string
-def print_2_txt(mat_set, name):
+def mat_to_txt(mat_set, name):
     f = open(name, 'w')
     f.write('[')
     for i in range(len(mat_set)): # loop through each element in mat_set
@@ -15,17 +13,16 @@ def print_2_txt(mat_set, name):
     		cur_row = cur_mat[j]
     		for k in range(len(cur_row)):
     			f.write(str(cur_row[k]))
-    			if k != len(cur_row)-1:
+    			if k != len(cur_row) - 1:
     				f.write(', ')
     		f.write(']')
     		if j != cur_mat.nrows() - 1:
     			f.write(',\n')
     	f.write(']')
-    	if i != len(mat_set)-1:
-    		f.write(',\n')
+    	if i != len(mat_set) - 1:
+    		f.write(',\n\n')
     f.write(']')
     f.close()
-
 
 # bracket_operation(): compute basis from generators
 # Input: gen_mat -- Sage generator matrices (list)
@@ -80,7 +77,6 @@ def bracket_operation(gen_mat,gen_names):
             print("Number of independent matrices: %d" % dim)
             return old_list
 
-
 # in_span(): checks whether matrix entry is in the span of
 # the matrices in list
 # Input: cell array list of matrices, entry to check independence of
@@ -95,13 +91,11 @@ def in_span(in_list, entry):
     comp_mat = comp_mat.augment(entry_vec)
     return rank(comp_mat) != comp_mat.ncols()
 
-
 # bracket(): bracket operator
 # Input: Sage matrices A and B
 # Output: Lie bracket [A,B]
 def bracket(A,B):
     return A * B - B * A
-
 
 # name_bracket(): function to compute string names for brackets
 # Input: matrix string names 'A' and 'B'
@@ -109,16 +103,14 @@ def bracket(A,B):
 def name_bracket(A,B):
     return "[" + A + "," + B + "]"
 
-
 # script for calculation
-with open('E_F.txt', 'r') as f:
-    data = f.read().replace('\n', '')
+with open('4_plus_1_gen.txt', 'r') as in_file:
+    data = in_file.read().replace('\n', '')
 # read in generator list {E,F}
 gen_list = eval(data)
 mat_list = []
 for i in range(len(gen_list)):
     mat_list.append(matrix(QQ,gen_list[i]))
-E = mat_list[0]
-F = mat_list[1]
 gen_names = ['E','F']
 basis_list = bracket_operation(mat_list,gen_names)
+mat_to_txt(basis_list,'4_plus_1_basis.txt')
