@@ -445,6 +445,10 @@ C = matrix([[0,0,0,1],[0,0,0,0],[0,0,0,0],[-1,0,0,0]])
 D = matrix([[0,0,0,0],[0,0,1,0],[0,-1,0,0],[0,0,0,0]])
 E = matrix([[0,0,0,0],[0,0,0,1],[0,0,0,0],[0,-1,0,0]])
 F = matrix([[0,0,0,0],[0,0,0,0],[0,0,0,1],[0,0,-1,0]])
+
+print_2_txt(A,'A.txt')
+
+
 alg_basis = [A,B,C,D,E,F]
 cartan_basis = [A,F]
 
@@ -466,3 +470,37 @@ print(pos_roots)
 cartan_mat = find_cartan_mat(pos_roots,kil_inv)
 print('cartan_mat')
 print(cartan_mat)
+
+
+with open('E_F.txt', 'r') as f:
+    data = f.read().replace('\n', '')
+# read in generator list {E,F}
+gen_list = eval(data)
+mat_list = []
+for i in range(len(gen_list)):
+    mat_list.append(matrix(QQ,gen_list[i]))
+E = mat_list[0]
+F = mat_list[1]
+gen_names = ['E','F']
+basis_list = bracket_operation(mat_list,gen_names)
+
+
+# print basis list to text file
+with open('basis_list.txt', 'w') as basis_list_fid:
+    for mat in basis_list:
+        basis_list_fid.write(mat.str())
+        basis_list_fid.write('\n\n')
+
+# compute adjoint rep, Killing form, and signature
+ad = adjoint_rep(basis_list)
+
+
+# print basis list to text file
+with open('adj_list.txt', 'w') as adj_list_fid:
+    for mat in ad:
+        adj_list_fid.write(mat.str())
+        adj_list_fid.write('\n\n')
+
+
+kil = killing_form(ad)
+print(kil.determinant())
