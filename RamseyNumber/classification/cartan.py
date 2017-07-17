@@ -106,27 +106,6 @@ def in_span(in_list, entry):
     comp_mat = comp_mat.augment(entry_vec)
     return rank(comp_mat) != comp_mat.ncols()
 
-# adjoint_rep(): computes adjoint representation matrices of 
-#                Lie algebra
-# Input: input_elems -- set of matrices to compute adjoint_rep of 
-#        basis -- compute with respect to basis 
-# Output: list of adjoint representation matrices
-def adjoint_rep(input_elems,basis):
-    basis_vec = []
-    ad = []
-    for b in basis:
-        basis_vec.append(b.transpose().list())
-    basis_mat = matrix(QQ,basis_vec).transpose()
-    for mat_elem in input_elems:
-        mat_list = []
-        for basis_elem in basis:
-            bracket_vec = vector(QQ,bracket(mat_elem,basis_elem).transpose().list())
-            coords = basis_mat.solve_right(bracket_vec)
-            mat_list.append(coords.list())
-        adj_mat = matrix(QQ,mat_list).transpose()
-        ad.append(adj_mat)
-    return ad
-
 # killing_form(): computes Killing form of Lie algebra
 # Input: basis for rho_{p+r}(a_p) (general)
 # Output: matrix of Killing form
@@ -240,14 +219,14 @@ def print_2_txt(mat, name):
 
 # find_cartan_basis(): computes basis for Cartan subalgebra 
 # Input: basis -- basis for overall Lie algebra
-#        adj_group -- group of adjoint rep matrices corresponding to
-#        basis elements
-# Output: cartan_basis -- basis for Cartan subalgebra
+# Output: mat_group -- basis for Cartan subalgebra
 def find_cartan_basis(basis):
     mat_size = basis[0].ncols()
     elem_found = False
+    # loop until valid element is found
     while not elem_found:
         cur_elem = compute_random_element(basis)
+        # find kernel of adjoint^(dim of Lie algebra)
         adj = adjoint_mat(cur_elem, basis)
         kernel_col = (adj^(len(basis))).right_kernel().basis()
         mat_group = []
@@ -256,14 +235,27 @@ def find_cartan_basis(basis):
             for i in range(len(basis)):
                 mat_elem = mat_elem + kernel_elem[i] * basis[i]
             mat_group.append(mat_elem)
+        # check if generated space is abelian
         if is_abelian(mat_group):
             elem_found = True
     return mat_group
 
-# compute_random_element(): computes random element, inner product of 
-#                           basis vectors with scaling
+# complete_basis(): completes the Cartan basis to the Lie algebra basis
+# Input: lie_basis -- existing basis for Lie algebra
+#        cartan_basis -- basis for Cartan subalgebra to be completed
+# Output: cur_basis -- basis for Lie algebra which includes elements in
+#                      the Cartan basis
+def complete_basis(lie_basis, cartan_basis):
+    cur_basis = cartan_basis
+    for elem in lie_basis:
+        if not in_span(cur_basis, elem):
+            cur_basis.append(elem)
+    return cur_basis
+
+# compute_random_element(): computes random matrix element, inner 
+#                           product of basis matrices with scaling
 # Input: basis -- basis of Lie algebra
-# Output: random element of Lie algebra
+# Output: random_elem -- random element of Lie algebra
 def compute_random_element(basis):
     mat_size = basis[0].ncols()
     scaling = [randint(1,100) for p in range(0,len(basis))]
@@ -272,10 +264,10 @@ def compute_random_element(basis):
         random_elem = random_elem + scaling[i] * basis[i]
     return random_elem
 
-# compute_random_element(): computes random element, inner product of 
-#                           basis vectors with scaling
+# compute_random_vector(): computes random vector, inner product of 
+#                          vectors with scaling
 # Input: basis -- basis of Lie algebra
-# Output: random element of Lie algebra
+# Output: random_elem -- random element of Lie algebra
 def compute_random_vector(basis):
     mat_size = basis[0].ncols()
     scaling = [randint(1,100) for p in range(0,len(basis))]
@@ -287,7 +279,7 @@ def compute_random_vector(basis):
 # is_abelian(): determines whether Lie algebra determined by basis is 
 #               abliean
 # Input: basis -- basis of Lie algebra
-# Output: result -- boolean true if abelian, false otherwise
+# Output: is_abelian -- boolean true if abelian, false otherwise
 def is_abelian(basis):
     mat_size = basis[0].ncols()
     is_abelian = True
@@ -297,17 +289,42 @@ def is_abelian(basis):
                 is_abelian = False
     return is_abelian
 
-# adjoint_mat(): computes adjoint representation matrix for matrix given
-#                basis set and basis matrix
-# Input: mat -- matrix to compute adj of 
-#        basis -- basis for Lie algebra
-# Output: result -- adjoint matrix
-def adjoint_mat(input_mat,basis):
+# adjoint_rep(): computes adjoint representation matrices of 
+#                Lie algebra
+# Input: input_elems -- set of matrices to compute adjoint rep of 
+#        basis -- compute with respect to this basis 
+# Output: ad -- list of adjoint representation matrices
+def adjoint_rep(input_elems, basis):
     basis_vec = []
-    col_list = []
+    ad = []
+    # find matrix of basis 
     for b in basis:
         basis_vec.append(b.transpose().list())
     basis_mat = matrix(QQ,basis_vec).transpose()
+    # find adjoint rep matrices
+    for mat_elem in input_elems:
+        mat_list = []
+        for basis_elem in basis:
+            bracket_vec = vector(QQ,bracket(mat_elem,basis_elem).transpose().list())
+            coords = basis_mat.solve_right(bracket_vec)
+            mat_list.append(coords.list())
+        adj_mat = matrix(QQ,mat_list).transpose()
+        ad.append(adj_mat)
+    return ad
+
+# adjoint_mat(): computes adjoint representation matrix for matrix given
+#                the basis set
+# Input: mat -- matrix to compute adjoint rep matrix of 
+#        basis -- basis for Lie algebra
+# Output: adj_mat -- adjoint matrix
+def adjoint_mat(input_mat, basis):
+    basis_vec = []
+    col_list = []
+    # find matrix of basis
+    for b in basis:
+        basis_vec.append(b.transpose().list())
+    basis_mat = matrix(QQ,basis_vec).transpose()
+    # find adjoint rep matrices
     for elem in basis:
         bracket_vec = vector(QQ,bracket(input_mat,elem).transpose().list())
         coords = basis_mat.solve_right(bracket_vec)
@@ -316,9 +333,8 @@ def adjoint_mat(input_mat,basis):
     return adj_mat
 
 # diag_to_root_mat(): converts basis for Cartan subalgebra into root matrix
-# Input: h_basis -- basis for Cartan subalgebra
-#        g_basis -- basis for original Lie algebra
-#        g_basis_mat -- basis matrix for original Lie algebra
+# Input: cartan_basis -- basis for Cartan subalgebra
+#        alg_basis -- basis for original Lie algebra
 # Output: root_mat -- root matrix of Cartan subalgebra
 def diag_to_root_mat(cartan_basis, alg_basis):
     # compute basis matrix for Lie algebra
@@ -326,24 +342,28 @@ def diag_to_root_mat(cartan_basis, alg_basis):
     for b in alg_basis:
         basis_vec.append(b.transpose().list())
     basis_mat = matrix(QQ,basis_vec).transpose()
-    # adjoint representation of H1 on original basis
+    # adjoint representation of Cartan on Lie basis
     cartan_ad = adjoint_rep(cartan_basis,alg_basis)
     mat_size = cartan_ad[0].ncols()
-    cartan_elem = compute_random_element(cartan_ad)
-    D, P = cartan_elem.eigenmatrix_right()
-    # diagonalize matrix
-    root_mat_real = matrix(QQ,0,mat_size)
-    root_mat_complex = matrix(QQ,0,mat_size)
+    valid_elem = False 
+    # find element that diagonalizes the Cartan basis
+    while not valid_elem:
+        # compute a random element of the Cartan subalgebra
+        cartan_elem = compute_random_element(cartan_ad)
+        # diagonalize random element
+        D, P = cartan_elem.eigenmatrix_right()
+    # build the root matrix
+    root_mat = matrix(QQ,0,mat_size)
     for elem in cartan_ad:
         cur_diag = (P.inverse() * elem * P).diagonal()
-        root_mat_complex = root_mat_complex.stack(vector(cur_diag))
-    root_mat_complex = root_mat_complex.stack(matrix(QQ,len(alg_basis)-len(cartan_basis),len(alg_basis)))
-    return root_mat_complex
+        root_mat = root_mat.stack(vector(cur_diag))
+    root_mat = root_mat.stack(matrix(QQ,len(alg_basis)-len(cartan_basis),len(alg_basis)))
+    return root_mat
 
-# find_pos_roots(): compute the positive roots
+# find_simple_roots(): compute the simple roots of the Cartan subalgebra
 # Input: root_mat -- unprocessed root matrix
-# Output: pos_roots -- cell array of positive roots
-def find_pos_roots(root_mat, kil_cartan_inv):
+# Output: simple_roots -- cell array of simple roots
+def find_simple_roots(root_mat, kil_cartan_inv):
     num_rows = root_mat.nrows()
     num_cols = root_mat.ncols()
     for i in range(num_cols-1,-1,-1):
@@ -368,7 +388,7 @@ def find_pos_roots(root_mat, kil_cartan_inv):
     simple_roots = gen_simple_roots(pos_roots)
     return simple_roots
 
-def gen_simple_roots(pos_roots):
+def simple_root_helper(pos_roots):
     simple_roots = []
     bad_roots = []
     for i in range(len(pos_roots)):
@@ -387,11 +407,11 @@ def gen_simple_roots(pos_roots):
     return simple_roots
 
 # is_valid_scaling(): checks if scaling vector is valid
-# Condition: after removing zero rows of root matrix, all inner products
-# should be nonzero
+# valid condition: After removing zero rows of root matrix, all inner products
+# should be nonzero.
 # Input: root_mat -- root matrix with rows of zeros removed
 #        scaling -- vector to take inner product with
-# Output: result -- boolean true if scaling vector is valid
+# Output: is_valid -- boolean true if scaling vector is valid
 def is_valid_scaling(root_mat,scaling,kil_cartan_inv):
     num_rows = root_mat.nrows()
     num_cols = root_mat.ncols()
@@ -403,16 +423,13 @@ def is_valid_scaling(root_mat,scaling,kil_cartan_inv):
             break
     return is_valid
 
+# inner_product(): inner product defined by the Killing form
+# Input: x, y -- row vectors 
+#        M -- matrix in inner product 
+# Output: x * M * y^T
 def inner_product(x,y,M):
     result = matrix(x) * M * matrix(y).transpose()
     return result[0,0].real()
-
-def complete_basis(lie_basis,cartan_basis):
-    cur_basis = cartan_basis
-    for elem in lie_basis:
-        if not in_span(cur_basis, elem):
-            cur_basis.append(elem)
-    return cur_basis
 
 # find_cartan_mat(): finds Cartan matrix given a collection of positive
 #                    roots
@@ -439,68 +456,30 @@ def find_cartan_mat(pos_roots,kil_cartan_inv):
 # alg_basis = bracket_operation(sl_4[0],sl_4[1])
 
 # SO_4 HARDCODE
-A = matrix([[0,1,0,0],[-1,0,0,0],[0,0,0,0],[0,0,0,0]])
-B = matrix([[0,0,1,0],[0,0,0,0],[-1,0,0,0],[0,0,0,0]])
-C = matrix([[0,0,0,1],[0,0,0,0],[0,0,0,0],[-1,0,0,0]])
-D = matrix([[0,0,0,0],[0,0,1,0],[0,-1,0,0],[0,0,0,0]])
-E = matrix([[0,0,0,0],[0,0,0,1],[0,0,0,0],[0,-1,0,0]])
-F = matrix([[0,0,0,0],[0,0,0,0],[0,0,0,1],[0,0,-1,0]])
+# A = matrix([[0,1,0,0],[-1,0,0,0],[0,0,0,0],[0,0,0,0]])
+# B = matrix([[0,0,1,0],[0,0,0,0],[-1,0,0,0],[0,0,0,0]])
+# C = matrix([[0,0,0,1],[0,0,0,0],[0,0,0,0],[-1,0,0,0]])
+# D = matrix([[0,0,0,0],[0,0,1,0],[0,-1,0,0],[0,0,0,0]])
+# E = matrix([[0,0,0,0],[0,0,0,1],[0,0,0,0],[0,-1,0,0]])
+# F = matrix([[0,0,0,0],[0,0,0,0],[0,0,0,1],[0,0,-1,0]])
+# alg_basis = [A,B,C,D,E,F]
+# cartan_basis = [A,F]
 
-print_2_txt(A,'A.txt')
-
-
-alg_basis = [A,B,C,D,E,F]
-cartan_basis = [A,F]
-
-# cartan_basis = find_cartan_basis(alg_basis)
+cartan_basis = find_cartan_basis(alg_basis)
 comp_basis = complete_basis(alg_basis,cartan_basis)
 adj = adjoint_rep(comp_basis,comp_basis)
 kil_mat_comp = killing_form(adj)
 kil_inv = kil_mat_comp.inverse()
-print('kil_mat_comp')
+print('kil_mat_comp:')
 print(kil_mat_comp)
 print('kil_inv:')
 print(kil_inv)
 root_mat = diag_to_root_mat(cartan_basis,comp_basis)
-print('root mat')
+print('root_mat:')
 print(root_mat)
 pos_roots = find_pos_roots(root_mat,kil_inv)
-print('simple_roots')
+print('simple_roots:')
 print(pos_roots)
 cartan_mat = find_cartan_mat(pos_roots,kil_inv)
-print('cartan_mat')
+print('cartan_mat:')
 print(cartan_mat)
-
-
-with open('E_F.txt', 'r') as f:
-    data = f.read().replace('\n', '')
-# read in generator list {E,F}
-gen_list = eval(data)
-mat_list = []
-for i in range(len(gen_list)):
-    mat_list.append(matrix(QQ,gen_list[i]))
-E = mat_list[0]
-F = mat_list[1]
-gen_names = ['E','F']
-basis_list = bracket_operation(mat_list,gen_names)
-
-
-# print basis list to text file
-with open('basis_list.txt', 'w') as basis_list_fid:
-    for mat in basis_list:
-        basis_list_fid.write(mat.str())
-        basis_list_fid.write('\n\n')
-
-# compute adjoint rep, Killing form, and signature
-ad = adjoint_rep(basis_list)
-
-
-# print basis list to text file
-with open('adj_list.txt', 'w') as adj_list_fid:
-    for mat in ad:
-        adj_list_fid.write(mat.str())
-        adj_list_fid.write('\n\n')
-
-
-kil = killing_form(ad)
-print(kil.determinant())
