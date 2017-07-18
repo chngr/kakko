@@ -15,7 +15,6 @@ p = r-2;
 % until no new elements are generated (temp_list is empty)
 for i = 1:intmax
     temp_list = {};
-    
     % adding operation result to temp list
     for j = 1:length(new_list)
         cur_tuple = new_list{j};
@@ -24,7 +23,6 @@ for i = 1:intmax
         [unique_set, ~] = gen_opr_on_tuple(cur_tuple,'F',p,r,map);
         temp_list = [temp_list, unique_set];
     end
-    
     % eleminate duplicates in temp_list
     str = unique(cellfun(@mat2str,temp_list,'UniformOutput',false));
     temp_list = cellfun(@eval,str,'UniformOutput',false);
