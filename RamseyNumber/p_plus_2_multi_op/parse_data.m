@@ -38,7 +38,7 @@ end
 %        p -- dimension of K_p
 % Output: result -- basis elements with a K_p
 function result = parse_comp_data(mat_list,p)
-tuple_list = gen_k_tuples(p+2,p);
+tuple_list = gen_k_tuples(p+3,p);
 comp_list = {};
 % for each element in input list
 for i = 1:length(mat_list)

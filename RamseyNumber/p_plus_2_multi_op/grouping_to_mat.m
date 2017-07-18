@@ -1,9 +1,9 @@
 % grouping_to_mat(): constructs large E and F matrices (generators for
 %                    space)
-% Input: grouping -- cell array of groups of basis 
+% Input: grouping -- cell array of groups of basis
 %        p -- dimension of K_p
-%        map -- map from tuple to its representative tuple
-% Output: E, F -- matrices representing E and F on the bases 
+%        map -- map from tuple to its representative
+% Output: E, F -- matrices representing E and F on the bases
 function [E,F] = grouping_to_mat(grouping,p,map)
 E = [];
 F = [];
@@ -25,15 +25,12 @@ F_sub = zeros(length(group));
 for i = 1:length(group)
     % ith element in group
     cur_tuple = group{i};
-    % get unique and duplicate tuple sets for E and F
-    [E_result_uniq, E_result_dup] = gen_opr_on_tuple(cur_tuple,'E',p,p+2,map);
-    [F_result_uniq, F_result_dup] = gen_opr_on_tuple(cur_tuple,'F',p,p+2,map);
-    % for each element in E subgroup
+    [E_result_uniq, E_result_dup] = gen_opr_on_tuple(cur_tuple,'E',p,p+3,map);
+    [F_result_uniq, F_result_dup] = gen_opr_on_tuple(cur_tuple,'F',p,p+3,map);
     for j = 1:length(E_result_uniq)
         result_index = get_index_in_group(E_result_uniq{j},group);
         E_sub(result_index,i) = get_freq(E_result_uniq{j},E_result_dup);
     end
-    % for each element in F subgroup
     for j = 1:length(F_result_uniq)
         result_index = get_index_in_group(F_result_uniq{j},group);
         F_sub(result_index,i) = get_freq(F_result_uniq{j},F_result_dup);
@@ -54,10 +51,7 @@ for i = 1:length(group)
 end
 end
 
-% get_freq_in_result(): get frequency of tuple in result of operation
-% Input: tuple -- tuple to get frequency of
-%        dup_set -- set of duplicate tuples
-% Output: frequency
+% get_freq(): get frequence of tuple in result of operation
 function freq = get_freq(tuple,dup_set)
 freq = 0;
 for i = 1:length(dup_set)

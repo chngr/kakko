@@ -1,92 +1,121 @@
-% gen_basis(): basis for all unlabelled graphs on (p+2) vertices with 
-%              at least one K_p
-% Input: p -- dimension of K_p
-% Output: map -- from tuple to its representative 
-%         basis -- set of unique representative tuples
-function [map, basis] = gen_basis(p)
-valid_tuples = valid_tuples(p);
-mixed_tuples = mixed_tuples(p);
-% create map from mixed_tuples
-[map, unique_values] = create_map(mixed_tuples,p);
-% fill map with valid_tuples
-for i = 1:length(valid_tuples)
-   map(mat2str(valid_tuples{i})) = valid_tuples{i};
-   unique_values{end+1} = valid_tuples{i}; 
+% gen_basis(): basis for all unlabelled graphs on (p+3) vertices with
+% at least one K_p
+% Input: input_file -- name of input_file with graphs on p+3 vertices
+%        p -- dimension of K_p
+% Output: map -- map with basis
+%         unique_values -- set of representative basis tuples (including 
+%         permutations within vertices p+1, p+2, p+3)
+function [map, unique_values] = gen_basis(input_file,p)
+tuple_map = containers.Map;
+% generate set of unique basis elements
+basis = parse_data(input_file,p);
+% all possible permutations of 3 indices
+permute_indices = {[1,2],[2,1]};
+% for each basis element
+for i = 1:length(basis)
+    cur_mat = basis{i};
+    % set of candidates to check for K_p
+    tuple_candidates = gen_k_tuples(p+3,p);
+    tuple_image = {};
+    % for each candidate
+    for j = 1:length(tuple_candidates)
+        cur_tuple = tuple_candidates{j};
+        % check if candidate forms a monochromatic K_p
+        sum = 0;
+        for k = 1:length(cur_tuple)
+            for l = k+1:length(cur_tuple)
+                sum = sum + cur_mat(cur_tuple(k),cur_tuple(l));
+            end
+        end
+        if sum == nchoosek(p,2)
+            tuple_image{end+1} = cur_tuple;
+        end
+        if sum == 0
+            tuple_image{end+1} = cur_tuple;
+        end
+    end
+    alphabet_values = {};
+    % for each tuple representing a K_p
+    for j = 1:length(tuple_image)
+        k_p_indices = tuple_image{j};
+        tuple_diff = setdiff(1:p+3,k_p_indices);
+        % go through all permutations of last 3 columns
+        for q = 1:length(permute_indices) 
+            % compute a through h
+            a = 0; b = 0; c = 0; d = 0; e = 0; f = 0; g = 0; h = 0;
+            for k = 1:length(k_p_indices)
+                if cur_mat(k_p_indices(k),tuple_diff(permute_indices{q}(1))) == 1 && ...
+                        cur_mat(k_p_indices(k),tuple_diff(permute_indices{q}(2))) == 1 && ...
+                        cur_mat(k_p_indices(k),tuple_diff(permute_indices{q}(3))) == 1
+                    a = a + 1;
+                elseif cur_mat(k_p_indices(k),tuple_diff(permute_indices{q}(1))) == 1 && ...
+                        cur_mat(k_p_indices(k),tuple_diff(permute_indices{q}(2))) == 1 && ...
+                        cur_mat(k_p_indices(k),tuple_diff(permute_indices{q}(3))) == 0
+                    b = b + 1;
+                elseif cur_mat(k_p_indices(k),tuple_diff(permute_indices{q}(1))) == 1 && ...
+                        cur_mat(k_p_indices(k),tuple_diff(permute_indices{q}(2))) == 0 && ...
+                        cur_mat(k_p_indices(k),tuple_diff(permute_indices{q}(3))) == 1
+                    c = c + 1;
+                elseif cur_mat(k_p_indices(k),tuple_diff(permute_indices{q}(1))) == 1 && ...
+                        cur_mat(k_p_indices(k),tuple_diff(permute_indices{q}(2))) == 0 && ...
+                        cur_mat(k_p_indices(k),tuple_diff(permute_indices{q}(3))) == 0
+                    d = d + 1;
+                elseif cur_mat(k_p_indices(k),tuple_diff(permute_indices{q}(1))) == 0 && ...
+                        cur_mat(k_p_indices(k),tuple_diff(permute_indices{q}(2))) == 1 && ...
+                        cur_mat(k_p_indices(k),tuple_diff(permute_indices{q}(3))) == 1
+                    e = e + 1;
+                elseif cur_mat(k_p_indices(k),tuple_diff(permute_indices{q}(1))) == 0 && ...
+                        cur_mat(k_p_indices(k),tuple_diff(permute_indices{q}(2))) == 1 && ...
+                        cur_mat(k_p_indices(k),tuple_diff(permute_indices{q}(3))) == 0
+                    f = f + 1;
+                elseif cur_mat(k_p_indices(k),tuple_diff(permute_indices{q}(1))) == 0 && ...
+                        cur_mat(k_p_indices(k),tuple_diff(permute_indices{q}(2))) == 0 && ...
+                        cur_mat(k_p_indices(k),tuple_diff(permute_indices{q}(3))) == 1
+                    g = g + 1;
+                else
+                    h = h + 1;
+                end
+            end
+            % compute x, y, z
+            x = cur_mat(k_p_indices(1),k_p_indices(2));
+            y = 2 * cur_mat(tuple_diff(permute_indices{q}(1)),tuple_diff(permute_indices{q}(2))) + ...
+                cur_mat(tuple_diff(permute_indices{q}(1)),tuple_diff(permute_indices{q}(3)));
+            z = cur_mat(tuple_diff(permute_indices{q}(2)),tuple_diff(permute_indices{q}(3)));
+            % add result tuple to alphabet_values (including every possible permutations)
+            alphabet_values{end+1} = [x,a,b,c,d,e,f,g,h,y,z];
+        end
+    end
+    % alphabet_values contains all permutations of {p+1,p+2,p+3} and all selections of K_p 
+    
+    % delete duplicates within alphabet_values 
+    alphabet_values_str = unique(cellfun(@mat2str,alphabet_values,'UniformOutput',false));
+    alphabet_values = cellfun(@eval,alphabet_values_str,'UniformOutput',false);
+    
+    % find representative tuple (from alphabet_values) by taking the "max"
+    rep_tuple = compare_tuples(alphabet_values);
+    for j = 1:length(alphabet_values)
+        tuple_map(mat2str(alphabet_values{j})) = rep_tuple;
+    end
 end
-basis = unique_values;
+map = tuple_map;
+% find unique representative values
+map_values = values(map);
+str_values = unique(cellfun(@mat2str,map_values,'UniformOutput',false));
+unique_values = cellfun(@eval,str_values,'UniformOutput',false);
 end
 
-% valid_tuples(): generates set of valid tuples, with exactly one K_p
-% Input: p -- dimension of K_p
-% Output: result -- cell array of valid tuples
-% If R has one K_p^{red}: generate tuples (x,a,b,c,d,y) with
-%   a + b + c + d = p
-%   b >= c
-%   a + b <= p - 2 (x = 1)
-%   b + d <= p - 2 (x = 0)
-% NOTE: Includes single edge case where a + b = p - 2, which has two
-% K_p^{red}, but no duplicate tuples.
-% Set of tuples are represented once and do not need more processing.
-function result = valid_tuples(p)
-valid_tuples = {};
-% for x = 1
-for a = p:-1:0
-    for b = (p-a-2):-1:0
-        for c = min(p-a-b,b):-1:0
-            for y = 0:1
-                d = p-a-b-c;
-                valid_tuples{end+1} = [1,a,b,c,d,y];
-            end
-        end
-    end
+% compare_tuples: finds the largest tuple in set lexicographically:
+%                 compare x's for largest first, then a's, b's, etc.
+% Input: cell array of tuples
+% Output: largest tuple
+function result = compare_tuples(tuple_list)
+mat_of_tuples = [];
+% fill matrix with tuples as rows
+for i = 1:length(tuple_list)
+    mat_of_tuples(i,:) = tuple_list{i};
 end
-% for x = 0
-for d = p:-1:0
-    for b = (p-d-2):-1:0
-        for c = min(p-d-b,b):-1:0
-            for y = 0:1
-                a = p-d-b-c;
-                valid_tuples{end+1} = [0,a,b,c,d,y];
-            end
-        end
-    end
-end
-result = valid_tuples;
-end
-
-% mixed_tuples(): generates set of mixed tuples (some valid, some invalid)
-% Input: p -- dimension of K_p
-% Output: result -- cell array of mixed tuples
-% If R has more than one K_p^{red}: generate tuples (x,a,b,c,d,y) with:
-%   a + b + c + d = p
-%   b >= c
-%   a + b >= p - 1 (x = 1)
-%   b + d >= p - 1 (x = 0)
-% NOTE: Set of tuples generated need to be processed further to eliminate 
-% duplicates.
-function result = mixed_tuples(p)
-mixed_tuples = {};
-% for x = 1
-for a = p:-1:0
-    for b = (p-a):-1:(p-a-1)
-        for c = min(p-a-b,b):-1:0
-            for y = 0:1
-                d = p-a-b-c;
-                mixed_tuples{end+1} = [1,a,b,c,d,y];
-            end
-        end
-    end
-end
-% for x = 0
-for d = p:-1:0
-    for b = (p-d):-1:(p-d-1)
-        for c = min(p-d-b,b):-1:0
-            for y = 0:1
-                a = p-d-b-c;
-                mixed_tuples{end+1} = [0,a,b,c,d,y];
-            end
-        end
-    end
-end
-result = mixed_tuples;
+% sort rows and return bottom row with largest tuple
+sorted_mat = sortrows(mat_of_tuples);
+rep_tuple = sorted_mat(end,:);
+result = rep_tuple;
 end

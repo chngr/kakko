@@ -1,0 +1,6 @@
+LEGEND.txt
+
+
+p_plus_x -- unlabelled graphs with multiplicity, sequence of consecutive Es and Fs (original)
+p_plus_x_no_repeat -- removes the paired duplicate subblocks in E and F
+p_plus_2_multi_op -- for case p = 3, p + 2, performs repeated Es and Fs

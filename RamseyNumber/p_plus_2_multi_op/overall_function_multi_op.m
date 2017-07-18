@@ -4,7 +4,7 @@
 % Output: result_basis -- basis of generated Lie algebra
 %         printed: dimension and signature
 % NOTE: Valid for p >= 4.
-function result_basis = overall_function(p)
+function result_basis = overall_function_multi_op(p)
 % find basis of unlabelled graphs with K_p
 [map, basis] = gen_basis(p);
 % find groups after performing E and F repeatedly
@@ -15,7 +15,7 @@ groups = grouping_basis(p,basis,map);
 gen_mat = {E,F};
 gen_names = {'E','F'};
 % write E and F to .txt file
-gen_file_name = strcat(mat2str(p),'_plus_2.g');
+gen_file_name = strcat(mat2str(p),'_plus_2_multi_op.g');
 mat_to_txt(gen_mat,gen_file_name,p);
 
 %{
