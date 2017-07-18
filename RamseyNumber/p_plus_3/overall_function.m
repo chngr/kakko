@@ -14,6 +14,7 @@ gen_mat = {E,F};
 % Write result_basis to .txt file
 file_name = strcat(p_str,'_plus_3.g');
 mat_to_txt({E,F},file_name,p);
+
 %{
 disp('Finished writing to .txt')
 gen_names = {'E','F'};

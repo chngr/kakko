@@ -2,8 +2,9 @@
 % at least one K_p
 % Input: input_file -- name of input_file with graphs on p+3 vertices
 %        p -- dimension of K_p
-% Output: map with basis, set of representative basis tuples (including permutations within
-% vertices p+1, p+2, p+3)
+% Output: map -- map with basis
+%         unique_values -- set of representative basis tuples (including 
+%         permutations within vertices p+1, p+2, p+3)
 function [map, unique_values] = gen_basis(input_file,p)
 tuple_map = containers.Map;
 % generate set of unique basis elements
@@ -22,7 +23,7 @@ for i = 1:length(basis)
         % check if candidate forms a monochromatic K_p
         sum = 0;
         for k = 1:length(cur_tuple)
-            for l = (k+1):length(cur_tuple)
+            for l = k+1:length(cur_tuple)
                 sum = sum + cur_mat(cur_tuple(k),cur_tuple(l));
             end
         end
@@ -38,7 +39,8 @@ for i = 1:length(basis)
     for j = 1:length(tuple_image)
         k_p_indices = tuple_image{j};
         tuple_diff = setdiff(1:p+3,k_p_indices);
-        for q = 1 : length(permute_indices) % go through all permutations of last 3 columns
+        % go through all permutations of last 3 columns
+        for q = 1:length(permute_indices) 
             % compute a through h
             a = 0; b = 0; c = 0; d = 0; e = 0; f = 0; g = 0; h = 0;
             for k = 1:length(k_p_indices)
@@ -83,7 +85,7 @@ for i = 1:length(basis)
             alphabet_values{end+1} = [x,a,b,c,d,e,f,g,h,y,z];
         end
     end
-    % alphabet_values contains all permutations of {p+1,p+2,p+3} and all selections of  K_p 
+    % alphabet_values contains all permutations of {p+1,p+2,p+3} and all selections of K_p 
     
     % delete duplicates within alphabet_values 
     alphabet_values_str = unique(cellfun(@mat2str,alphabet_values,'UniformOutput',false));
