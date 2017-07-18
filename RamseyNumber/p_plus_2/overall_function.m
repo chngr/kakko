@@ -15,8 +15,9 @@ groups = grouping_basis(p,basis,map);
 gen_mat = {E,F};
 gen_names = {'E','F'};
 % write E and F to .txt file
-gen_file_name = strcat(mat2str(p),'_plus_3.g');
+gen_file_name = strcat(mat2str(p),'_plus_2.g');
 mat_to_txt(gen_mat,gen_file_name,p);
+
 %{
 % computes dimension and basis of generated Lie algebra 
 [dim,result_basis] = bracket_operation(gen_mat,gen_names);

@@ -16,8 +16,8 @@ F = blkdiag(F_1,F_1,F_1);
 gen_mat = {E,F};
 gen_names = {'E','F'};
 % write E and F to output file
-gen_file_name = strcat(mat2str(p),'_plus_1_gen.txt');
-mat_to_txt(gen_mat,gen_file_name);
+gen_file_name = strcat(mat2str(p),'_plus_1.g');
+mat_to_txt(gen_mat,gen_file_name,p);
 % computes dimension and basis of generated Lie algebra 
 [dim,result_basis] = bracket_operation(gen_mat,gen_names);
 % computes Killing form of generated Lie algebra

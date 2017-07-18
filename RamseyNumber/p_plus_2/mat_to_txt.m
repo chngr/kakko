@@ -3,17 +3,16 @@
 %        txt_name -- name of text file
 %        p -- dimension of K_p
 % Output: .txt file with mat_set printed
-%         saved in kakko/RamseyNumber/classification directory
-% NOTE: Printed in Python-friendly syntax for use with eval() function. 
+%         saved in kakko/RamseyNumber/gap_files directory
 function mat_to_txt(mat_set,txt_name,p)
 p_str = int2str(p);
 % find destination directory relatively
 cur_dir = cd;
-dest_name = fullfile(cur_dir,'..','classification',txt_name);
+dest_name = fullfile(cur_dir,'..','gap_files',txt_name);
 % write file
 format long
 fid = fopen(dest_name,'w');
-mat_line = strcat('mat_',int2str(p),'_plus_3 := ');
+mat_line = strcat('mat_',p_str,'_plus_2 := ');
 fprintf(fid,mat_line);
 fprintf(fid,'[');
 for i = 1:length(mat_set) % loop through elements in mat_set
