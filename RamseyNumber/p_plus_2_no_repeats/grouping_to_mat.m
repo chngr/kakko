@@ -4,13 +4,24 @@
 %        p -- dimension of K_p
 %        map -- map from tuple to its representative tuple
 % Output: E, F -- matrices representing E and F on the bases 
+% NOTE: Removes duplicate pairs.
 function [E,F] = grouping_to_mat(grouping,p,map)
 E = [];
 F = [];
+comp_col = {};
 for i = 1:length(grouping)
     [E_sub,F_sub] = opr_in_sub(grouping{i},p,map);
-    E = blkdiag(E,E_sub);
-    F = blkdiag(F,F_sub);
+    present = false;
+    for j = 1:length(comp_col)
+        if isequal([E_sub,F_sub],comp_col{j})
+            present = true;
+            break;
+        end
+    end
+    if present == false
+        E = blkdiag(E,E_sub);
+        F = blkdiag(F,F_sub);
+    end
 end
 end
 

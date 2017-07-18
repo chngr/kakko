@@ -15,7 +15,7 @@ groups = grouping_basis(p,basis,map);
 gen_mat = {E,F};
 gen_names = {'E','F'};
 % write E and F to .txt file
-gen_file_name = strcat(mat2str(p),'_plus_2.g');
+gen_file_name = strcat(mat2str(p),'_plus_2_no_repeats.g');
 mat_to_txt(gen_mat,gen_file_name,p);
 
 %{
