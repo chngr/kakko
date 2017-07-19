@@ -1,1 +1,32 @@
-mat_1_size_3 :=[[
+mat_1_size_3 :=[[[0, 0, 0],[1, 0, 0],[1, 1, 0]],[[0, 1, 1],[0, 0, 1],[0, 0, 0]]];
+
+L_1 := LieAlgebra(Rationals, mat_1_size_3);
+
+S_1 := SemiSimpleType(L_1);
+
+PrintTo("*stdout*",S_1);
+
+mat_2_size_3 :=[[[0, 0, 0],[1, 0, 1],[1, 0, 0]],[[0, 1, 1],[0, 0, 0],[0, 1, 0]]];
+
+L_2 := LieAlgebra(Rationals, mat_2_size_3);
+
+S_2 := SemiSimpleType(L_2);
+
+PrintTo("*stdout*",S_2);
+
+mat_3_size_3 :=[[[0, 0, 1],[1, 0, 0],[0, 1, 0]],[[0, 1, 0],[0, 0, 1],[1, 0, 0]]];
+
+L_3 := LieAlgebra(Rationals, mat_3_size_3);
+
+S_3 := SemiSimpleType(L_3);
+
+PrintTo("*stdout*",S_3);
+
+mat_4_size_3 :=[[[0, 0, 1],[1, 0, 1],[0, 0, 0]],[[0, 1, 0],[0, 0, 0],[1, 1, 0]]];
+
+L_4 := LieAlgebra(Rationals, mat_4_size_3);
+
+S_4 := SemiSimpleType(L_4);
+
+PrintTo("*stdout*",S_4);
+
