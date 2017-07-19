@@ -6,8 +6,11 @@ function result_basis = gen_E_F(head, tail)
 result_basis = {};
 for size = head:tail
     new_E = zeros(size);
+    new_F = zeros(size);
     for i = 2 : size
-        
+        new_E(i,i-1) = 1;
+        new_F(i-1,i) = 1;
     end
 end
+result_basis{end+1} = {new_E,ne}
 end
