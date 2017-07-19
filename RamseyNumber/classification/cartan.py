@@ -332,6 +332,9 @@ def adjoint_mat(input_mat, basis):
     adj_mat = matrix(QQ,col_list).transpose()
     return adj_mat
 
+'''
+TO RETURN TO LATER: FINISH CHECKING DIAGONALIZATION CONDITION
+
 # diag_to_root_mat(): converts basis for Cartan subalgebra into root matrix
 # Input: cartan_basis -- basis for Cartan subalgebra
 #        alg_basis -- basis for original Lie algebra
@@ -359,6 +362,7 @@ def diag_to_root_mat(cartan_basis, alg_basis):
         root_mat = root_mat.stack(vector(cur_diag))
     root_mat = root_mat.stack(matrix(QQ,len(alg_basis)-len(cartan_basis),len(alg_basis)))
     return root_mat
+'''
 
 # find_simple_roots(): compute the simple roots of the Cartan subalgebra
 # Input: root_mat -- unprocessed root matrix
@@ -465,6 +469,51 @@ def find_cartan_mat(pos_roots,kil_cartan_inv):
 # alg_basis = [A,B,C,D,E,F]
 # cartan_basis = [A,F]
 
+
+# Test for first block of p+3
+mat_list = [ [ [ 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ], 
+      [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ], 
+      [ 0, 1, 0, 1, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ], 
+      [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ], 
+      [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ], 
+      [ 0, 0, 0, 1, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0 ], 
+      [ 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0 ], 
+      [ 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0 ], 
+      [ 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 1, 2, 0, 0 ], 
+      [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ], 
+      [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ], 
+      [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ], 
+      [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ], 
+      [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0 ], 
+      [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0 ] ], 
+  [ [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ], 
+      [ 2, 0, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ], 
+      [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ], 
+      [ 0, 0, 2, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0 ], 
+      [ 0, 0, 1, 0, 0, 0, 0, 2, 1, 0, 0, 0, 0, 0, 0 ], 
+      [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ], 
+      [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ], 
+      [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ], 
+      [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ], 
+      [ 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0 ], 
+      [ 0, 0, 0, 0, 0, 0, 0, 4, 0, 0, 0, 0, 0, 1, 0 ], 
+      [ 0, 0, 0, 0, 0, 0, 1, 0, 4, 0, 0, 0, 0, 0, 0 ], 
+      [ 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 2 ], 
+      [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ], 
+      [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ] ] ]
+gen_mat = []
+for i in range(len(mat_list)):
+    gen_mat.append(matrix(QQ,mat_list[i]))
+gen_names = ['E','F']
+basis = bracket_operation(gen_mat,gen_names)
+ad = adjoint_rep(basis,basis)
+kil_mat = killing_form(ad)
+det = kil_mat.determinant()
+print('determinant of block: %d' % det)
+
+'''
+SCRIPT FOR CARTAN
+
 cartan_basis = find_cartan_basis(alg_basis)
 comp_basis = complete_basis(alg_basis,cartan_basis)
 adj = adjoint_rep(comp_basis,comp_basis)
@@ -483,3 +532,4 @@ print(pos_roots)
 cartan_mat = find_cartan_mat(pos_roots,kil_inv)
 print('cartan_mat:')
 print(cartan_mat)
+'''

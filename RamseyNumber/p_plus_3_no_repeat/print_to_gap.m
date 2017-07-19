@@ -49,15 +49,9 @@ for x = 1:length(key_set)
     fprintf(fid,'\n\n');
     lie_line = strcat('L_',x_str,' := LieAlgebra(Rationals, mat_',x_str,');');
     fprintf(fid,lie_line);
-    fprintf(fid,'\n\n');
-    root_line = strcat('R_',x_str,' := RootSystem(L_',x_str,');');
-    fprintf(fid,root_line);
-    fprintf(fid,'\n\n');
-    cartan_line = strcat('C_',x_str,' := CartanMatrix(R_',x_str,');');
-    fprintf(fid,cartan_line);
-    fprintf(fid,'\n\n');
-    print_line = strcat('PrintArray(C_',x_str,');');
-    fprintf(fid,print_line);
+    fprintf(fid,'\n\n');   
+    semi_simp = strcat('Print(SemiSimpleType(L_',x_str,'));');
+    fprintf(fid,semi_simp);
     fprintf(fid,'\n\n');
 end
 fclose(fid);
