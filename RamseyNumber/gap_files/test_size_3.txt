@@ -2,39 +2,23 @@ mat_1_size_3 :=[[[0, 0, 0],[1, 0, 0],[1, 1, 0]],[[0, 1, 1],[0, 0, 1],[0, 0, 0]]]
 
 L_1 := LieAlgebra(Rationals, mat_1_size_3);
 
-R_1 := RootSystem(L_1);
-
-C_1 := CartanMatrix(R_1);
-
-PrintArray(C_1);
+Print(SemiSimpleType(L_1));
 
 mat_2_size_3 :=[[[0, 0, 0],[1, 0, 1],[1, 0, 0]],[[0, 1, 1],[0, 0, 0],[0, 1, 0]]];
 
 L_2 := LieAlgebra(Rationals, mat_2_size_3);
 
-R_2 := RootSystem(L_2);
-
-C_2 := CartanMatrix(R_2);
-
-PrintArray(C_2);
+Print(SemiSimpleType(L_2));
 
 mat_3_size_3 :=[[[0, 0, 1],[1, 0, 0],[0, 1, 0]],[[0, 1, 0],[0, 0, 1],[1, 0, 0]]];
 
 L_3 := LieAlgebra(Rationals, mat_3_size_3);
 
-R_3 := RootSystem(L_3);
-
-C_3 := CartanMatrix(R_3);
-
-PrintArray(C_3);
+Print(SemiSimpleType(L_3));
 
 mat_4_size_3 :=[[[0, 0, 1],[1, 0, 1],[0, 0, 0]],[[0, 1, 0],[0, 0, 0],[1, 1, 0]]];
 
 L_4 := LieAlgebra(Rationals, mat_4_size_3);
 
-R_4 := RootSystem(L_4);
-
-C_4 := CartanMatrix(R_4);
-
-PrintArray(C_4);
+Print(SemiSimpleType(L_4));
 

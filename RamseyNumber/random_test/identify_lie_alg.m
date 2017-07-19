@@ -53,14 +53,8 @@ for x = 1: length(mat_set) % loop through pair elements in mat_set
     lie_line = strcat('L_',index_str, ' := LieAlgebra(Rationals, mat_',index_str,'_size_3);');
     fprintf(fid,lie_line);
     fprintf(fid,'\n\n');
-    root_line = strcat('R_',index_str,' := RootSystem(L_',index_str,');');
-    fprintf(fid,root_line);
-    fprintf(fid,'\n\n');
-    cartan_line = strcat('C_',index_str,' := CartanMatrix(R_',index_str,');');
-    fprintf(fid,cartan_line);
-    fprintf(fid,'\n\n');
-    print_line = strcat('PrintArray(C_',index_str,');');
-    fprintf(fid,print_line);
+    semi_simp = strcat('Print(SemiSimpleType(L_',index_str,'));');
+    fprintf(fid,semi_simp);
     fprintf(fid,'\n\n');
 end
 fclose(fid);
