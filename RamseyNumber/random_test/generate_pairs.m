@@ -1,7 +1,8 @@
 % generate_pairs: get all possible pair of generators
 % input: basis of matrices
 % output: array of all pairs
-function pair_basis = generate_pairs(basis)
+function pair_basis = generate_pairs(size)
+basis = gen_ran_basis(size);
 temp_basis = basis;
 pair_basis = {};
 while ~isempty(temp_basis)
@@ -13,5 +14,4 @@ while ~isempty(temp_basis)
     new_basis_str = setdiff(temp_basis_str,cur_pair_str);
     temp_basis = cellfun(@eval,new_basis_str,'UniformOutput',false);
 end
-celldisp(pair_basis)
 end
