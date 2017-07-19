@@ -50,7 +50,7 @@ for x = 1:length(key_set)
     lie_line = strcat('L_',x_str,' := LieAlgebra(Rationals, mat_',x_str,');');
     fprintf(fid,lie_line);
     fprintf(fid,'\n\n');
-    semi_simp = strcat('SemiSimpleType(L_',x_str,');');
+    semi_simp = strcat('S_',x_str,' := SemiSimpleType(L_',x_str,');');
     fprintf(fid,semi_simp);
     fprintf(fid,'\n\n');
     print_line = strcat('PrintTo("*stdout*",S_',x_str,');');
