@@ -3,15 +3,17 @@
 % output: txt file for cartan matrices
 function identify_lie_alg(size)
 basis = generate_pairs(size);
+celldisp(basis);
 file_name = strcat('test_size_', int2str(size), '.txt');
-write_cmd(basis, file_name);
+write_cmd(basis, file_name, size);
 end
 
 % write_cmd: write
 % input: mat_set -- set of generator pairs
 % output: txt file of gap commands
-function write_cmd(mat_set, txt_name)
+function write_cmd(mat_set, txt_name, size)
 % find destination directory
+size_str = int2str(size);
 cur_dir = cd;
 dest_name = fullfile(cur_dir, '..', 'gap_files', txt_name);
 format long
@@ -19,7 +21,7 @@ fid = fopen(dest_name,'w');
 
 for x = 1: length(mat_set) % loop through pair elements in mat_set
     index_str = int2str(x);
-    mat_line = strcat('mat_',index_str,'_size_3 := ');
+    mat_line = strcat('mat_',index_str,'_size_',size_str,' := ');
     fprintf(fid,mat_line);
     fprintf(fid, '[');
     cur_pair = mat_set{x};
@@ -50,11 +52,14 @@ for x = 1: length(mat_set) % loop through pair elements in mat_set
     fprintf(fid,'];');
     fprintf(fid,'\n\n');
     % execute GAP for each pair
-    lie_line = strcat('L_',index_str, ' := LieAlgebra(Rationals, mat_',index_str,'_size_3);');
+    lie_line = strcat('L_',index_str, ' := LieAlgebra(Rationals, mat_',index_str,'_size_',size_str,');');
     fprintf(fid,lie_line);
     fprintf(fid,'\n\n');
-    semi_simp = strcat('Print(SemiSimpleType(L_',index_str,'));');
+    semi_simp = strcat('S_',x_str,' := SemiSimpleType(L_',index_str,');');
     fprintf(fid,semi_simp);
+    fprintf(fid,'\n\n');
+    print_line = strcat('PrintTo("*stdout*",S_',index_str,');');
+    fprintf(fid,print_line);
     fprintf(fid,'\n\n');
 end
 fclose(fid);

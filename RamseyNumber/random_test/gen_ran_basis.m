@@ -31,11 +31,10 @@ for i =  1:length(binary_set)
             end
         end
     end
-    if ~isequal(cur_matrix, cur_matrix') && flag
+    if flag
         result_basis{end+1} = cur_matrix;
     end
 end
-celldisp(result_basis);
 end
 
 
