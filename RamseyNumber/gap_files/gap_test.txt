@@ -4,8 +4,6 @@ L_1 := LieAlgebra(Rationals, mat_1);
 
 S_1 := SemiSimpleType(L_1);
 
-PrintTo("*stdout*","s\n");
+AppendTo("blocks_p_plus_3_result.txt",S_1,"\n");
 
-Print("s\n");
-
-Print(S_1);
+AppendTo("blocks_p_plus_3_result.txt",S_1,"\n");
