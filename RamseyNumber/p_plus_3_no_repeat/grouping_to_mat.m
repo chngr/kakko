@@ -8,12 +8,19 @@
 function [E,F] = grouping_to_mat(grouping,p,map)
 E = [];
 F = [];
-comp_col = {};
+block_map = containers.Map;
+unique_comp_col = {};
 for i = 1:length(grouping)
     [E_sub,F_sub] = opr_in_sub(grouping{i},p,map);
+    pair_str = mat2str([E_sub,F_sub]);
+    if isKey(block_map,pair_str)
+        block_map(pair_str) = block_map(pair_str) + 1;
+    else
+        block_map(pair_str) = 1;
+    end
     present = false;
-    for j = 1:length(comp_col)
-        if isequal([E_sub,F_sub],comp_col{j})
+    for j = 1:length(unique_comp_col)
+        if isequal([E_sub,F_sub],unique_comp_col{j})
             present = true;
             break;
         end
@@ -21,9 +28,12 @@ for i = 1:length(grouping)
     if present == false
         E = blkdiag(E,E_sub);
         F = blkdiag(F,F_sub);
-        comp_col{end+1} = [E_sub,F_sub];
+        unique_comp_col{end+1} = [E_sub,F_sub];
     end
 end
+print_blocks(block_map);
+file_name_g = strcat('blocks_',int2str(p),'_plus_3.txt');
+print_to_gap(block_map,file_name_g);
 end
 
 % opr_in_sub(): constructs matrix of E and F in each subgroup
