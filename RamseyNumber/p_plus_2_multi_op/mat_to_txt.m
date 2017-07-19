@@ -12,7 +12,7 @@ dest_name = fullfile(cur_dir,'..','gap_files',txt_name);
 % write file
 format long
 fid = fopen(dest_name,'w');
-mat_line = strcat('mat_',p_str,'_plus_2 := ');
+mat_line = strcat('mat_',p_str,' := ');
 fprintf(fid,mat_line);
 fprintf(fid,'[');
 for i = 1:length(mat_set) % loop through elements in mat_set
@@ -38,16 +38,13 @@ for i = 1:length(mat_set) % loop through elements in mat_set
 end
 fprintf(fid,'];');
 fprintf(fid,'\n\n');
-lie_line = strcat('L_',p_str,' := LieAlgebra(Rationals, mat_',p_str,'_plus_2);');
+lie_line = strcat('L_',p_str,' := LieAlgebra(Rationals, mat_',p_str,');');
 fprintf(fid,lie_line);
 fprintf(fid,'\n\n');
-root_line = strcat('R_',p_str,' := RootSystem(L_',p_str,');');
-fprintf(fid,root_line);
+semi_simp = strcat('S_',p_str,' := SemiSimpleType(L_',p_str,');');
+fprintf(fid,semi_simp);
 fprintf(fid,'\n\n');
-cartan_line = strcat('C_',p_str,' := CartanMatrix(R_',p_str,');');
-fprintf(fid,cartan_line);
-fprintf(fid,'\n\n');
-print_line = strcat('PrintArray(C_',p_str,');');
+print_line = strcat('PrintTo("*stdout*",S_',p_str,',"\\n");');
 fprintf(fid,print_line);
 fprintf(fid,'\n\n');
 fclose(fid);
