@@ -8,7 +8,7 @@ function groups = grouping_basis(p,basis,map)
 tuple_basis = basis;
 partitions = {};
 while ~isempty(tuple_basis)
-    new_group = multi_opr_on_tuple(tuple_basis{1},p+3,map);
+    new_group = multi_opr_on_tuple(tuple_basis{1},p+2,map);
     partitions{end+1} = new_group;
     % set diff for basis and new_group generated
     basis_str = cellfun(@mat2str,tuple_basis,'UniformOutput',false);

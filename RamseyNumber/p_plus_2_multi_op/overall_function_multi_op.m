@@ -4,9 +4,9 @@
 % Output: result_basis -- basis of generated Lie algebra
 %         printed: dimension and signature
 % NOTE: Valid for p = 3 (p + 2).
-function result_basis = overall_function_multi_op(p)
+function result_basis = overall_function_multi_op(input_file,p)
 % find basis of unlabelled graphs with K_p
-[map, basis] = gen_basis(p);
+[map, basis] = gen_basis(input_file,p);
 % find groups after performing E and F repeatedly
 groups = grouping_basis(p,basis,map);
 % convert to operator matrices E and F
