@@ -1,9 +1,9 @@
-% -- FOR P+2 --
+% -- FOR P+2 MULTI OP --
 % overall_function(): wrapper to compute dimension and signature
-% Input: p -- dimension of K_p  
+% Input: p -- dimension of K_p
 % Output: result_basis -- basis of generated Lie algebra
 %         printed: dimension and signature
-% NOTE: Valid for p >= 4.
+% NOTE: Valid for p = 3 (p + 2).
 function result_basis = overall_function_multi_op(p)
 % find basis of unlabelled graphs with K_p
 [map, basis] = gen_basis(p);
@@ -15,7 +15,7 @@ groups = grouping_basis(p,basis,map);
 gen_mat = {E,F};
 gen_names = {'E','F'};
 % write E and F to .txt file
-gen_file_name = strcat(mat2str(p),'_plus_2_multi_op.g');
+gen_file_name = strcat(mat2str(p),'_plus_2_multi_op.txt');
 mat_to_txt(gen_mat,gen_file_name,p);
 
 %{

@@ -47,5 +47,8 @@ fprintf(fid,'\n\n');
 cartan_line = strcat('C_',p_str,' := CartanMatrix(R_',p_str,');');
 fprintf(fid,cartan_line);
 fprintf(fid,'\n\n');
+print_line = strcat('PrintArray(C_',p_str,');');
+fprintf(fid,print_line);
+fprintf(fid,'\n\n');
 fclose(fid);
 end

@@ -1,6 +1,24 @@
-LEGEND.txt
+LEGEND.txt: Description of directories in kakko/RamseyNumber.
 
-
-p_plus_x -- unlabelled graphs with multiplicity, sequence of consecutive Es and Fs (original)
-p_plus_x_no_repeat -- removes the paired duplicate subblocks in E and F
-p_plus_2_multi_op -- for case p = 3, p + 2, performs repeated Es and Fs
+brute_force -- computes Ramsey number R(m,n) by brute force
+classification -- our implementation of Cartan matrix calculation 
+cluster_submission -- holds shell submission scripts for Yeti cluster
+database_graphs -- text files with unlabelled simple graphs on 5-9 vertices
+eigenvalues_of_H -- calculating eigenvalues of H (with error -- computed on
+					wrong space)
+gap_files -- holds .g files with generators to be fed into GAP for computing
+			 Lie algebras
+graph_generator -- executable to generate unlabelled simple graphs
+				   source: http://users.cecs.anu.edu.au/~bdm/data/graphs.html
+miscellaneous -- miscellaneous functions not in use
+p_plus_1 -- computing generators for p+1
+p_plus_2 -- computing generators for p+2
+p_plus_2_multi_op -- computing generators for p+2 and allowing for sequential 
+					 repeated E's and F's (e.g. for case p = 3)
+p_plus_2_no_repeat -- coputing generators for p+2 and removes repeated pairs
+					  of subblocks 
+p_plus_3 -- computing generators for p+3
+p_plus_3_no_repeat -- computing generators for p+3 and removes repeated 
+					   pairs of subblocks
+random_test -- generates all 0,1-matrices with 0s on the main diagonal for
+			   GAP experiments

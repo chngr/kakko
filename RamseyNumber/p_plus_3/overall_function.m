@@ -12,7 +12,7 @@ groups = grouping_basis(p,basis,map);
 [E,F] = grouping_to_mat(groups,p,map);
 gen_mat = {E,F};
 % Write result_basis to .txt file
-file_name = strcat(p_str,'_plus_3.g');
+file_name = strcat(p_str,'_plus_3.txt');
 mat_to_txt({E,F},file_name,p);
 
 %{

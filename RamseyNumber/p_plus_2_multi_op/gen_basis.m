@@ -1,21 +1,20 @@
-% gen_basis(): basis for all unlabelled graphs on (p+3) vertices with
-% at least one K_p
-% Input: input_file -- name of input_file with graphs on p+3 vertices
+% gen_basis(): basis for unlabelled graphs for p+2, p=3 case
+% Input: input_file -- name of input_file with graphs on p+2 vertices
 %        p -- dimension of K_p
 % Output: map -- map with basis
 %         unique_values -- set of representative basis tuples (including 
-%         permutations within vertices p+1, p+2, p+3)
+%         permutations within vertices p+1, p+2)
 function [map, unique_values] = gen_basis(input_file,p)
 tuple_map = containers.Map;
 % generate set of unique basis elements
 basis = parse_data(input_file,p);
-% all possible permutations of 3 indices
+% all possible permutations of 2 indices
 permute_indices = {[1,2],[2,1]};
 % for each basis element
 for i = 1:length(basis)
     cur_mat = basis{i};
     % set of candidates to check for K_p
-    tuple_candidates = gen_k_tuples(p+3,p);
+    tuple_candidates = gen_k_tuples(p+2,p);
     tuple_image = {};
     % for each candidate
     for j = 1:length(tuple_candidates)
@@ -38,54 +37,33 @@ for i = 1:length(basis)
     % for each tuple representing a K_p
     for j = 1:length(tuple_image)
         k_p_indices = tuple_image{j};
-        tuple_diff = setdiff(1:p+3,k_p_indices);
-        % go through all permutations of last 3 columns
+        tuple_diff = setdiff(1:p+2,k_p_indices);
+        % go through all permutations of last 2 columns
         for q = 1:length(permute_indices) 
-            % compute a through h
-            a = 0; b = 0; c = 0; d = 0; e = 0; f = 0; g = 0; h = 0;
+            % compute a through d
+            a = 0; b = 0; c = 0; d = 0;
             for k = 1:length(k_p_indices)
                 if cur_mat(k_p_indices(k),tuple_diff(permute_indices{q}(1))) == 1 && ...
-                        cur_mat(k_p_indices(k),tuple_diff(permute_indices{q}(2))) == 1 && ...
-                        cur_mat(k_p_indices(k),tuple_diff(permute_indices{q}(3))) == 1
+                        cur_mat(k_p_indices(k),tuple_diff(permute_indices{q}(2))) == 1
                     a = a + 1;
                 elseif cur_mat(k_p_indices(k),tuple_diff(permute_indices{q}(1))) == 1 && ...
-                        cur_mat(k_p_indices(k),tuple_diff(permute_indices{q}(2))) == 1 && ...
-                        cur_mat(k_p_indices(k),tuple_diff(permute_indices{q}(3))) == 0
+                        cur_mat(k_p_indices(k),tuple_diff(permute_indices{q}(2))) == 0
                     b = b + 1;
-                elseif cur_mat(k_p_indices(k),tuple_diff(permute_indices{q}(1))) == 1 && ...
-                        cur_mat(k_p_indices(k),tuple_diff(permute_indices{q}(2))) == 0 && ...
-                        cur_mat(k_p_indices(k),tuple_diff(permute_indices{q}(3))) == 1
+                elseif cur_mat(k_p_indices(k),tuple_diff(permute_indices{q}(1))) == 0 && ...
+                        cur_mat(k_p_indices(k),tuple_diff(permute_indices{q}(2))) == 1 
                     c = c + 1;
-                elseif cur_mat(k_p_indices(k),tuple_diff(permute_indices{q}(1))) == 1 && ...
-                        cur_mat(k_p_indices(k),tuple_diff(permute_indices{q}(2))) == 0 && ...
-                        cur_mat(k_p_indices(k),tuple_diff(permute_indices{q}(3))) == 0
-                    d = d + 1;
-                elseif cur_mat(k_p_indices(k),tuple_diff(permute_indices{q}(1))) == 0 && ...
-                        cur_mat(k_p_indices(k),tuple_diff(permute_indices{q}(2))) == 1 && ...
-                        cur_mat(k_p_indices(k),tuple_diff(permute_indices{q}(3))) == 1
-                    e = e + 1;
-                elseif cur_mat(k_p_indices(k),tuple_diff(permute_indices{q}(1))) == 0 && ...
-                        cur_mat(k_p_indices(k),tuple_diff(permute_indices{q}(2))) == 1 && ...
-                        cur_mat(k_p_indices(k),tuple_diff(permute_indices{q}(3))) == 0
-                    f = f + 1;
-                elseif cur_mat(k_p_indices(k),tuple_diff(permute_indices{q}(1))) == 0 && ...
-                        cur_mat(k_p_indices(k),tuple_diff(permute_indices{q}(2))) == 0 && ...
-                        cur_mat(k_p_indices(k),tuple_diff(permute_indices{q}(3))) == 1
-                    g = g + 1;
                 else
-                    h = h + 1;
+                    d = d + 1;
                 end
             end
             % compute x, y, z
             x = cur_mat(k_p_indices(1),k_p_indices(2));
-            y = 2 * cur_mat(tuple_diff(permute_indices{q}(1)),tuple_diff(permute_indices{q}(2))) + ...
-                cur_mat(tuple_diff(permute_indices{q}(1)),tuple_diff(permute_indices{q}(3)));
-            z = cur_mat(tuple_diff(permute_indices{q}(2)),tuple_diff(permute_indices{q}(3)));
+            y = cur_mat(tuple_diff(permute_indices{q}(1)),tuple_diff(permute_indices{q}(2)));
             % add result tuple to alphabet_values (including every possible permutations)
-            alphabet_values{end+1} = [x,a,b,c,d,e,f,g,h,y,z];
+            alphabet_values{end+1} = [x,a,b,c,d,y];
         end
     end
-    % alphabet_values contains all permutations of {p+1,p+2,p+3} and all selections of K_p 
+    % alphabet_values contains all permutations of {p+1,p+2} and all selections of K_p 
     
     % delete duplicates within alphabet_values 
     alphabet_values_str = unique(cellfun(@mat2str,alphabet_values,'UniformOutput',false));
