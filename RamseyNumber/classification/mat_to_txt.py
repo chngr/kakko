@@ -172,7 +172,7 @@ block_list = eval(basis_set_str)
 # holds set of bases (four-level)
 basis_set = []
 # loop over blocks of E and F
-for i in range(0,len(block_list))
+for i in range(0,len(block_list)):
     gen_mat = []
     gen_names = []
     # gen_mat and gen_names for bracket_operation
