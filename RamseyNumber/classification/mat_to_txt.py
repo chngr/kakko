@@ -1,28 +1,71 @@
+# def mat_to_txt(mat_set, name):
+#     f = open(name, 'w')
+#     f.write('[')
+#     for i in range(len(mat_set)): # loop through each element in mat_set
+#     	f.write('[')
+#     	cur_mat = mat_set[i]
+#     	for j in range(cur_mat.nrows()):# loop through rows in matrix
+#     		f.write('[')
+#     		cur_row = cur_mat[j]
+#     		for k in range(len(cur_row)):
+#     			f.write(str(cur_row[k]))
+#     			if k != len(cur_row) - 1:
+#     				f.write(', ')
+#     		f.write(']')
+#     		if j != cur_mat.nrows() - 1:
+#     			f.write(',\n')
+#     	f.write(']')
+#     	if i != len(mat_set) - 1:
+#     		f.write(',\n\n')
+#     f.write(']')
+#     f.close()
+
 # mat_to_txt(): prints matrix to text file
 # Input: mat_set -- set of matrices to print
 #        name -- name of text file
 # Output: textfile with matrix as string
+
 def mat_to_txt(mat_set, name):
     f = open(name, 'w')
-    f.write('[')
-    for i in range(len(mat_set)): # loop through each element in mat_set
-    	f.write('[')
-    	cur_mat = mat_set[i]
-    	for j in range(cur_mat.nrows()):# loop through rows in matrix
-    		f.write('[')
-    		cur_row = cur_mat[j]
-    		for k in range(len(cur_row)):
-    			f.write(str(cur_row[k]))
-    			if k != len(cur_row) - 1:
-    				f.write(', ')
-    		f.write(']')
-    		if j != cur_mat.nrows() - 1:
-    			f.write(',\n')
-    	f.write(']')
-    	if i != len(mat_set) - 1:
-    		f.write(',\n\n')
-    f.write(']')
+    # loop through each block basis
+    for index in range(len(mat_set)):
+        index_str = str(index)
+        basis_name = "basis_" + index_str
+        mat_line = basis_name + " := "
+        f.write(mat_line)
+        # write for basis of index
+        f.write('[')
+        cur_block = mat_set[index]
+        for i in range(len(cur_block)):
+            f.write('[')
+            cur_mat = cur_block[i]
+            for j in range(cur_mat.nrows()):
+                f.write('[')
+                cur_row = cur_mat[j]
+                for k in range(len(cur_row)):
+                    f.write(str(cur_row[k]))
+                    if k != len(cur_row) - 1:
+                        f.write(',')
+                f.write(']')
+                if j != cur_mat.nrows() - 1:
+                    f.write(',')
+            f.write(']')
+            if i != len(mat_set) - 1:
+                f.write(',')
+        f.write('];')
+        f.write('\n\n')
+        lie_line = 'L_' + index_str + ' := LieAlgebra(Rationals, ' + basis_name + ', "basis");'
+        f.write(lie_line)
+        f.write('\n\n')
+        semi_simp = 'S_' + index_str + ' := SemiSimpleType(L_' + index_str + ');'
+        f.write(semi_simp)
+        f.write('\n\n')
+        print_line = 'PrintTo("*stdout*",S_' + index_str + ',"\\n");'
+        f.write(print_line)
+        f.write('\n\n')
+
     f.close()
+
 
 # bracket_operation(): compute basis from generators
 # Input: gen_mat -- Sage generator matrices (list)
@@ -103,14 +146,44 @@ def bracket(A,B):
 def name_bracket(A,B):
     return "[" + A + "," + B + "]"
 
-# script for calculation
-with open('4_plus_1_gen.txt', 'r') as in_file:
-    data = in_file.read().replace('\n', '')
-# read in generator list {E,F}
-gen_list = eval(data)
-mat_list = []
-for i in range(len(gen_list)):
-    mat_list.append(matrix(QQ,gen_list[i]))
-gen_names = ['E','F']
-basis_list = bracket_operation(mat_list,gen_names)
-mat_to_txt(basis_list,'4_plus_1_basis.txt')
+# # script for calculation
+# with open('4_plus_1_gen.txt', 'r') as in_file:
+#     data = in_file.read().replace('\n', '')
+# # read in generator list {E,F}
+# gen_list = eval(data)
+# mat_list = []
+# for i in range(len(gen_list)):
+#     mat_list.append(matrix(QQ,gen_list[i]))
+# gen_names = ['E','F']
+# basis_list = bracket_operation(mat_list,gen_names)
+# mat_to_txt(basis_list,'4_plus_1_basis.txt')
+
+from sys import argv
+
+# --- COMPUTATION SCRIPT ---
+
+# INPUT: file with list of blocks 
+in_file_name = argv[1]
+out_file_name = 'gap_' + argv[1]
+with open(in_file_name, 'r') as in_file:
+    basis_set_str = in_file.read().replace('\n', '')
+# block_list holds sequential E and F blocks (four-level)
+block_list = eval(basis_set_str)
+# holds set of bases (four-level)
+basis_set = []
+# loop over blocks of E and F
+for i in range(0,len(block_list))
+    gen_mat = []
+    gen_names = []
+    # gen_mat and gen_names for bracket_operation
+    gen_mat.append(matrix(QQ,block_list[i][0]))
+    gen_mat.append(matrix(QQ,block_list[i][1]))
+    gen_names.append('e_' + str(i))
+    gen_names.append('f_' + str(i))
+    # find basis for each block
+    basis_set.append(bracket_operation(gen_mat,gen_names))
+# print to output
+mat_to_txt(basis,out_file_name)
+
+
+
