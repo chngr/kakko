@@ -5,9 +5,15 @@ function print_blocks(block_map)
 key_set = keys(block_map);
 for i = 1:length(key_set)
    mat = eval(key_set{i});
+   col_size = size(mat,2)/2;
+   e_sub = mat(:,1:col_size);
+   f_sub = mat(:,col_size+1:end);
    freq = block_map(key_set{i});
    fprintf('frequency: %d\n', freq);
-   disp(mat);
+   disp('e_sub:')
+   disp(e_sub);
+   disp('f_sub:')
+   disp(f_sub);
    fprintf('\n');
 end
 [sum, total_size] = freq_sum(block_map);

@@ -1,6 +1,6 @@
 % identify_lie_subdiag 
 
-function identify_lie_subdiag()
+function basis = identify_lie_subdiag()
 basis = gen_E_F(3,30);
 celldisp(basis);
 file_name = strcat('test_E_F', '.txt');

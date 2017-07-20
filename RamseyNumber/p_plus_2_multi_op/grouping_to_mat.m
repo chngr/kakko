@@ -33,6 +33,8 @@ for i = 1:length(grouping)
 end
 file_name_g = strcat('blocks_',int2str(p),'_plus_2.txt');
 print_to_gap(block_map,file_name_g);
+print_with_newline({E,F},'E_and_F.txt')
+print_blocks(block_map);
 end
 
 % opr_in_sub(): constructs matrix of E and F in each subgroup
