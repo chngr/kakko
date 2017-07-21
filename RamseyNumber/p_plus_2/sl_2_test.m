@@ -1,9 +1,9 @@
 % sl_2_test(): GAP test for sl_2
 % Input: none
 % Output: print test file to gap_file directory
-function sl_2_test()
+function sl_2_test(max_value)
 % get collection of 6 tuples
-six_tuples = gen_6_tuples();
+six_tuples = gen_6_tuples(max_value);
 tuple_collection = {};
 % generate matrices for all possible tuples
 for i = 1:length(six_tuples)
