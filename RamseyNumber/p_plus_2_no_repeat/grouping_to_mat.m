@@ -31,6 +31,7 @@ for i = 1:length(grouping)
         unique_comp_col{end+1} = [E_sub,F_sub];
     end
 end
+assignin('base','block_map',block_map)
 file_name_g = strcat('blocks_',int2str(p),'_plus_2.txt');
 print_to_gap(block_map,file_name_g);
 end
