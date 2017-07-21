@@ -1309,3 +1309,4 @@ L_164 := LieAlgebra(Rationals, mat_164);
 S_164 := SemiSimpleType(L_164);
 
 PrintTo("*stdout*",S_164,"\n");
+
