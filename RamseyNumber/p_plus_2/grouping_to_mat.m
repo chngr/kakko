@@ -7,11 +7,16 @@
 function [E,F] = grouping_to_mat(grouping,p,map)
 E = [];
 F = [];
+block_col = {};
 for i = 1:length(grouping)
     [E_sub,F_sub] = opr_in_sub(grouping{i},p,map);
+    block_col{end+1} = [E_sub,F_sub];
     E = blkdiag(E,E_sub);
     F = blkdiag(F,F_sub);
 end
+assignin('base','E',E);
+assignin('base','F',F);
+print_to_gap(block_col,'p_plus_2_gap_test.txt');
 end
 
 % opr_in_sub(): constructs matrix of E and F in each subgroup
