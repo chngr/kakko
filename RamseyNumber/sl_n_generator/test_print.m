@@ -1,5 +1,5 @@
 % print_to_gap(): prints subblocks to gap_file
-% Input: block_map -- map from sublocks [E_sub,F_sub] to frequency
+% Input: key_set -- set of sublocks [E_sub,F_sub]
 %        txt_name -- name of .g file
 % Output: .g file with subblocks and Lie algebra generated in 
 %         RamseyNumber/gap_files directory
