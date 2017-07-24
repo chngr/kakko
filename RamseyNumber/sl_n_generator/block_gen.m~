@@ -1,0 +1,18 @@
+% block_gen(): generates a random block of size dim_1 by dim_2 with
+%              values ranging from 0 to max_value
+% Input: dim_1 -- first dimension of block
+%        dim_2 -- second dimension of block
+%        max_value -- upper bound for rand number selection
+% Output: result -- cell array with block and its transpose 
+function result = block_gen(dim_1,dim_2,max_value)
+block = zeros(dim_1,dim_2);
+% number of entries in block
+total_num = dim_1 * dim_2;
+% sample to find indices of the entries to fill
+samp = randsample(total_num, randi(total_num));
+for i = 1:length(samp)
+    coord_1 = ceil(
+    coord_2 = 
+end
+
+end
