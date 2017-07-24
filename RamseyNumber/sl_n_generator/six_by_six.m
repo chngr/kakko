@@ -20,5 +20,5 @@ for i = 1:num_of_blocks
     disp(f_sub);
     block_col{end+1} = [e_sub,f_sub];
 end
-sl_2_test_print(block_col,'six_by_six.txt');
+test_print(block_col,'six_by_six.txt');
 end

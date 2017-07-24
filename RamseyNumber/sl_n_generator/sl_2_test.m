@@ -16,5 +16,5 @@ for i = 1:length(six_tuples)
     f(1,2:end) = second_part;
     tuple_collection{end+1} = [e,f];
 end
-sl_2_test_print(tuple_collection,'sl_2_test.txt');
+test_print(tuple_collection,'sl_2_test.txt');
 end
