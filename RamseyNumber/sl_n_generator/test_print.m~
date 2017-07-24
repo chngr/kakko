@@ -18,9 +18,7 @@ for x = 1:length(key_set)
     col_size = size(cur_mat,2)/2;
     e = cur_mat(:,1:col_size);
     f = cur_mat(:,col_size+1:end);
-    fprintf('Trial %d\n', x);
-    disp(e);
-    disp(f);
+    fprintf('Trial %d
     mat_set = {e,f};
     mat_line = strcat('mat_',x_str,' := ');
     fprintf(fid,mat_line);

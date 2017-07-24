@@ -1,0 +1,38 @@
+% all_trials(): given partition, constructs all matrices with 0,1-blocks
+%               on super- and subdiagonal
+% Input: partition -- array of ints with partition 
+%        file_name -- GAP file name
+% Output: outputs GAP file
+function all_trials(partition,file_name)
+result_set = {}; % all possible {E,F} pairs
+whole_size = sum(partition);
+% compute string length of partitions
+str_length = length_helper(partitions);
+str_array = gen_bin_str(str_length); % generate all possible binary strings
+
+% store index cuts of each block
+index_pointers = [];
+sum = 0;
+for i = 1:length(partition)
+    sum = sum + partition(i);
+    index_pointers = [index_pointers,sum];
+end
+
+all_blocks = gen_all_mat(partition);
+% iterate through all possible set of blocks
+for i = 1:length(all_blocks)
+    cur_E = zeros(whole_size);
+    cur_blocks = all_blocks{i};
+    % fill in each block
+    for j = 1:length(cur_blocks)
+        row_coord_1 = index_pointers(1)
+        row_coord_2 =   
+        col_coord_1 = 
+        col_coord_2 = 
+        cur_E (partition)
+    end
+    cur_F = cur_E';
+    result_set{end+1} = {cur_E , cur_F};
+end
+
+end
