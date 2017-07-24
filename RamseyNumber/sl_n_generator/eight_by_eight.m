@@ -15,14 +15,14 @@ for i = 1:num_of_blocks
     e_sub(5,8) = randi(max_value);
     
     f_sub(3,1) = randi(max_value);
-    f_sub() = randi(max_value);
-    f_sub() = randi(max_value);
-    f_sub() = randi(max_value);
-    f_sub() = randi(max_value);
-    f_sub() = randi(max_value);
-    f_sub() = randi(max_value);
-    f_sub() = randi(max_value);
-    f_sub() = randi(max_value);
+    f_sub(4,1) = randi(max_value);
+    f_sub(3,2) = randi(max_value);
+    f_sub(5,2) = randi(max_value);
+    f_sub(7,3) = randi(max_value);
+    f_sub(6,4) = randi(max_value);
+    f_sub(6,5) = randi(max_value);
+    f_sub(7,5) = randi(max_value);
+    f_sub(8,5) = randi(max_value);
     
     disp(e_sub);
     disp(f_sub);
