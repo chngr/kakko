@@ -9,6 +9,9 @@ function run_trials(max_val, partitions, num_trials, file_name)
 blocks = {};
 for i = 1:num_trials
     [E,F] = construct_generator(max_val,partitions);
+    fprintf('Trial %d\n', i);
+    disp(E)
+    disp(F)
     blocks{end+1} = [E,F];
 end
 % print to GAP
