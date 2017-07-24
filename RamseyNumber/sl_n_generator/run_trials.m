@@ -4,7 +4,7 @@
 %        num_trials -- number of trials to run
 % Output: .txt file in RamseyNumber/gap_files directory with trials to
 %         run on GAP
-function run_trials(max_value, partitions, num_trials, file_name)
+function run_trials(max_val, partitions, num_trials, file_name)
 % store block groups
 blocks = {};
 for i = 1:num_trials
