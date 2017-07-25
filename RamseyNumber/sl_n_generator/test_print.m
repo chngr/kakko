@@ -55,7 +55,7 @@ for x = 1:length(key_set)
     semi_simp = strcat('S_',x_str,' := SemiSimpleType(L_',x_str,');');
     fprintf(fid,semi_simp);
     fprintf(fid,'\n\n');
-    print_line = strcat('PrintTo("*stdout*",S_',x_str,',"\\n");');
+    print_line = strcat('PrintTo("*stdout*","',x_str,'. ", S_',x_str,',"\\n");');
     fprintf(fid,print_line);
     fprintf(fid,'\n\n');
 end
