@@ -1,0 +1,5 @@
+# construct gens from Matlab
+
+lie_alg := LieAlgebra(Rationals,gens);
+cartan_subalg := CartanSubalgebra(L);
+cartan_basis := BasisVectors(Basis(cartan_subalg));
