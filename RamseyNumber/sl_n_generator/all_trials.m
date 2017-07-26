@@ -3,14 +3,14 @@
 % Input: partition -- array of ints with partition 
 %        file_name -- GAP file name
 % Output: outputs GAP file
-function all_trials(partition,file_name)
-result_set = all_trials_helper(partition);
-num_trials = length(result_set);
+function test_set = all_trials(partition,file_name)
+[result_set,test_set] = all_trials_helper(partition);
 test_print(result_set, file_name)
 end
 
-function result_set = all_trials_helper(partition)
-result_set = {}; % all possible {E,F} pairs
+function [result_set,test_set] = all_trials_helper(partition)
+result_set = {}; % all possible [E,F] pairs, for printing
+test_set = {}; % all possible {E,F} pairs, for calculation
 whole_size = sum(partition);
 
 % store index cuts of each block
@@ -38,5 +38,8 @@ for i = 1:length(all_blocks)
     end
     cur_F = cur_E';
     result_set{end+1} = [cur_E,cur_F];
+    test_set{end+1} = {cur_E,cur_F};
 end
 end
+
+
