@@ -77,8 +77,10 @@ def weight_space_decomp(weight_space_list):
     index_set = get_tuples(max_index,basis_size)
     # direct_sum stores all of the intersections
     to_direct_sum = []
+    # for each index
     for index in index_set:
         list_to_intersect = []
+        # pair index with each sublist
         for i in range(len(index)):
             cur_index = index[i]
             list_to_intersect.append(weight_space_list[i][cur_index])
@@ -89,6 +91,29 @@ def weight_space_decomp(weight_space_list):
         if elem.dimension() == 0:
             to_direct_sum.remove(elem)
     return to_direct_sum
+
+# extract_weights(): determines a list of weights 
+# Input: diag_mat_list -- set of diagonal matrices after simultaneously 
+#        diagonalizing basis for the Cartan
+# Output: weight_vec_list -- list of weights
+def extract_weights(diag_mat_list):
+    # extract the diagonals from the diagonalized matrices
+    diag_vec_list = []
+    for elem in diag_mat_list:
+        diag_vec_list.append(elem.diagonal())
+    # dim_H is the dimension of Cartan subalgebra
+    # dim_V is the dimension of the entire space
+    dim_H = len(diag_vec_list)
+    dim_V = len(diag_vec_list[0])
+    weight_vec_list = []
+    # for ith index in each diagonal 
+    for i in range(dim_V):
+        # for jth diagonal vector, create a vector across a common index
+        cur_vec = []
+        for j in range(dim_H):
+            cur_vec.append(diag_vec_list[j][i])
+        weight_vec_list.append(cur_vec)
+    return weight_vec_list
 
 # intersect_spaces(): computes intersection of vector spaces in space_list
 # Input: space_list -- list of vector spaces over common base ring
@@ -128,6 +153,16 @@ def tuple_helper(old_list, max_val):
             new_list.append(new_cur_tuple)
     return new_list
 
+# highest_weight_gen(): determines direct sum of highest weight spaces
+# Input: 
+# Output: 
+def highest_weight_gen():
+
+
+
+
+# --- SCRIPT ---
+
 # SL_3 TEST 
 # e_1 = matrix([[0,1,0],[0,0,0],[0,0,0]])
 # e_2 = matrix([[0,0,0],[1,0,0],[0,0,0]])
@@ -142,14 +177,17 @@ e_3 = matrix([[0,0,0,0],[0,0,0,0],[1,0,0,0],[0,0,0,0]])
 e_4 = matrix([[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,1,0,0]])
 gens = [e_1,e_2,e_3,e_4]
 
+#  
+
 lie_alg = gap.LieAlgebra('Rationals',gens)
 alg_dim = gap.Dimension(lie_alg)
 cartan_alg = gap.CartanSubalgebra(lie_alg)
 old_cartan_basis = gap.BasisVectors(gap.Basis(cartan_alg))
+
 # convert GAP cartan_basis to Sage format
 new_cartan_basis = []
 for elem in old_cartan_basis:
     new_cartan_basis.append(matrix(QQ,elem))
+
 diag_mat_list = simultaneous_diag(new_cartan_basis)
-weight_space_list = weight_space_gen(new_cartan_basis, diag_mat_list, alg_dim)
-to_direct_sum = weight_space_decomp(weight_space_list)
+weight_list = extract_weights(diag_mat_list)
