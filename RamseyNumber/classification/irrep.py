@@ -2,46 +2,6 @@
 
 from random import randint
 
-# compute_random_element(): computes random matrix element, random linear
-#                           combination of basis vectors
-# Input: basis -- basis of Lie algebra
-# Output: random_elem -- random element of Lie algebra
-def compute_random_element(basis):
-    mat_size = basis[0].ncols()
-    # choose coefficients from 1 to 100 inclusive
-    scaling = [randint(1,100) for p in range(len(basis))]
-    random_elem = matrix(QQ,mat_size)
-    for i in range(len(basis)):
-        random_elem = random_elem + scaling[i] * basis[i]
-    return random_elem
-
-# simultaneous_diag(): simultaneously diagonalizes a commuting basis set
-# Input: basis -- commuting basis
-# Output: P -- matrix P of D = P^{-1} * A * P that simultaneously diagonalizes
-def simultaneous_diag(basis):
-    valid_elem = False
-    # common P and unique D for each element in Cartan
-    P = None
-    diag_mat_list = []
-    # find element that diagonalizes the Cartan basis
-    while not valid_elem:
-        diag_mat_list = []
-        # compute a random element of the Cartan subalgebra
-        cartan_elem = compute_random_element(basis)
-        # diagonalize random element
-        D, P = cartan_elem.eigenmatrix_right()
-        # assume the diagonalization works
-        valid_elem = True
-        # check if diagonalizes all elements
-        for elem in basis:
-            cur_diag_mat = P.inverse() * elem * P
-            diag_mat_list.append(cur_diag_mat)
-            # check if each element is diagonalized
-            if not gap.IsDiagonalMat(cur_diag_mat):
-                valid_elem = False
-                break
-    return diag_mat_list
-
 # weight_space_gen(): generates root spaces
 # Input: cartan_basis -- list with Cartan basis set
 #        diag_mat_list -- list of diagonal matrices corresponding to Cartan basis
@@ -92,38 +52,6 @@ def weight_space_decomp(weight_space_list):
             to_direct_sum.remove(elem)
     return to_direct_sum
 
-# extract_weights(): determines a list of weights 
-# Input: diag_mat_list -- set of diagonal matrices after simultaneously 
-#        diagonalizing basis for the Cartan
-# Output: weight_vec_list -- list of weights
-def extract_weights(diag_mat_list):
-    # extract the diagonals from the diagonalized matrices
-    diag_vec_list = []
-    for elem in diag_mat_list:
-        diag_vec_list.append(elem.diagonal())
-    # dim_H is the dimension of Cartan subalgebra
-    # dim_V is the dimension of the entire space
-    dim_H = len(diag_vec_list)
-    dim_V = len(diag_vec_list[0])
-    weight_vec_list = []
-    # for ith index in each diagonal 
-    for i in range(dim_V):
-        # for jth diagonal vector, create a vector across a common index
-        cur_vec = []
-        for j in range(dim_H):
-            cur_vec.append(diag_vec_list[j][i])
-        weight_vec_list.append(cur_vec)
-    return weight_vec_list
-
-# intersect_spaces(): computes intersection of vector spaces in space_list
-# Input: space_list -- list of vector spaces over common base ring
-# Output: inter_space -- intersection of spaces
-def intersect_spaces(space_list):
-    inter_space = space_list[0]
-    for space in space_list:
-        inter_space = inter_space.intersection(space)
-    return inter_space
-
 # get_tuples(): generates all possible tuples from 0 to max_val, inclusive
 # Input: max_val -- maximum value in tuple 
 #        list_len -- length of each tuple
@@ -153,41 +81,179 @@ def tuple_helper(old_list, max_val):
             new_list.append(new_cur_tuple)
     return new_list
 
+# ------------------------------------------------------------------------------------------
+
+# simultaneous_diag(): simultaneously diagonalizes a commuting basis set
+# Input: basis -- commuting basis
+# Output: P -- matrix P of D = P^{-1} * A * P that simultaneously diagonalizes
+#         diag_mat_list -- list of diagonalized matrices
+def simultaneous_diag(basis):
+    valid_elem = False
+    # common P and unique D for each element in Cartan
+    P = None
+    diag_mat_list = []
+    # find element that diagonalizes the Cartan basis
+    while not valid_elem:
+        diag_mat_list = []
+        # compute a random element of the Cartan subalgebra
+        cartan_elem = compute_random_element(basis)
+        # diagonalize random element
+        D, P = cartan_elem.eigenmatrix_right()
+        # assume the diagonalization works
+        valid_elem = True
+        # check if diagonalizes all elements
+        for elem in basis:
+            cur_diag_mat = P.inverse() * elem * P
+            diag_mat_list.append(cur_diag_mat)
+            # check if each element is diagonalized
+            if not gap.IsDiagonalMat(cur_diag_mat):
+                valid_elem = False
+                break
+    return P, diag_mat_list
+
+# compute_random_element(): computes random matrix element, random linear
+#                           combination of basis vectors
+# Input: basis -- basis of Lie algebra
+# Output: random_elem -- random element of Lie algebra
+def compute_random_element(basis):
+    mat_size = basis[0].ncols()
+    # choose coefficients from 1 to 100 inclusive
+    scaling = [randint(1,100) for p in range(len(basis))]
+    random_elem = matrix(QQ,mat_size)
+    for i in range(len(basis)):
+        random_elem = random_elem + scaling[i] * basis[i]
+    return random_elem
+
+# extract_weights(): determines a list of weights 
+# Input: diag_mat_list -- set of diagonal matrices after simultaneously 
+#        diagonalizing basis for the Cartan
+# Output: weight_vec_list -- list of weights
+def extract_weights(diag_mat_list):
+    # extract the diagonals from the diagonalized matrices
+    diag_vec_list = []
+    for elem in diag_mat_list:
+        diag_vec_list.append(elem.diagonal())
+    # dim_H is the dimension of Cartan subalgebra
+    # dim_V is the dimension of the entire space
+    dim_H = len(diag_vec_list)
+    dim_V = len(diag_vec_list[0])
+    weight_vec_list = []
+    # for ith index in each diagonal 
+    for i in range(dim_V):
+        # for jth diagonal vector, create a vector across a common index
+        cur_vec = []
+        for j in range(dim_H):
+            cur_vec.append(diag_vec_list[j][i])
+        weight_vec_list.append(cur_vec)
+    return weight_vec_list
+
 # highest_weight_gen(): determines direct sum of highest weight spaces
-# Input: 
-# Output: 
-def highest_weight_gen():
+# Input: pos_root_vec -- set of positive root vectors
+# Output: highest_weight_intersection -- direct sum of highest weight spaces
+def highest_weight_gen(pos_root_vec):
+    spaces_to_intersect = []
+    for elem in pos_root_vec:
+        spaces_to_intersect.append(elem.kernel())
+    highest_weight_intersection = intersect_spaces(spaces_to_intersect)
+    return highest_weight_intersection
 
+# intersect_spaces(): computes intersection of vector spaces in space_list
+# Input: space_list -- list of vector spaces over common base ring
+# Output: inter_space -- intersection of spaces
+def intersect_spaces(space_list):
+    inter_space = space_list[0]
+    for space in space_list:
+        inter_space = inter_space.intersection(space)
+    return inter_space
 
+# find_highest_weights(): finds the weights in weight_list which are highest weights
+# Input: highest_weight_intersection -- intersection of the highest weight spaces
+#        weight_list -- list of all weights
+#        P -- matrix of simultaneous eigenvalues
+# Output: highest_weights -- weights in weight_list which are highest weights
+def find_highest_weights(highest_weight_intersection, weight_list, P):
+    highest_weights = []
+    col_list = P.columns()
+    for i in range(len(col_list)):
+        cur_weight_space = span([col_list[i]],QQ)
+        if highest_weight_intersection.intersection(cur_weight_space).dimension() != 0:
+            highest_weights.append(weight_list[i])
+    return highest_weights
 
+# find_irreps(): finds the multiplicities of irreps
+# Input: simple_roots -- list of simple roots
+#        highest_weights -- list of highest weights
+# Output: irrep_dict -- dictionary mapping irrep identifier to frequency
+def find_irreps(simple_roots, highest_weights):
+    # map from tuple to frequency
+    irrep_dict = {}
+    # build matrix of simple roots
+    simple_root_mat = matrix(QQ,simple_roots).transpose()
+    # solve for int coordinates of highest_weights wrt simple_root_mat
+    for elem in highest_weights:
+        coords = tuple(simple_root_mat.solve_right(vector(QQ,elem)))
+        if coords not in irrep_dict:
+            irrep_dict[coords] = 1
+        else:
+            irrep_dict[coords] += 1
+    return irrep_dict
 
-# --- SCRIPT ---
+# --------------------- MAIN SCRIPT ---------------------
 
-# SL_3 TEST 
+# SL_3 Test
 # e_1 = matrix([[0,1,0],[0,0,0],[0,0,0]])
 # e_2 = matrix([[0,0,0],[1,0,0],[0,0,0]])
 # e_3 = matrix([[0,0,0],[0,0,1],[0,0,0]])
 # e_4 = matrix([[0,0,0],[0,0,0],[0,1,0]])
 # gens = [e_1,e_2,e_3,e_4]
 
-# SO_4 TEST 
+# SO_4 Test 
 e_1 = matrix([[0,0,1,0],[0,0,0,0],[0,0,0,0],[0,0,0,0]])
 e_2 = matrix([[0,0,0,0],[0,0,0,1],[0,0,0,0],[0,0,0,0]])
 e_3 = matrix([[0,0,0,0],[0,0,0,0],[1,0,0,0],[0,0,0,0]])
 e_4 = matrix([[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,1,0,0]])
 gens = [e_1,e_2,e_3,e_4]
 
-#  
-
+# In GAP -- Compute:
+#   Lie algebra
+#   dimension of Lie algebra
+#   Cartan subalgebra
+#   basis for Cartan subalgebra
+#   root System for Lie algebra
+#   simple roots of Lie algebra
+#   positive root vectors of Lie algebra
 lie_alg = gap.LieAlgebra('Rationals',gens)
 alg_dim = gap.Dimension(lie_alg)
 cartan_alg = gap.CartanSubalgebra(lie_alg)
-old_cartan_basis = gap.BasisVectors(gap.Basis(cartan_alg))
+cartan_basis = gap.BasisVectors(gap.Basis(cartan_alg))
+root_sys = gap.RootSystem(lie_alg)
+simple_roots = gap.SimpleSystem(root_sys)
+pos_root_vec = gap.PositiveRootVectors(root_sys)
 
-# convert GAP cartan_basis to Sage format
-new_cartan_basis = []
-for elem in old_cartan_basis:
-    new_cartan_basis.append(matrix(QQ,elem))
+# convert from GAP to Sage format: cartan_basis
+sage_cartan_basis = []
+for elem in cartan_basis:
+    sage_cartan_basis.append(matrix(QQ,elem))
+# convert from GAP to Sage format: pos_root_vec
+sage_pos_root_vec = []
+for elem in pos_root_vec:
+    sage_pos_root_vec.append(matrix(QQ,elem))
+# convert from GAP to Sage format: simple_roots
+sage_simple_roots = []
+for elem in simple_roots:
+    sage_simple_roots.append(list(elem))
+# convert from GAP to Sage format: pos_root_vec
+sage_pos_root_vec = []
+for elem in pos_root_vec:
+    sage_pos_root_vec.append(matrix(QQ,elem))
 
-diag_mat_list = simultaneous_diag(new_cartan_basis)
+# simultaneously diagonalize the Cartan basis
+P, diag_mat_list = simultaneous_diag(sage_cartan_basis)
+# extract the weights from the diagonalized matrices
 weight_list = extract_weights(diag_mat_list)
+# find the intersection of highest weight spaces
+highest_weight_intersection = highest_weight_gen(sage_pos_root_vec)
+# find the highest weights
+highest_weights = find_highest_weights(highest_weight_intersection, weight_list, P)
+# find coordinates of highest weights wrt simple roots
+irrep_dict = find_irreps(sage_simple_roots, highest_weights)
