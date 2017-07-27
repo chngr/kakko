@@ -16,9 +16,9 @@ gen_mat = {E,F};
 gen_names = {'E','F'};
 % write E and F to .txt file
 %gen_file_name = strcat(mat2str(p),'_plus_2.txt');
-gen_file_name = strcat(mat2str(p),'_plus_2_irrep.py');
+gen_file_name = strcat(mat2str(p),'_plus_2_irrep_gap.txt');
 %mat_to_txt(gen_mat,gen_file_name,p);
-print_E_F(gen_mat,gen_file_name);
+gap_print_E_F(gen_mat,gen_file_name);
 
 %{
 % computes dimension and basis of generated Lie algebra 
