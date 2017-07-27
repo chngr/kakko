@@ -9,7 +9,6 @@ for i = 1:length(result_E)
     result_set{end+1} = [cur_E,cur_E'];
 end
 test_print(result_set, file_name)
-celldisp(result_set)
 end
 
 
