@@ -1,7 +1,5 @@
 # irrep.py
 
-from random import randint
-
 # weight_space_gen(): generates root spaces
 # Input: cartan_basis -- list with Cartan basis set
 #        diag_mat_list -- list of diagonal matrices corresponding to Cartan basis
@@ -82,6 +80,8 @@ def tuple_helper(old_list, max_val):
     return new_list
 
 # ------------------------------------------------------------------------------------------
+
+from random import randint
 
 # simultaneous_diag(): simultaneously diagonalizes a commuting basis set
 # Input: basis -- commuting basis
@@ -242,10 +242,6 @@ for elem in pos_root_vec:
 sage_simple_roots = []
 for elem in simple_roots:
     sage_simple_roots.append(list(elem))
-# convert from GAP to Sage format: pos_root_vec
-sage_pos_root_vec = []
-for elem in pos_root_vec:
-    sage_pos_root_vec.append(matrix(QQ,elem))
 
 # simultaneously diagonalize the Cartan basis
 P, diag_mat_list = simultaneous_diag(sage_cartan_basis)
