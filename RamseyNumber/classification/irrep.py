@@ -224,11 +224,11 @@ def find_irreps(simple_roots, highest_weights):
 # --------------------- MAIN SCRIPT ---------------------
 
 # SL_3 Test
-e_1 = matrix([[0,1,0],[0,0,0],[0,0,0]])
-e_2 = matrix([[0,0,0],[1,0,0],[0,0,0]])
-e_3 = matrix([[0,0,0],[0,0,1],[0,0,0]])
-e_4 = matrix([[0,0,0],[0,0,0],[0,1,0]])
-gens = [e_1,e_2,e_3,e_4]
+# e_1 = matrix([[0,1,0],[0,0,0],[0,0,0]])
+# e_2 = matrix([[0,0,0],[1,0,0],[0,0,0]])
+# e_3 = matrix([[0,0,0],[0,0,1],[0,0,0]])
+# e_4 = matrix([[0,0,0],[0,0,0],[0,1,0]])
+# gens = [e_1,e_2,e_3,e_4]
 
 # SO_4 Test 
 # e_1 = matrix([[0,0,1,0],[0,0,0,0],[0,0,0,0],[0,0,0,0]])
@@ -237,10 +237,10 @@ gens = [e_1,e_2,e_3,e_4]
 # e_4 = matrix([[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,1,0,0]])
 # gens = [e_1,e_2,e_3,e_4]
 
-# P+1, P=6
-e = matrix([[0, 1, 0, 0, 0, 0],[0, 0, 0, 0, 0, 0],[0, 0, 0, 2, 0, 0],[0, 0, 0, 0, 0, 0],[0, 0, 0, 0, 0, 7],[0, 0, 0, 0, 0, 0]])
-f = matrix([[0, 0, 0, 0, 0, 0],[1, 0, 0, 0, 0, 0],[0, 0, 0, 0, 0, 0],[0, 0, 1, 0, 0, 0],[0, 0, 0, 0, 0, 0],[0, 0, 0, 0, 1, 0]])
-gens = [e,f]
+# # P+1, P=6
+# e = matrix([[0, 1, 0, 0, 0, 0],[0, 0, 0, 0, 0, 0],[0, 0, 0, 2, 0, 0],[0, 0, 0, 0, 0, 0],[0, 0, 0, 0, 0, 7],[0, 0, 0, 0, 0, 0]])
+# f = matrix([[0, 0, 0, 0, 0, 0],[1, 0, 0, 0, 0, 0],[0, 0, 0, 0, 0, 0],[0, 0, 1, 0, 0, 0],[0, 0, 0, 0, 0, 0],[0, 0, 0, 0, 1, 0]])
+# gens = [e,f]
 
 # In GAP -- Compute:
 #   Lie algebra
@@ -250,6 +250,7 @@ gens = [e,f]
 #   root System for Lie algebra
 #   simple roots of Lie algebra
 #   positive root vectors of Lie algebra
+gens = [E,F]
 lie_alg = gap.LieAlgebra('Rationals',gens)
 alg_dim = gap.Dimension(lie_alg)
 cartan_alg = gap.CartanSubalgebra(lie_alg)

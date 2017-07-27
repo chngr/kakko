@@ -4,7 +4,7 @@ function print_E_F (mat_set, txt_name)
 string_set = {'E','F'}
 % find destination directory relatively
 cur_dir = cd;
-dest_name = fullfile(cur_dir,'..','gap_files',txt_name);
+dest_name = fullfile(cur_dir,'..','classification',txt_name);
 % write file
 format long
 fid = fopen(dest_name,'w');
