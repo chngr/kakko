@@ -79,6 +79,29 @@ def tuple_helper(old_list, max_val):
             new_list.append(new_cur_tuple)
     return new_list
 
+# adjoint_rep(): computes adjoint representation matrices of 
+#                Lie algebra
+# Input: input_elems -- set of matrices to compute adjoint rep of 
+#        basis -- compute with respect to this basis 
+# Output: ad -- list of adjoint representation matrices
+def adjoint_rep(input_elems, basis):
+    basis_vec = []
+    ad = []
+    # find matrix of basis 
+    for b in basis:
+        basis_vec.append(b.transpose().list())
+    basis_mat = matrix(QQ,basis_vec).transpose()
+    # find adjoint rep matrices
+    for mat_elem in input_elems:
+        mat_list = []
+        for basis_elem in basis:
+            bracket_vec = vector(QQ,bracket(mat_elem,basis_elem).transpose().list())
+            coords = basis_mat.solve_right(bracket_vec)
+            mat_list.append(coords.list())
+        adj_mat = matrix(QQ,mat_list).transpose()
+        ad.append(adj_mat)
+    return ad
+
 # ------------------------------------------------------------------------------------------
 
 from random import randint
@@ -153,7 +176,7 @@ def extract_weights(diag_mat_list):
 def highest_weight_gen(pos_root_vec):
     spaces_to_intersect = []
     for elem in pos_root_vec:
-        spaces_to_intersect.append(elem.kernel())
+        spaces_to_intersect.append(elem.right_kernel())
     highest_weight_intersection = intersect_spaces(spaces_to_intersect)
     return highest_weight_intersection
 
@@ -169,7 +192,7 @@ def intersect_spaces(space_list):
 # find_highest_weights(): finds the weights in weight_list which are highest weights
 # Input: highest_weight_intersection -- intersection of the highest weight spaces
 #        weight_list -- list of all weights
-#        P -- matrix of simultaneous eigenvalues
+#        P -- matrix of simultaneous eigenvectors
 # Output: highest_weights -- weights in weight_list which are highest weights
 def find_highest_weights(highest_weight_intersection, weight_list, P):
     highest_weights = []
@@ -201,18 +224,23 @@ def find_irreps(simple_roots, highest_weights):
 # --------------------- MAIN SCRIPT ---------------------
 
 # SL_3 Test
-# e_1 = matrix([[0,1,0],[0,0,0],[0,0,0]])
-# e_2 = matrix([[0,0,0],[1,0,0],[0,0,0]])
-# e_3 = matrix([[0,0,0],[0,0,1],[0,0,0]])
-# e_4 = matrix([[0,0,0],[0,0,0],[0,1,0]])
-# gens = [e_1,e_2,e_3,e_4]
+e_1 = matrix([[0,1,0],[0,0,0],[0,0,0]])
+e_2 = matrix([[0,0,0],[1,0,0],[0,0,0]])
+e_3 = matrix([[0,0,0],[0,0,1],[0,0,0]])
+e_4 = matrix([[0,0,0],[0,0,0],[0,1,0]])
+gens = [e_1,e_2,e_3,e_4]
 
 # SO_4 Test 
-e_1 = matrix([[0,0,1,0],[0,0,0,0],[0,0,0,0],[0,0,0,0]])
-e_2 = matrix([[0,0,0,0],[0,0,0,1],[0,0,0,0],[0,0,0,0]])
-e_3 = matrix([[0,0,0,0],[0,0,0,0],[1,0,0,0],[0,0,0,0]])
-e_4 = matrix([[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,1,0,0]])
-gens = [e_1,e_2,e_3,e_4]
+# e_1 = matrix([[0,0,1,0],[0,0,0,0],[0,0,0,0],[0,0,0,0]])
+# e_2 = matrix([[0,0,0,0],[0,0,0,1],[0,0,0,0],[0,0,0,0]])
+# e_3 = matrix([[0,0,0,0],[0,0,0,0],[1,0,0,0],[0,0,0,0]])
+# e_4 = matrix([[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,1,0,0]])
+# gens = [e_1,e_2,e_3,e_4]
+
+# P+1, P=6
+e = matrix([[0, 1, 0, 0, 0, 0],[0, 0, 0, 0, 0, 0],[0, 0, 0, 2, 0, 0],[0, 0, 0, 0, 0, 0],[0, 0, 0, 0, 0, 7],[0, 0, 0, 0, 0, 0]])
+f = matrix([[0, 0, 0, 0, 0, 0],[1, 0, 0, 0, 0, 0],[0, 0, 0, 0, 0, 0],[0, 0, 1, 0, 0, 0],[0, 0, 0, 0, 0, 0],[0, 0, 0, 0, 1, 0]])
+gens = [e,f]
 
 # In GAP -- Compute:
 #   Lie algebra
