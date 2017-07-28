@@ -17,4 +17,5 @@ while ~isempty(tuple_basis)
     tuple_basis = cellfun(@eval,basis_str,'UniformOutput',false);
 end
 groups = partitions;
+assignin('base','partitions',partitions);
 end

@@ -10,11 +10,11 @@ dest_name = fullfile(cur_dir,'..','gap_files',file_name);
 % write file
 format long
 fid = fopen(dest_name,'w');
-key_set = keys(block_map);
+key_set = block_map;
 % for every subblock of E and F
 for x = 1:length(key_set)
     x_str = int2str(x);
-    cur_mat = eval(key_set{x});
+    cur_mat = key_set{x};
     % get column sizes for e and f (subblocks)
     col_size = size(cur_mat,2)/2;
     e = cur_mat(:,1:col_size);
