@@ -237,24 +237,6 @@ def find_irreps(simple_roots, highest_weights):
 # e_4 = matrix([[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,1,0,0]])
 # gens = [e_1,e_2,e_3,e_4]
 
-# # P+1, P=6
-E = matrix([[0, 1, 0],[0, 0, 4],[0, 0, 0]])
-F = matrix([[0, 0, 0],[4, 0, 0],[0, 1, 0]])
-
-# gens = [e,f]
-
-
-# 3_plus_2 
-# A1 A1
-# A1 A1
-# A2
-# A1
-# A3
-# A3
-# A1 A1
-# A2
-
-
 # In GAP -- Compute:
 #   Lie algebra
 #   dimension of Lie algebra
