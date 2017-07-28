@@ -252,6 +252,7 @@ def find_irreps(simple_roots, highest_weights):
 #   positive root vectors of Lie algebra
 gens = [E,F]
 lie_alg = gap.LieAlgebra('Rationals',gens)
+lie_type = gap.SemiSimpleType(lie_alg)
 alg_dim = gap.Dimension(lie_alg)
 cartan_alg = gap.CartanSubalgebra(lie_alg)
 cartan_basis = gap.BasisVectors(gap.Basis(cartan_alg))
