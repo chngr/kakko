@@ -1,7 +1,7 @@
 
 % mat_set dim 2 with E and F
 function print_E_F (mat_set, txt_name)
-string_set = {'E','F'}
+string_set = {'E','F'};
 % find destination directory relatively
 cur_dir = cd;
 dest_name = fullfile(cur_dir,'..','classification',txt_name);

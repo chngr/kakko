@@ -1,0 +1,384 @@
+mat_1 :=[[[0, 1],[0, 0]],[[0, 0],[21, 0]]];
+
+L_1 := LieAlgebra(Rationals, mat_1);
+
+S_1 := SemiSimpleType(L_1);
+
+PrintTo("*stdout*",S_1,"\n");
+
+mat_2 :=[[[0, 1, 1],[0, 0, 0],[0, 0, 0]],[[0, 0, 0],[1, 0, 0],[10, 0, 0]]];
+
+L_2 := LieAlgebra(Rationals, mat_2);
+
+S_2 := SemiSimpleType(L_2);
+
+PrintTo("*stdout*",S_2,"\n");
+
+mat_3 :=[[[0, 1],[0, 0]],[[0, 0],[4, 0]]];
+
+L_3 := LieAlgebra(Rationals, mat_3);
+
+S_3 := SemiSimpleType(L_3);
+
+PrintTo("*stdout*",S_3,"\n");
+
+mat_4 :=[[[0, 1],[0, 0]],[[0, 0],[2, 0]]];
+
+L_4 := LieAlgebra(Rationals, mat_4);
+
+S_4 := SemiSimpleType(L_4);
+
+PrintTo("*stdout*",S_4,"\n");
+
+mat_5 :=[[[0, 1],[0, 0]],[[0, 0],[1, 0]]];
+
+L_5 := LieAlgebra(Rationals, mat_5);
+
+S_5 := SemiSimpleType(L_5);
+
+PrintTo("*stdout*",S_5,"\n");
+
+mat_6 :=[[[0, 1],[0, 0]],[[0, 0],[1, 0]]];
+
+L_6 := LieAlgebra(Rationals, mat_6);
+
+S_6 := SemiSimpleType(L_6);
+
+PrintTo("*stdout*",S_6,"\n");
+
+mat_7 :=[[[0, 1, 1],[0, 0, 0],[0, 0, 0]],[[0, 0, 0],[3, 0, 0],[3, 0, 0]]];
+
+L_7 := LieAlgebra(Rationals, mat_7);
+
+S_7 := SemiSimpleType(L_7);
+
+PrintTo("*stdout*",S_7,"\n");
+
+mat_8 :=[[[0, 1],[0, 0]],[[0, 0],[2, 0]]];
+
+L_8 := LieAlgebra(Rationals, mat_8);
+
+S_8 := SemiSimpleType(L_8);
+
+PrintTo("*stdout*",S_8,"\n");
+
+mat_9 :=[[[0, 1],[0, 0]],[[0, 0],[1, 0]]];
+
+L_9 := LieAlgebra(Rationals, mat_9);
+
+S_9 := SemiSimpleType(L_9);
+
+PrintTo("*stdout*",S_9,"\n");
+
+mat_10 :=[[[0, 1],[0, 0]],[[0, 0],[1, 0]]];
+
+L_10 := LieAlgebra(Rationals, mat_10);
+
+S_10 := SemiSimpleType(L_10);
+
+PrintTo("*stdout*",S_10,"\n");
+
+mat_11 :=[[[0, 1, 2],[0, 0, 0],[0, 0, 0]],[[0, 0, 0],[4, 0, 0],[2, 0, 0]]];
+
+L_11 := LieAlgebra(Rationals, mat_11);
+
+S_11 := SemiSimpleType(L_11);
+
+PrintTo("*stdout*",S_11,"\n");
+
+mat_12 :=[[[0, 1, 0, 0],[0, 0, 0, 0],[0, 1, 0, 6],[0, 0, 0, 0]],[[0, 0, 0, 0],[2, 0, 5, 0],[0, 0, 0, 0],[0, 0, 1, 0]]];
+
+L_12 := LieAlgebra(Rationals, mat_12);
+
+S_12 := SemiSimpleType(L_12);
+
+PrintTo("*stdout*",S_12,"\n");
+
+mat_13 :=[[[0, 1, 0, 0],[0, 0, 0, 0],[0, 5, 0, 2],[0, 0, 0, 0]],[[0, 0, 0, 0],[6, 0, 1, 0],[0, 0, 0, 0],[0, 0, 1, 0]]];
+
+L_13 := LieAlgebra(Rationals, mat_13);
+
+S_13 := SemiSimpleType(L_13);
+
+PrintTo("*stdout*",S_13,"\n");
+
+mat_14 :=[[[0, 1, 1, 1],[0, 0, 0, 0],[0, 0, 0, 0],[0, 0, 0, 0]],[[0, 0, 0, 0],[2, 0, 0, 0],[4, 0, 0, 0],[1, 0, 0, 0]]];
+
+L_14 := LieAlgebra(Rationals, mat_14);
+
+S_14 := SemiSimpleType(L_14);
+
+PrintTo("*stdout*",S_14,"\n");
+
+mat_15 :=[[[0, 1],[0, 0]],[[0, 0],[3, 0]]];
+
+L_15 := LieAlgebra(Rationals, mat_15);
+
+S_15 := SemiSimpleType(L_15);
+
+PrintTo("*stdout*",S_15,"\n");
+
+mat_16 :=[[[0, 1, 1],[0, 0, 0],[0, 0, 0]],[[0, 0, 0],[1, 0, 0],[2, 0, 0]]];
+
+L_16 := LieAlgebra(Rationals, mat_16);
+
+S_16 := SemiSimpleType(L_16);
+
+PrintTo("*stdout*",S_16,"\n");
+
+mat_17 :=[[[0, 1],[0, 0]],[[0, 0],[2, 0]]];
+
+L_17 := LieAlgebra(Rationals, mat_17);
+
+S_17 := SemiSimpleType(L_17);
+
+PrintTo("*stdout*",S_17,"\n");
+
+mat_18 :=[[[0, 1],[0, 0]],[[0, 0],[1, 0]]];
+
+L_18 := LieAlgebra(Rationals, mat_18);
+
+S_18 := SemiSimpleType(L_18);
+
+PrintTo("*stdout*",S_18,"\n");
+
+mat_19 :=[[[0, 1],[0, 0]],[[0, 0],[1, 0]]];
+
+L_19 := LieAlgebra(Rationals, mat_19);
+
+S_19 := SemiSimpleType(L_19);
+
+PrintTo("*stdout*",S_19,"\n");
+
+mat_20 :=[[[0, 1, 1],[0, 0, 0],[0, 0, 0]],[[0, 0, 0],[1, 0, 0],[1, 0, 0]]];
+
+L_20 := LieAlgebra(Rationals, mat_20);
+
+S_20 := SemiSimpleType(L_20);
+
+PrintTo("*stdout*",S_20,"\n");
+
+mat_21 :=[[[0, 1],[0, 0]],[[0, 0],[2, 0]]];
+
+L_21 := LieAlgebra(Rationals, mat_21);
+
+S_21 := SemiSimpleType(L_21);
+
+PrintTo("*stdout*",S_21,"\n");
+
+mat_22 :=[[[0, 1],[0, 0]],[[0, 0],[1, 0]]];
+
+L_22 := LieAlgebra(Rationals, mat_22);
+
+S_22 := SemiSimpleType(L_22);
+
+PrintTo("*stdout*",S_22,"\n");
+
+mat_23 :=[[[0, 1],[0, 0]],[[0, 0],[1, 0]]];
+
+L_23 := LieAlgebra(Rationals, mat_23);
+
+S_23 := SemiSimpleType(L_23);
+
+PrintTo("*stdout*",S_23,"\n");
+
+mat_24 :=[[[0, 1],[0, 0]],[[0, 0],[1, 0]]];
+
+L_24 := LieAlgebra(Rationals, mat_24);
+
+S_24 := SemiSimpleType(L_24);
+
+PrintTo("*stdout*",S_24,"\n");
+
+mat_25 :=[[[0, 1],[0, 0]],[[0, 0],[1, 0]]];
+
+L_25 := LieAlgebra(Rationals, mat_25);
+
+S_25 := SemiSimpleType(L_25);
+
+PrintTo("*stdout*",S_25,"\n");
+
+mat_26 :=[[[0, 1, 2],[0, 0, 0],[0, 0, 0]],[[0, 0, 0],[1, 0, 0],[1, 0, 0]]];
+
+L_26 := LieAlgebra(Rationals, mat_26);
+
+S_26 := SemiSimpleType(L_26);
+
+PrintTo("*stdout*",S_26,"\n");
+
+mat_27 :=[[[0, 1, 0],[0, 0, 0],[0, 1, 0]],[[0, 0, 0],[2, 0, 1],[0, 0, 0]]];
+
+L_27 := LieAlgebra(Rationals, mat_27);
+
+S_27 := SemiSimpleType(L_27);
+
+PrintTo("*stdout*",S_27,"\n");
+
+mat_28 :=[[[0, 2],[0, 0]],[[0, 0],[1, 0]]];
+
+L_28 := LieAlgebra(Rationals, mat_28);
+
+S_28 := SemiSimpleType(L_28);
+
+PrintTo("*stdout*",S_28,"\n");
+
+mat_29 :=[[[0, 2, 0],[0, 0, 0],[0, 4, 0]],[[0, 0, 0],[2, 0, 1],[0, 0, 0]]];
+
+L_29 := LieAlgebra(Rationals, mat_29);
+
+S_29 := SemiSimpleType(L_29);
+
+PrintTo("*stdout*",S_29,"\n");
+
+mat_30 :=[[[0, 1],[0, 0]],[[0, 0],[2, 0]]];
+
+L_30 := LieAlgebra(Rationals, mat_30);
+
+S_30 := SemiSimpleType(L_30);
+
+PrintTo("*stdout*",S_30,"\n");
+
+mat_31 :=[[[0, 1],[0, 0]],[[0, 0],[1, 0]]];
+
+L_31 := LieAlgebra(Rationals, mat_31);
+
+S_31 := SemiSimpleType(L_31);
+
+PrintTo("*stdout*",S_31,"\n");
+
+mat_32 :=[[[0, 1],[0, 0]],[[0, 0],[1, 0]]];
+
+L_32 := LieAlgebra(Rationals, mat_32);
+
+S_32 := SemiSimpleType(L_32);
+
+PrintTo("*stdout*",S_32,"\n");
+
+mat_33 :=[[[0, 1],[0, 0]],[[0, 0],[1, 0]]];
+
+L_33 := LieAlgebra(Rationals, mat_33);
+
+S_33 := SemiSimpleType(L_33);
+
+PrintTo("*stdout*",S_33,"\n");
+
+mat_34 :=[[[0, 1],[0, 0]],[[0, 0],[1, 0]]];
+
+L_34 := LieAlgebra(Rationals, mat_34);
+
+S_34 := SemiSimpleType(L_34);
+
+PrintTo("*stdout*",S_34,"\n");
+
+mat_35 :=[[[0, 1],[0, 0]],[[0, 0],[1, 0]]];
+
+L_35 := LieAlgebra(Rationals, mat_35);
+
+S_35 := SemiSimpleType(L_35);
+
+PrintTo("*stdout*",S_35,"\n");
+
+mat_36 :=[[[0, 2],[0, 0]],[[0, 0],[1, 0]]];
+
+L_36 := LieAlgebra(Rationals, mat_36);
+
+S_36 := SemiSimpleType(L_36);
+
+PrintTo("*stdout*",S_36,"\n");
+
+mat_37 :=[[[0, 1, 0],[0, 0, 0],[0, 1, 0]],[[0, 0, 0],[1, 0, 1],[0, 0, 0]]];
+
+L_37 := LieAlgebra(Rationals, mat_37);
+
+S_37 := SemiSimpleType(L_37);
+
+PrintTo("*stdout*",S_37,"\n");
+
+mat_38 :=[[[0, 2],[0, 0]],[[0, 0],[1, 0]]];
+
+L_38 := LieAlgebra(Rationals, mat_38);
+
+S_38 := SemiSimpleType(L_38);
+
+PrintTo("*stdout*",S_38,"\n");
+
+mat_39 :=[[[0, 3, 0],[0, 0, 0],[0, 3, 0]],[[0, 0, 0],[1, 0, 1],[0, 0, 0]]];
+
+L_39 := LieAlgebra(Rationals, mat_39);
+
+S_39 := SemiSimpleType(L_39);
+
+PrintTo("*stdout*",S_39,"\n");
+
+mat_40 :=[[[0, 1],[0, 0]],[[0, 0],[1, 0]]];
+
+L_40 := LieAlgebra(Rationals, mat_40);
+
+S_40 := SemiSimpleType(L_40);
+
+PrintTo("*stdout*",S_40,"\n");
+
+mat_41 :=[[[0, 2],[0, 0]],[[0, 0],[1, 0]]];
+
+L_41 := LieAlgebra(Rationals, mat_41);
+
+S_41 := SemiSimpleType(L_41);
+
+PrintTo("*stdout*",S_41,"\n");
+
+mat_42 :=[[[0, 2],[0, 0]],[[0, 0],[1, 0]]];
+
+L_42 := LieAlgebra(Rationals, mat_42);
+
+S_42 := SemiSimpleType(L_42);
+
+PrintTo("*stdout*",S_42,"\n");
+
+mat_43 :=[[[0, 2, 0],[0, 0, 0],[0, 1, 0]],[[0, 0, 0],[1, 0, 1],[0, 0, 0]]];
+
+L_43 := LieAlgebra(Rationals, mat_43);
+
+S_43 := SemiSimpleType(L_43);
+
+PrintTo("*stdout*",S_43,"\n");
+
+mat_44 :=[[[0, 4],[0, 0]],[[0, 0],[1, 0]]];
+
+L_44 := LieAlgebra(Rationals, mat_44);
+
+S_44 := SemiSimpleType(L_44);
+
+PrintTo("*stdout*",S_44,"\n");
+
+mat_45 :=[[[0, 4, 0, 0],[0, 0, 0, 0],[0, 1, 0, 0],[0, 2, 0, 0]],[[0, 0, 0, 0],[1, 0, 1, 1],[0, 0, 0, 0],[0, 0, 0, 0]]];
+
+L_45 := LieAlgebra(Rationals, mat_45);
+
+S_45 := SemiSimpleType(L_45);
+
+PrintTo("*stdout*",S_45,"\n");
+
+mat_46 :=[[[0, 3],[0, 0]],[[0, 0],[1, 0]]];
+
+L_46 := LieAlgebra(Rationals, mat_46);
+
+S_46 := SemiSimpleType(L_46);
+
+PrintTo("*stdout*",S_46,"\n");
+
+mat_47 :=[[[0, 10, 0],[0, 0, 0],[0, 1, 0]],[[0, 0, 0],[1, 0, 1],[0, 0, 0]]];
+
+L_47 := LieAlgebra(Rationals, mat_47);
+
+S_47 := SemiSimpleType(L_47);
+
+PrintTo("*stdout*",S_47,"\n");
+
+mat_48 :=[[[0, 21],[0, 0]],[[0, 0],[1, 0]]];
+
+L_48 := LieAlgebra(Rationals, mat_48);
+
+S_48 := SemiSimpleType(L_48);
+
+PrintTo("*stdout*",S_48,"\n");
+

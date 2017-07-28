@@ -1,210 +1,210 @@
-mat_1 :=[[[0, 1, 0, 0],[0, 0, 0, 0],[0, 1, 0, 5],[0, 0, 0, 0]],[[0, 0, 0, 0],[2, 0, 4, 0],[0, 0, 0, 0],[0, 0, 1, 0]]];
+mat_1 :=matrix([[0, 1, 0, 0],[0, 0, 0, 0],[0, 1, 0, 5],[0, 0, 0, 0]],[[0, 0, 0, 0],[2, 0, 4, 0],[0, 0, 0, 0],[0, 0, 1, 0]]];
 
-L_1 := LieAlgebra(Rationals, mat_1);
+L_1 :=matrix(LieAlgebra(Rationals, mat_1);
 
-R_1 := RootSystem(L_1);
+R_1 :=matrix(RootSystem(L_1);
 
-C_1 := CartanMatrix(R_1);
+C_1 :=matrix(CartanMatrix(R_1);
 
 PrintArray(C_1);
 
-mat_2 :=[[[0, 1, 0, 0],[0, 0, 0, 0],[0, 4, 0, 2],[0, 0, 0, 0]],[[0, 0, 0, 0],[5, 0, 1, 0],[0, 0, 0, 0],[0, 0, 1, 0]]];
+mat_2 :=matrix([[0, 1, 0, 0],[0, 0, 0, 0],[0, 4, 0, 2],[0, 0, 0, 0]],[[0, 0, 0, 0],[5, 0, 1, 0],[0, 0, 0, 0],[0, 0, 1, 0]]];
 
-L_2 := LieAlgebra(Rationals, mat_2);
+L_2 :=matrix(LieAlgebra(Rationals, mat_2);
 
-R_2 := RootSystem(L_2);
+R_2 :=matrix(RootSystem(L_2);
 
-C_2 := CartanMatrix(R_2);
+C_2 :=matrix(CartanMatrix(R_2);
 
 PrintArray(C_2);
 
-mat_3 :=[[[0, 1, 0],[0, 0, 0],[0, 1, 0]],[[0, 0, 0],[2, 0, 1],[0, 0, 0]]];
+mat_3 :=matrix([[0, 1, 0],[0, 0, 0],[0, 1, 0]],[[0, 0, 0],[2, 0, 1],[0, 0, 0]]];
 
-L_3 := LieAlgebra(Rationals, mat_3);
+L_3 :=matrix(LieAlgebra(Rationals, mat_3);
 
-R_3 := RootSystem(L_3);
+R_3 :=matrix(RootSystem(L_3);
 
-C_3 := CartanMatrix(R_3);
+C_3 :=matrix(CartanMatrix(R_3);
 
 PrintArray(C_3);
 
-mat_4 :=[[[0, 1],[0, 0]],[[0, 0],[1, 0]]];
+mat_4 :=matrix([[0, 1],[0, 0]],[[0, 0],[1, 0]]];
 
-L_4 := LieAlgebra(Rationals, mat_4);
+L_4 :=matrix(LieAlgebra(Rationals, mat_4);
 
-R_4 := RootSystem(L_4);
+R_4 :=matrix(RootSystem(L_4);
 
-C_4 := CartanMatrix(R_4);
+C_4 :=matrix(CartanMatrix(R_4);
 
 PrintArray(C_4);
 
-mat_5 :=[[[0, 1],[0, 0]],[[0, 0],[15, 0]]];
+mat_5 :=matrix([[0, 1],[0, 0]],[[0, 0],[15, 0]]];
 
-L_5 := LieAlgebra(Rationals, mat_5);
+L_5 :=matrix(LieAlgebra(Rationals, mat_5);
 
-R_5 := RootSystem(L_5);
+R_5 :=matrix(RootSystem(L_5);
 
-C_5 := CartanMatrix(R_5);
+C_5 :=matrix(CartanMatrix(R_5);
 
 PrintArray(C_5);
 
-mat_6 :=[[[0, 1],[0, 0]],[[0, 0],[2, 0]]];
+mat_6 :=matrix([[0, 1],[0, 0]],[[0, 0],[2, 0]]];
 
-L_6 := LieAlgebra(Rationals, mat_6);
+L_6 :=matrix(LieAlgebra(Rationals, mat_6);
 
-R_6 := RootSystem(L_6);
+R_6 :=matrix(RootSystem(L_6);
 
-C_6 := CartanMatrix(R_6);
+C_6 :=matrix(CartanMatrix(R_6);
 
 PrintArray(C_6);
 
-mat_7 :=[[[0, 1],[0, 0]],[[0, 0],[3, 0]]];
+mat_7 :=matrix([[0, 1],[0, 0]],[[0, 0],[3, 0]]];
 
-L_7 := LieAlgebra(Rationals, mat_7);
+L_7 :=matrix(LieAlgebra(Rationals, mat_7);
 
-R_7 := RootSystem(L_7);
+R_7 :=matrix(RootSystem(L_7);
 
-C_7 := CartanMatrix(R_7);
+C_7 :=matrix(CartanMatrix(R_7);
 
 PrintArray(C_7);
 
-mat_8 :=[[[0, 1],[0, 0]],[[0, 0],[4, 0]]];
+mat_8 :=matrix([[0, 1],[0, 0]],[[0, 0],[4, 0]]];
 
-L_8 := LieAlgebra(Rationals, mat_8);
+L_8 :=matrix(LieAlgebra(Rationals, mat_8);
 
-R_8 := RootSystem(L_8);
+R_8 :=matrix(RootSystem(L_8);
 
-C_8 := CartanMatrix(R_8);
+C_8 :=matrix(CartanMatrix(R_8);
 
 PrintArray(C_8);
 
-mat_9 :=[[[0, 1, 1],[0, 0, 0],[0, 0, 0]],[[0, 0, 0],[1, 0, 0],[2, 0, 0]]];
+mat_9 :=matrix([[0, 1, 1],[0, 0, 0],[0, 0, 0]],[[0, 0, 0],[1, 0, 0],[2, 0, 0]]];
 
-L_9 := LieAlgebra(Rationals, mat_9);
+L_9 :=matrix(LieAlgebra(Rationals, mat_9);
 
-R_9 := RootSystem(L_9);
+R_9 :=matrix(RootSystem(L_9);
 
-C_9 := CartanMatrix(R_9);
+C_9 :=matrix(CartanMatrix(R_9);
 
 PrintArray(C_9);
 
-mat_10 :=[[[0, 1, 1],[0, 0, 0],[0, 0, 0]],[[0, 0, 0],[1, 0, 0],[8, 0, 0]]];
+mat_10 :=matrix([[0, 1, 1],[0, 0, 0],[0, 0, 0]],[[0, 0, 0],[1, 0, 0],[8, 0, 0]]];
 
-L_10 := LieAlgebra(Rationals, mat_10);
+L_10 :=matrix(LieAlgebra(Rationals, mat_10);
 
-R_10 := RootSystem(L_10);
+R_10 :=matrix(RootSystem(L_10);
 
-C_10 := CartanMatrix(R_10);
+C_10 :=matrix(CartanMatrix(R_10);
 
 PrintArray(C_10);
 
-mat_11 :=[[[0, 1, 1, 1],[0, 0, 0, 0],[0, 0, 0, 0],[0, 0, 0, 0]],[[0, 0, 0, 0],[2, 0, 0, 0],[3, 0, 0, 0],[1, 0, 0, 0]]];
+mat_11 :=matrix([[0, 1, 1, 1],[0, 0, 0, 0],[0, 0, 0, 0],[0, 0, 0, 0]],[[0, 0, 0, 0],[2, 0, 0, 0],[3, 0, 0, 0],[1, 0, 0, 0]]];
 
-L_11 := LieAlgebra(Rationals, mat_11);
+L_11 :=matrix(LieAlgebra(Rationals, mat_11);
 
-R_11 := RootSystem(L_11);
+R_11 :=matrix(RootSystem(L_11);
 
-C_11 := CartanMatrix(R_11);
+C_11 :=matrix(CartanMatrix(R_11);
 
 PrintArray(C_11);
 
-mat_12 :=[[[0, 1, 2],[0, 0, 0],[0, 0, 0]],[[0, 0, 0],[1, 0, 0],[1, 0, 0]]];
+mat_12 :=matrix([[0, 1, 2],[0, 0, 0],[0, 0, 0]],[[0, 0, 0],[1, 0, 0],[1, 0, 0]]];
 
-L_12 := LieAlgebra(Rationals, mat_12);
+L_12 :=matrix(LieAlgebra(Rationals, mat_12);
 
-R_12 := RootSystem(L_12);
+R_12 :=matrix(RootSystem(L_12);
 
-C_12 := CartanMatrix(R_12);
+C_12 :=matrix(CartanMatrix(R_12);
 
 PrintArray(C_12);
 
-mat_13 :=[[[0, 1, 2],[0, 0, 0],[0, 0, 0]],[[0, 0, 0],[3, 0, 0],[2, 0, 0]]];
+mat_13 :=matrix([[0, 1, 2],[0, 0, 0],[0, 0, 0]],[[0, 0, 0],[3, 0, 0],[2, 0, 0]]];
 
-L_13 := LieAlgebra(Rationals, mat_13);
+L_13 :=matrix(LieAlgebra(Rationals, mat_13);
 
-R_13 := RootSystem(L_13);
+R_13 :=matrix(RootSystem(L_13);
 
-C_13 := CartanMatrix(R_13);
+C_13 :=matrix(CartanMatrix(R_13);
 
 PrintArray(C_13);
 
-mat_14 :=[[[0, 15],[0, 0]],[[0, 0],[1, 0]]];
+mat_14 :=matrix([[0, 15],[0, 0]],[[0, 0],[1, 0]]];
 
-L_14 := LieAlgebra(Rationals, mat_14);
+L_14 :=matrix(LieAlgebra(Rationals, mat_14);
 
-R_14 := RootSystem(L_14);
+R_14 :=matrix(RootSystem(L_14);
 
-C_14 := CartanMatrix(R_14);
+C_14 :=matrix(CartanMatrix(R_14);
 
 PrintArray(C_14);
 
-mat_15 :=[[[0, 2, 0],[0, 0, 0],[0, 1, 0]],[[0, 0, 0],[1, 0, 1],[0, 0, 0]]];
+mat_15 :=matrix([[0, 2, 0],[0, 0, 0],[0, 1, 0]],[[0, 0, 0],[1, 0, 1],[0, 0, 0]]];
 
-L_15 := LieAlgebra(Rationals, mat_15);
+L_15 :=matrix(LieAlgebra(Rationals, mat_15);
 
-R_15 := RootSystem(L_15);
+R_15 :=matrix(RootSystem(L_15);
 
-C_15 := CartanMatrix(R_15);
+C_15 :=matrix(CartanMatrix(R_15);
 
 PrintArray(C_15);
 
-mat_16 :=[[[0, 2, 0],[0, 0, 0],[0, 3, 0]],[[0, 0, 0],[2, 0, 1],[0, 0, 0]]];
+mat_16 :=matrix([[0, 2, 0],[0, 0, 0],[0, 3, 0]],[[0, 0, 0],[2, 0, 1],[0, 0, 0]]];
 
-L_16 := LieAlgebra(Rationals, mat_16);
+L_16 :=matrix(LieAlgebra(Rationals, mat_16);
 
-R_16 := RootSystem(L_16);
+R_16 :=matrix(RootSystem(L_16);
 
-C_16 := CartanMatrix(R_16);
+C_16 :=matrix(CartanMatrix(R_16);
 
 PrintArray(C_16);
 
-mat_17 :=[[[0, 2],[0, 0]],[[0, 0],[1, 0]]];
+mat_17 :=matrix([[0, 2],[0, 0]],[[0, 0],[1, 0]]];
 
-L_17 := LieAlgebra(Rationals, mat_17);
+L_17 :=matrix(LieAlgebra(Rationals, mat_17);
 
-R_17 := RootSystem(L_17);
+R_17 :=matrix(RootSystem(L_17);
 
-C_17 := CartanMatrix(R_17);
+C_17 :=matrix(CartanMatrix(R_17);
 
 PrintArray(C_17);
 
-mat_18 :=[[[0, 3, 0, 0],[0, 0, 0, 0],[0, 1, 0, 0],[0, 2, 0, 0]],[[0, 0, 0, 0],[1, 0, 1, 1],[0, 0, 0, 0],[0, 0, 0, 0]]];
+mat_18 :=matrix([[0, 3, 0, 0],[0, 0, 0, 0],[0, 1, 0, 0],[0, 2, 0, 0]],[[0, 0, 0, 0],[1, 0, 1, 1],[0, 0, 0, 0],[0, 0, 0, 0]]];
 
-L_18 := LieAlgebra(Rationals, mat_18);
+L_18 :=matrix(LieAlgebra(Rationals, mat_18);
 
-R_18 := RootSystem(L_18);
+R_18 :=matrix(RootSystem(L_18);
 
-C_18 := CartanMatrix(R_18);
+C_18 :=matrix(CartanMatrix(R_18);
 
 PrintArray(C_18);
 
-mat_19 :=[[[0, 3],[0, 0]],[[0, 0],[1, 0]]];
+mat_19 :=matrix([[0, 3],[0, 0]],[[0, 0],[1, 0]]];
 
-L_19 := LieAlgebra(Rationals, mat_19);
+L_19 :=matrix(LieAlgebra(Rationals, mat_19);
 
-R_19 := RootSystem(L_19);
+R_19 :=matrix(RootSystem(L_19);
 
-C_19 := CartanMatrix(R_19);
+C_19 :=matrix(CartanMatrix(R_19);
 
 PrintArray(C_19);
 
-mat_20 :=[[[0, 4],[0, 0]],[[0, 0],[1, 0]]];
+mat_20 :=matrix([[0, 4],[0, 0]],[[0, 0],[1, 0]]];
 
-L_20 := LieAlgebra(Rationals, mat_20);
+L_20 :=matrix(LieAlgebra(Rationals, mat_20);
 
-R_20 := RootSystem(L_20);
+R_20 :=matrix(RootSystem(L_20);
 
-C_20 := CartanMatrix(R_20);
+C_20 :=matrix(CartanMatrix(R_20);
 
 PrintArray(C_20);
 
-mat_21 :=[[[0, 8, 0],[0, 0, 0],[0, 1, 0]],[[0, 0, 0],[1, 0, 1],[0, 0, 0]]];
+mat_21 :=matrix([[0, 8, 0],[0, 0, 0],[0, 1, 0]],[[0, 0, 0],[1, 0, 1],[0, 0, 0]]];
 
-L_21 := LieAlgebra(Rationals, mat_21);
+L_21 :=matrix(LieAlgebra(Rationals, mat_21);
 
-R_21 := RootSystem(L_21);
+R_21 :=matrix(RootSystem(L_21);
 
-C_21 := CartanMatrix(R_21);
+C_21 :=matrix(CartanMatrix(R_21);
 
 PrintArray(C_21);
 

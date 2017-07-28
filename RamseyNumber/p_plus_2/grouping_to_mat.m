@@ -17,6 +17,7 @@ end
 assignin('base','E',E);
 assignin('base','F',F);
 print_to_gap(block_col,'p_plus_2_gap_test.txt');
+fprintf('Number of blocks: %d\n', length(grouping))
 end
 
 % opr_in_sub(): constructs matrix of E and F in each subgroup
