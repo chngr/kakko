@@ -260,18 +260,18 @@ def find_irreps(simple_roots, highest_weights):
 # simple_roots = gap.SimpleSystem(root_sys)
 # pos_root_vec = gap.PositiveRootVectors(root_sys)
 
-# # convert from GAP to Sage format: cartan_basis
-# sage_cartan_basis = []
-# for elem in cartan_basis:
-#     sage_cartan_basis.append(matrix(QQ,elem))
-# # convert from GAP to Sage format: pos_root_vec
-# sage_pos_root_vec = []
-# for elem in pos_root_vec:
-#     sage_pos_root_vec.append(matrix(QQ,elem))
-# # convert from GAP to Sage format: simple_roots
-# sage_simple_roots = []
-# for elem in simple_roots:
-#     sage_simple_roots.append(list(elem))
+# convert from GAP to Sage format: cartan_basis
+sage_cartan_basis = []
+for elem in cartan_basis:
+    sage_cartan_basis.append(matrix(QQ,elem))
+# convert from GAP to Sage format: pos_root_vec
+sage_pos_root_vec = []
+for elem in pos_root_vec:
+    sage_pos_root_vec.append(matrix(QQ,elem))
+# convert from GAP to Sage format: simple_roots
+sage_simple_roots = []
+for elem in simple_roots:
+    sage_simple_roots.append(list(elem))
 
 # simultaneously diagonalize the Cartan basis
 P, diag_mat_list = simultaneous_diag(sage_cartan_basis)
